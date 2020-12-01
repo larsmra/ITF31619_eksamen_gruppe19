@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledNav = styled.nav`
-    width: 100%;
+  width: 100%;
 `;
 
 const NavMenu = styled.ul`
@@ -27,35 +27,35 @@ const NavMenuItem = styled.li`
     text-decoration: none;
 
     &.active {
-      color: #479EB9;
+      color: #479eb9;
     }
   }
 `;
 const Navbar = () => (
-    <StyledNav>
-        <NavMenu>
-            <NavMenuItem>
-                <NavLink exact to="/home" activeClassName="active">
-                    Home
-                </NavLink>
-            </NavMenuItem>
-            <NavMenuItem>
-                <NavLink to="/offices" activeClassName="active">
-                    Kontorer 
-                </NavLink>
-            </NavMenuItem>
-            <NavMenuItem>
-                <NavLink exact to="/" activeClassName="active">
-                    Fagartikler
-                </NavLink>
-            </NavMenuItem>
-            <NavMenuItem>
-                <NavLink exact to="/" activeClassName="active">
-                    Kontakt
-                </NavLink>
-            </NavMenuItem>
-        </NavMenu>
-    </StyledNav>
+  <StyledNav>
+    <NavMenu>
+      <NavMenuItem>
+        <NavLink exact to="/home" activeClassName="active">
+          Home
+        </NavLink>
+      </NavMenuItem>
+      <NavMenuItem>
+        <NavLink to="/offices" activeClassName="active">
+          Kontorer
+        </NavLink>
+      </NavMenuItem>
+      <NavMenuItem>
+        <NavLink exact to="/" activeClassName="active">
+          Fagartikler
+        </NavLink>
+      </NavMenuItem>
+      <NavMenuItem>
+        <NavLink exact to="/" activeClassName="active">
+          Kontakt
+        </NavLink>
+      </NavMenuItem>
+    </NavMenu>
+  </StyledNav>
 );
 
 export default Navbar;
