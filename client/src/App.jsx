@@ -1,15 +1,6 @@
 import React from 'react';
+import Routes from './routes/Router';
 
-const App = () => {
-  return(
-      <>
-        <Navbar> </Navbar>
-        <Title> </Title>
-        <main>
-            
-        </main>
-      </>
-  )
-};
+const App = () => <Routes />;
 
 export default App;
