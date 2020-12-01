@@ -1,5 +1,15 @@
 import React from 'react';
 
-const App = () => <p>Test</p>;
+const App = () => {
+  return(
+      <>
+        <Navbar> </Navbar>
+        <Title> </Title>
+        <main>
+            
+        </main>
+      </>
+  )
+};
 
 export default App;
