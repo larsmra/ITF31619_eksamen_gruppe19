@@ -35,7 +35,24 @@ const Navbar = () => (
     <StyledNav>
         <NavMenu>
             <NavMenuItem>
-                
+                <NavLink exact to="/home" activeClassName="active">
+                    Home
+                </NavLink>
+            </NavMenuItem>
+            <NavMenuItem>
+                <NavLink to="/offices" activeClassName="active">
+                    Kontorer 
+                </NavLink>
+            </NavMenuItem>
+            <NavMenuItem>
+                <NavLink exact to="/" activeClassName="active">
+                    Fagartikler
+                </NavLink>
+            </NavMenuItem>
+            <NavMenuItem>
+                <NavLink exact to="/" activeClassName="active">
+                    Kontakt
+                </NavLink>
             </NavMenuItem>
         </NavMenu>
     </StyledNav>
