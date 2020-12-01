@@ -6,7 +6,6 @@ const GridContainer = styled.section`
     display: grid;
     grid-template-columns: auto auto auto;
     grid-gap: 10px;
-
 `
 ;
 const GridItem = styled.article`
