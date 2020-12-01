@@ -45,12 +45,12 @@ const Navbar = () => (
         </NavLink>
       </NavMenuItem>
       <NavMenuItem>
-        <NavLink exact to="/" activeClassName="active">
+        <NavLink exact to="/fagartikler" activeClassName="active">
           Fagartikler
         </NavLink>
       </NavMenuItem>
       <NavMenuItem>
-        <NavLink exact to="/" activeClassName="active">
+        <NavLink exact to="/kontakt" activeClassName="active">
           Kontakt
         </NavLink>
       </NavMenuItem>
