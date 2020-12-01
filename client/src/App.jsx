@@ -3,8 +3,10 @@ import React from 'react';
 const App = () => {
   return(
       <>
-        <Navbar> </Navbar>
-        <Title> </Title>
+        <header>
+            <Navbar/>
+            <Title title="Velkommen til FG Rørleggerservice AS"/>
+        </header>
         <main>
             
         </main>
