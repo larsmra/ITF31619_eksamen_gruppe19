@@ -1,11 +1,26 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const Footer = () => (
-  <footer>
-    <p>Orgnr: 007 007 007</p>
-    <p>lg@lgror.no</p>
-    <p>99 00 00 00</p>
-  </footer>
+const StyledFooter = styled.footer`
+    width: 100%; 
+`
+
+const StyledFooterText = styled.p`
+    display: inline-block;
+    padding: 10px;
+`
+
+const Footer = ({ orgnumber, email, phone }) => ( 
+    <StyledFooter>
+        <footer>
+            <StyledFooterText>
+                <p>{orgnumber}</p> 
+                <p>{email}</p> 
+                <p>{phone}</p>
+            </StyledFooterText>  
+        </footer>  
+    </StyledFooter>
+  
 );
 
 export default Footer;

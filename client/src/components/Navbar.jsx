@@ -4,26 +4,31 @@ import styled from 'styled-components';
 
 const StyledNav = styled.nav`
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 10px 38px 2px rgba(237, 237, 237, 1);
+
+  & > span {
+    align-self: center;
+    padding: 10px 30px;
+  }
 `;
 
 const NavMenu = styled.ul`
   display: flex;
-  margin: 0;
-  padding: 0;
+  justify-content: flex-end;
   list-style: none;
 `;
 
 const NavMenuItem = styled.li`
-  padding: 0 20px;
-
+  padding: 10px 30px;
   &:first-child {
     padding-left: 0;
   }
 
   & > a {
     display: block;
-    font-size: 14px;
-    padding: 5px 0;
+    font-size: 16px;
     text-decoration: none;
 
     &.active {
@@ -33,6 +38,7 @@ const NavMenuItem = styled.li`
 `;
 const Navbar = () => (
   <StyledNav>
+    <span> FG </span>
     <NavMenu>
       <NavMenuItem>
         <NavLink exact to="/" activeClassName="active">
