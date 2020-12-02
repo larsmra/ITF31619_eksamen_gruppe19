@@ -2,23 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledFooter = styled.footer`
+    display: flex;
     width: 100%; 
+    justify-content: center;
 `
 
-const StyledFooterText = styled.p`
+const FooterText = styled.p`
     display: inline-block;
     padding: 10px;
 `
 
 const Footer = ({ orgnumber, email, phone }) => ( 
     <StyledFooter>
-        <footer>
-            <StyledFooterText>
-                <p>{orgnumber}</p> 
-                <p>{email}</p> 
-                <p>{phone}</p>
-            </StyledFooterText>  
-        </footer>  
+            <FooterText>
+                {orgnumber}
+            </FooterText>  
+            <FooterText>
+                {email}
+            </FooterText>
+            <FooterText>
+               {phone}
+            </FooterText>
     </StyledFooter>
   
 );

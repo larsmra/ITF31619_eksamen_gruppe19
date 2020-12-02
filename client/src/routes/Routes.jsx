@@ -5,6 +5,8 @@ import PageLayout from '../layouts/PageLayout';
 import Home from '../pages/Home';
 import Offices from '../pages/Offices';
 import Office from '../pages/Office';
+import Articles from '../pages/Articles';
+import Article from '../pages/Article';
 
 const Routes = () => (
   <Router>
