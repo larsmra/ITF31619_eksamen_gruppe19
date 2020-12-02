@@ -1,6 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 import { offices } from '../data/data';
+
+const GridSection = styled.section`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 1em;
+`;
 
 const Office = () => {
   const { id } = useParams();
@@ -14,14 +21,15 @@ const Office = () => {
       </section>
       <section>
         <h2>Våre ansatte</h2>
-        <section>
+        <GridSection>
           {office.employees.map((employee) => (
             <article key={employee.id}>
+              <img alt={employee.name} />
               <p>{employee.name}</p>
               <p>{employee.position}</p>
             </article>
           ))}
-        </section>
+        </GridSection>
       </section>
       <section>
         <p>Kontakt oss på {office.phone}</p>
