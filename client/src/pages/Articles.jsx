@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Title from '../components/Title';
 import CategorySelector from '../components/CategorySelector';
@@ -43,21 +43,19 @@ const StyledArticles = styled.section`
 
 const Articles = () => {
 
-    /*Implement when we have a backend
-    
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [articles, setArticles] = useState([]);
 
     const createMap = ({data}) => Object.entries(data);
 
-    
+    /*Implement when we have a backend
 
     useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('http://localhost:/artikler', {
+        const response = await axios.get('http://localhost:APORT/artikler', {
           transformResponse: createMap,
           responseType: 'json',
         });
