@@ -8,9 +8,9 @@ const StyledNav = styled.nav`
 
 const NavMenu = styled.ul`
   display: flex;
-  margin: 0;
-  padding: 0;
   list-style: none;
+  padding: 30px 30px;
+  box-shadow: 0px 10px 38px 2px rgba(237, 237, 237, 1);
 `;
 
 const NavMenuItem = styled.li`
@@ -33,6 +33,7 @@ const NavMenuItem = styled.li`
 `;
 const Navbar = () => (
   <StyledNav>
+    <span> FG </span>
     <NavMenu>
       <NavMenuItem>
         <NavLink exact to="/home" activeClassName="active">
