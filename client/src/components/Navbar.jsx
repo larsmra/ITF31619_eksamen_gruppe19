@@ -36,10 +36,14 @@ const NavMenuItem = styled.li`
     }
   }
 `;
-const Navbar = () => (
+
+
+const Navbar = () => {
+
+  return(
   <StyledNav>
     <span> FG </span>
-    <NavMenu>
+    <NavMenu >
       <NavMenuItem>
         <NavLink exact to="/" activeClassName="active">
           Home
@@ -62,6 +66,7 @@ const Navbar = () => (
       </NavMenuItem>
     </NavMenu>
   </StyledNav>
-);
+  )
+};
 
 export default Navbar;
