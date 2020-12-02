@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PageLayout from '../layouts/PageLayout';
 
 import Home from '../pages/Home';
 import Offices from '../pages/Offices';
-import Plumbers from '../pages/Plumbers';
+import Office from '../pages/Office';
 
 const Routes = () => (
   <Router>
@@ -13,11 +13,11 @@ const Routes = () => (
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/kontorer">
+        <Route exact path="/kontorer">
           <Offices />
         </Route>
         <Route path="/kontorer/:id">
-          <Plumbers />
+          <Office />
         </Route>
       </Switch>
     </PageLayout>

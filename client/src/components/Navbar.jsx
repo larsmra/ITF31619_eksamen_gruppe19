@@ -35,22 +35,22 @@ const Navbar = () => (
   <StyledNav>
     <NavMenu>
       <NavMenuItem>
-        <NavLink exact to="/home" activeClassName="active">
+        <NavLink exact to="/" activeClassName="active">
           Home
         </NavLink>
       </NavMenuItem>
       <NavMenuItem>
-        <NavLink to="/offices" activeClassName="active">
+        <NavLink to="/kontorer" activeClassName="active">
           Kontorer
         </NavLink>
       </NavMenuItem>
       <NavMenuItem>
-        <NavLink exact to="/" activeClassName="active">
+        <NavLink exact to="/fagartikler" activeClassName="active">
           Fagartikler
         </NavLink>
       </NavMenuItem>
       <NavMenuItem>
-        <NavLink exact to="/" activeClassName="active">
+        <NavLink exact to="/kontakt" activeClassName="active">
           Kontakt
         </NavLink>
       </NavMenuItem>
