@@ -19,6 +19,9 @@ const Routes = () => (
         <Route path="/kontorer/:id">
           <Office />
         </Route>
+        <Route path="/fagartikler">
+          <Articles />
+        </Route>
       </Switch>
     </PageLayout>
   </Router>
