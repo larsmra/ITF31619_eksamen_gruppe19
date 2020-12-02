@@ -4,26 +4,31 @@ import styled from 'styled-components';
 
 const StyledNav = styled.nav`
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 10px 38px 2px rgba(237, 237, 237, 1);
+
+  & > span {
+    align-self: center;
+    padding: 10px 30px;
+  }
 `;
 
 const NavMenu = styled.ul`
   display: flex;
+  justify-content: flex-end;
   list-style: none;
-  padding: 30px 30px;
-  box-shadow: 0px 10px 38px 2px rgba(237, 237, 237, 1);
 `;
 
 const NavMenuItem = styled.li`
-  padding: 0 20px;
-
+  padding: 10px 30px;
   &:first-child {
     padding-left: 0;
   }
 
   & > a {
     display: block;
-    font-size: 14px;
-    padding: 5px 0;
+    font-size: 16px;
     text-decoration: none;
 
     &.active {
