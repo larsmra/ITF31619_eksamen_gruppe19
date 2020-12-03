@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledArticle = styled.article`
@@ -7,6 +8,11 @@ const StyledArticle = styled.article`
     padding: 20px;
     max-width: 90%;
     margin: auto;
+    border: 0.1rem solid white;
+
+    &:hover{
+        border: 0.1rem solid lightgrey;
+    }
 
 `
 
@@ -41,9 +47,15 @@ const StyledIngress = styled.p`
 
 const ArticleCard = ({id, title, category, ingress}) => {
     const MAX_LENGTH = 150;
+
+    const history = useHistory();
+
+    const goToPage = () => {
+    history.push(`/fagartikler/${id}`);
+    };
     
     return(
-        <StyledArticle href={`/artikler/${id}`}>
+        <StyledArticle onClick={goToPage}>
         
                 <StyledDiv/>
                 <StyledHeader>

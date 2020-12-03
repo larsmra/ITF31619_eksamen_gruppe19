@@ -29,12 +29,13 @@ const ArticleAdminFunctions = styled.div`
 const Delete = styled.button`
         background-color: #D04040;
         &:hover{
-            background-color: #8A1E1E;
+            background-color: #942E2E;
         }
 `
 
 const Update = styled.button`
         background-color: #ACAC45;
+        margin: 0px 5px;
         &:hover{
             background-color: #878123;
         }
@@ -99,7 +100,7 @@ const Article = () => {
                 <p> {article.ingress} </p>
                 <p> {article.content} </p>
             </ArticleContent>
-            <p> {article.category} </p>
+            <h5> {article.category} </h5>
 
             <ArticleAdminFunctions>
                 <Delete> Slett </Delete>

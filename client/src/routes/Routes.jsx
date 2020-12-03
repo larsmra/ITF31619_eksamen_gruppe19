@@ -21,7 +21,7 @@ const Routes = () => (
         <Route path="/kontorer/:id">
           <Office />
         </Route>
-        <Route path="/fagartikler">
+        <Route exact path="/fagartikler">
           <Articles />
         </Route>
         <Route path="/fagartikler/:id">
