@@ -1,6 +1,6 @@
 /*This is temporarily mockup data to use until we set up a backend*/
 
-export const article = [
+export const articles = [
     {
         id: 9328508109,
         title: 'Artikkeltittel',
@@ -27,7 +27,7 @@ export const article = [
         ipsum dolor sit amet.`,
         date: '03.12.20',
         author: 'Forfatternavn',
-        category: 'Kategorinavn'
+        category: 'Kategorinavn1',
     },
     {
         id: 9328508110,
@@ -55,6 +55,6 @@ export const article = [
         ipsum dolor sit amet.`,
         date: '03.12.20',
         author: 'Forfatternavn 2',
-        category: 'Kategorinavn 2'
+        category: 'Kategorinavn2'
     }
 ]

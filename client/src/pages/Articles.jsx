@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Title from '../components/Title';
 import CategorySelector from '../components/CategorySelector';
 import ArticleCard from '../components/ArticleCard';
-import { articles } from '../data/articleData';
+import { articles} from '../data/articleData';
 
 const ArticleFunctions = styled.section`
     max-width: 90%;
@@ -37,9 +37,10 @@ const SearchFilter = styled.div`
     }
 `;
 
-const StyledArticles = styled.section`
+const StyledArticleSection = styled.section`
     display: flex;
-    flex-direction: column wrap;
+    flex-flow: column wrap;
+    padding: 50px 0px;
 `
 
 const Articles = () => {
@@ -86,7 +87,7 @@ const Articles = () => {
                     <button> Filter </button>
                 </SearchFilter>
             </ArticleFunctions>
-            <StyledArticles>
+            <StyledArticleSection>
                 {/* Use later
 
                 {loading && 'Loading ...'}
@@ -96,7 +97,7 @@ const Articles = () => {
                 */}
                 { articles && articles.map((article) => <ArticleCard key={article.id} {...article}/> )}
 
-            </StyledArticles>
+            </StyledArticleSection>
         </>
     );
 };
