@@ -24,6 +24,9 @@ const Routes = () => (
         <Route path="/fagartikler">
           <Articles />
         </Route>
+        <Route path="/fagartikler/:id">
+          <Article />
+        </Route>
       </Switch>
     </PageLayout>
   </Router>
