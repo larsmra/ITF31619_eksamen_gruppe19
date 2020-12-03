@@ -2,18 +2,22 @@ export const locations = [
   {
     id: 1,
     city: 'Fredrikstad',
+    view: true,
   },
   {
     id: 2,
     city: 'Sarpsborg',
+    view: true,
   },
   {
     id: 3,
     city: 'Moss',
+    view: true,
   },
   {
     id: 4,
     city: 'Halden',
+    view: true,
   },
 ];
 
