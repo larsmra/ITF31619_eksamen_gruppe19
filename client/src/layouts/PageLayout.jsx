@@ -9,7 +9,11 @@ const PageLayout = ({ children }) => (
       <Navbar />
     </header>
     <main>{children}</main>
-    <Footer orgnumber="Orgnr: 007 007 007" email="lg@lgror.no" phone="99 00 00 00"/>
+    <Footer
+      orgnumber="Orgnr: 007 007 007"
+      email="lg@lgror.no"
+      phone="99 00 00 00"
+    />
   </>
 );
 
