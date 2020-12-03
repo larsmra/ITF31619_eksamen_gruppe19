@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Title from '../components/Title';
 import CategorySelector from '../components/CategorySelector';
 import ArticleCard from '../components/ArticleCard';
+import {articles} from '../data/articleData';
 
 const ArticleFunctions = styled.section`
     max-width: 90%;
@@ -42,14 +43,13 @@ const StyledArticles = styled.section`
 `
 
 const Articles = () => {
+   /*Implement when we have a backend
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [articles, setArticles] = useState([]);
 
     const createMap = ({data}) => Object.entries(data);
-
-    /*Implement when we have a backend
 
     useEffect(() => {
     const fetchData = async () => {
@@ -60,11 +60,11 @@ const Articles = () => {
           responseType: 'json',
         });
         if (response.status === 200) {
-          setPosts(response.data);
+          setArticles(response.data);
           setError('');
         }
       } catch (error) {
-        setPosts([]);
+        setArticles([]);
         setError(error.message);
       } finally {
         setLoading(false);
@@ -86,9 +86,18 @@ const Articles = () => {
                 </SearchFilter>
             </ArticleFunctions>
             <StyledArticles>
+                {/* Use later
+
                 {loading && 'Loading ...'}
                 {error && <p>{error}</p>}
                 {articles && articles.length > 0 && <ArticleCard data={articles} /> }
+                
+                */}
+                { articles && articles.map((article) => (
+                    <ArticleCard data={article}/>
+                    
+                ))}
+
             </StyledArticles>
         </>
     );

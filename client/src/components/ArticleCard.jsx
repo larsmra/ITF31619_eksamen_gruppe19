@@ -1,5 +1,4 @@
 import React from 'react';
-import {articles} from '../data/articleData';
 import styled from 'styled-components';
 
 const StyledArticle = styled.article`
