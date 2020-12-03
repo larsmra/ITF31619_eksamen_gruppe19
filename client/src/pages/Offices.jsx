@@ -61,10 +61,6 @@ const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`
   }
 `;
 
-const StyledLabel = styled.label`
-  margin-left: 0.5em;
-`;
-
 const Offices = () => {
   const [availableLocations, setAvailableLocations] = useState(locations);
   const [filter, setFilter] = useState(false);
@@ -120,7 +116,7 @@ const Offices = () => {
               availableLocations.map((location) => (
                 <StyledListElement key={location.id}>
                   <StyledCheckbox
-                    name={location.city}
+                    id={location.city}
                     type="checkbox"
                     checked={location.view}
                     onChange={() => handleChange(location.id)}
