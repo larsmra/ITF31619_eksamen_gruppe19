@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Title from '../components/Title';
 import CategorySelector from '../components/CategorySelector';
 import ArticleCard from '../components/ArticleCard';
-import {articles} from '../data/articleData';
+import { articles } from '../data/articleData';
 
 const ArticleFunctions = styled.section`
     max-width: 90%;
@@ -94,7 +94,9 @@ const Articles = () => {
                 
                 */}
                 { articles && articles.map((article) => (
-                    <ArticleCard data={article}/>
+                    <ArticleCard
+                        key={article.id}
+                        data={article}/>
                     
                 ))}
 

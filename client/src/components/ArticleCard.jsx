@@ -31,12 +31,11 @@ const ArticleCard = ({data}) => {
     const MAX_LENGTH = 150;
     
     return(
-    
         <StyledArticle href={`/artikler/${article[0]}`}>
           {data.map((article) => (
             <>
                 <StyledDiv/>
-                <StyledHeader key={article[0]}>
+                <StyledHeader>
                     <h2>{article[1].title}</h2>
                     <h6>{article[1].category}</h6>
                 </StyledHeader>
@@ -49,10 +48,8 @@ const ArticleCard = ({data}) => {
                 }  
             </>
           ))}
-        </StyledArticle>
-        
+        </StyledArticle> 
       );
 };
-    
     
 export default ArticleCard;
