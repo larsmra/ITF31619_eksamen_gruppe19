@@ -43,6 +43,7 @@ const StyledArticles = styled.section`
 `
 
 const Articles = () => {
+
    /*Implement when we have a backend
 
     const [loading, setLoading] = useState(true);
@@ -93,12 +94,7 @@ const Articles = () => {
                 {articles && articles.length > 0 && <ArticleCard data={articles} /> }
                 
                 */}
-                { articles && articles.map((article) => (
-                    <ArticleCard
-                        key={article.id}
-                        data={article}/>
-                    
-                ))}
+                { articles && articles.map((article) => <ArticleCard key={article.id} {...article}/> )}
 
             </StyledArticles>
         </>

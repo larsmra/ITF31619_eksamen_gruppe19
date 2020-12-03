@@ -27,28 +27,25 @@ const StyledIngress = styled.p`
     grid-column-end: 4;
 `
 
-const ArticleCard = ({data}) => {
+const ArticleCard = ({id, title, category, ingress,}) => {
     const MAX_LENGTH = 150;
     
     return(
-        <StyledArticle href={`/artikler/${article[0]}`}>
-          {data.map((article) => (
-            <>
+        <StyledArticle href={`/artikler/${id}`}>
+        
                 <StyledDiv/>
                 <StyledHeader>
-                    <h2>{article[1].title}</h2>
-                    <h6>{article[1].category}</h6>
+                    <h2>{title}</h2>
+                    <h6>{category}</h6>
                 </StyledHeader>
                 {
-                    article[1].ingress.length > MAX_LENGTH ? 
+                    ingress.length > MAX_LENGTH ? 
                     (
-                        <StyledIngress> {`${article[1].ingress.substring(0,MAX_LENGTH)}...`} </StyledIngress>
+                        <StyledIngress> {`${ingress.substring(0,MAX_LENGTH)}...`} </StyledIngress>
                     ):
-                    <StyledIngress> {article[1].ingress} </StyledIngress>
+                    <StyledIngress> {ingress} </StyledIngress>
                 }  
-            </>
-          ))}
-        </StyledArticle> 
+        </StyledArticle>
       );
 };
     
