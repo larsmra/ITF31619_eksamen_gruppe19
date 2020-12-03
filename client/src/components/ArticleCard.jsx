@@ -1,4 +1,5 @@
 import React from 'react';
+import {articles} from '../data/articleData';
 import styled from 'styled-components';
 
 const StyledArticle = styled.article`
@@ -28,18 +29,26 @@ const StyledIngress = styled.p`
 `
 
 const ArticleCard = ({data}) => {
-
+    const MAX_LENGTH = 150;
+    
     return(
     
         <StyledArticle href={`/artikler/${item[0]}`}>
-          {data.map((item) => (
+          {data.map((article) => (
             <>
                 <StyledDiv/>
-                <StyledHeader key={item[0]}>
-                    <h2>{item[1].title}</h2>
-                    <h6>{item[6].category}</h6>
+                <StyledHeader key={article[0].id}>
+                    <h2>{article[1].title}</h2>
+                    <h6>{article[6].category}</h6>
                 </StyledHeader>
-                <StyledIngress>{item[2].ingress}</StyledIngress>
+                {
+                    article[2].ingress.length > MAX_LENGTH ? (
+                    <StyledIngress> {`${article[2].ingress.substring(0, MAX_LENGTH)}...`}</StyledIngress>  
+                    )
+                }
+
+                
+                
             </>
           ))}
         </StyledArticle>
