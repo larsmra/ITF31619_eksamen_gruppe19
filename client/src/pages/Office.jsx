@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import Title from '../components/Title';
 import { offices } from '../data/data';
 
 const GridSection = styled.section`
@@ -15,6 +16,7 @@ const Office = () => {
 
   return (
     <>
+    <Title title="Våre kontorer"/>
       <section>
         <h2>Velkommen til {office.name}</h2>
         <p>{office.description}</p>
