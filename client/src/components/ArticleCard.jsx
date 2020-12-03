@@ -33,22 +33,21 @@ const ArticleCard = ({data}) => {
     
     return(
     
-        <StyledArticle href={`/artikler/${item[0]}`}>
+        <StyledArticle href={`/artikler/${article[0]}`}>
           {data.map((article) => (
             <>
                 <StyledDiv/>
-                <StyledHeader key={article[0].id}>
+                <StyledHeader key={article[0]}>
                     <h2>{article[1].title}</h2>
-                    <h6>{article[6].category}</h6>
+                    <h6>{article[1].category}</h6>
                 </StyledHeader>
                 {
-                    article[2].ingress.length > MAX_LENGTH ? (
-                    <StyledIngress> {`${article[2].ingress.substring(0, MAX_LENGTH)}...`}</StyledIngress>  
-                    )
-                }
-
-                
-                
+                    article[1].ingress.length > MAX_LENGTH ? 
+                    (
+                        <StyledIngress> {`${article[1].ingress.substring(0,MAX_LENGTH)}...`} </StyledIngress>
+                    ):
+                    <StyledIngress> {article[1].ingress} </StyledIngress>
+                }  
             </>
           ))}
         </StyledArticle>
