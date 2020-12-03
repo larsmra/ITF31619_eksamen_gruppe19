@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Title from '../components/Title';
 import { locations, offices } from '../data/data';
 
 import OfficeContainer from '../components/OfficeContainer';
@@ -78,6 +79,8 @@ const Offices = () => {
   };
 
   return (
+  <>
+    <Title title="Våre kontorer"/>
     <section>
       <StyledButtonSection>
         <StyledButton
@@ -152,6 +155,7 @@ const Offices = () => {
             );
           })}
     </section>
+    </>
   );
 };
 
