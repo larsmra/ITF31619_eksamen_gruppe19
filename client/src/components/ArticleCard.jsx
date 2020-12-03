@@ -12,6 +12,7 @@ const StyledArticle = styled.article`
 
     &:hover{
         border: 0.1rem solid lightgrey;
+        cursor: pointer;
     }
 
 `
