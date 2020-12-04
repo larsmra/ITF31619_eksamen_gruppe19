@@ -7,6 +7,7 @@ import Offices from '../pages/Offices';
 import Office from '../pages/Office';
 import Articles from '../pages/Articles';
 import Article from '../pages/Article';
+import CreateArticle from '../pages/CreateArticle';
 
 const Routes = () => (
   <Router>
@@ -26,6 +27,9 @@ const Routes = () => (
         </Route>
         <Route path="/fagartikler/:id">
           <Article />
+        </Route>
+        <Route path="/fagartikler/">
+          <CreateArticle />
         </Route>
       </Switch>
     </PageLayout>

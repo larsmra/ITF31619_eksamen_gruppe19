@@ -80,7 +80,7 @@ const Articles = () => {
         <>
             <Title title="Fagartikler"/>
             <ArticleFunctions>
-                <Create> Ny Artikkel </Create>
+                <CreateArticle> Ny Artikkel </CreateArticle>
                 <SearchFilter>
                     <button> Search </button>
                     {/* Change later to use the CategorySelector component for filter, may change out button */}
