@@ -8,7 +8,7 @@ import Office from '../pages/Office';
 import Articles from '../pages/Articles';
 import Article from '../pages/Article';
 import CreateArticle from '../pages/CreateArticle';
-// import EditArticle from '../pages/EditArticle';
+import EditArticle from '../pages/EditArticle';
 
 const Routes = () => (
   <Router>
@@ -28,11 +28,15 @@ const Routes = () => (
         </Route>
         <Route path="/fagartikler/ny">
           <CreateArticle />
-        </Route>
+        </Route> 
         <Route exact path="/fagartikler/:id">
           <Article />
         </Route>
-        <Route path="/fagartikler/:id/rediger">{/* <EditArticle /> */}</Route>
+        <Route path="/fagartikler/:id/rediger">
+          <EditArticle />
+        </Route>
+       
+        
       </Switch>
     </PageLayout>
   </Router>
