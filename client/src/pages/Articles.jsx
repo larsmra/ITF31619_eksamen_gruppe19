@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import Title from '../components/Title';
 import CategorySelector from '../components/CategorySelector';
 import ArticleCard from '../components/ArticleCard';
+import CreateArticle from './CreateArticle';
 import { articles} from '../data/articleData';
 
 const ArticleFunctions = styled.section`
@@ -45,6 +47,12 @@ const StyledArticleSection = styled.section`
 
 const Articles = () => {
 
+    const history = useHistory();
+
+    const goToPage = () => {
+        history.push(`/fagartikler/ny`);
+    };
+
    /*Implement when we have a backend
 
     const [loading, setLoading] = useState(true);
@@ -80,7 +88,7 @@ const Articles = () => {
         <>
             <Title title="Fagartikler"/>
             <ArticleFunctions>
-                <CreateArticle> Ny Artikkel </CreateArticle>
+                <CreateArticle onClick={goToPage}> Ny Artikkel </CreateArticle>
                 <SearchFilter>
                     <button> Search </button>
                     {/* Change later to use the CategorySelector component for filter, may change out button */}
