@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const AuthorSelector = () => {
+const AuthorSelector = ( {handleAuthorChange}) => {
     const [authors] = useState([
         {name: 'Lars Larsen', value: 1},
         {name: 'Gunn Gundersen', value: 2},
@@ -8,9 +8,10 @@ const AuthorSelector = () => {
     ]);
 
     return (
-        <select id='author_select' onChange={() => {}}>
+        <select id='author_select' onChange={() => {handleAuthorChange}}>
+            <option value="" disabled selected hidden>Chose an author</option>
             {authors.map(author => (
-                <option key={author.value} value={author.value}>
+                <option key={author.value} value={author.name}>
                     {author.name}
                 </option>
             ))}

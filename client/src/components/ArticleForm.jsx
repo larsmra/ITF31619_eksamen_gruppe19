@@ -18,8 +18,13 @@ const ArticleForm = () => {
   const [ingress, setIngress] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
-  const [author, setAuthor] = useState('');
+  const [selectedAuthor, setSelectedAuthor] = useState('');
   const [modal, setModal] = useState(false);
+
+  const handleAuthorChange = ({target}) => {
+      const {value} = target;
+      setSelectedAuthor(value);
+  }
 
   return (
     <StyledForm>
@@ -54,7 +59,7 @@ const ArticleForm = () => {
         clickHandler={() => setModal(!modal)}
       />
       <label htmlFor="article_author"> Forfatter </label>
-      <AuthorSelector />
+      <AuthorSelector handleAuthorChange={handleAuthorChange} />
     </StyledForm>
   );
 };
