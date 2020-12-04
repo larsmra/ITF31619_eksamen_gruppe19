@@ -14,7 +14,7 @@ const ArticleFunctions = styled.section`
     justify-content: space-between;
 `;
 
-const Create = styled.button`
+const CreateArticlePage = styled.button`
         padding: 20px 30px;
         background-color: #479EB9;
         border-style: none;
@@ -49,7 +49,7 @@ const Articles = () => {
 
     const history = useHistory();
 
-    const goToPage = () => {
+    const goToCreateArticlePage = () => {
         history.push(`/fagartikler/ny`);
     };
 
@@ -88,7 +88,7 @@ const Articles = () => {
         <>
             <Title title="Fagartikler"/>
             <ArticleFunctions>
-                <CreateArticle onClick={goToPage}> Ny Artikkel </CreateArticle>
+                <CreateArticlePage onClick={goToCreateArticlePage}> Ny Artikkel </CreateArticlePage>
                 <SearchFilter>
                     <button> Search </button>
                     {/* Change later to use the CategorySelector component for filter, may change out button */}

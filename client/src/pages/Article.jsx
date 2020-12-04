@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Title from '../components/Title';
 import { articles } from '../data/articleData';
@@ -45,6 +45,12 @@ const Update = styled.button`
 const Article = () => {
     const { id } = useParams();
     const article = articles.filter((a) => a.id === parseInt(id))[0];
+
+    const history = useHistory();
+
+    const goToEditArticlePage = () => {
+        history.push(`/fagartikler/${id}/rediger`);
+    };
 
     /*
     const [loading, setLoading] = useState(true);
@@ -104,7 +110,7 @@ const Article = () => {
 
             <ArticleAdminFunctions>
                 <Delete> Slett </Delete>
-                <Update> Rediger </Update>
+                <Update onClick={goToEditArticlePage}> Rediger </Update>
             </ArticleAdminFunctions>
        </StyledSection>
         </>
