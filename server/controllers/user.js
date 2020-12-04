@@ -1,0 +1,37 @@
+import { userService } from '../services/index.js';
+import catchAsyncError from '../middleware/catchAsync.js';
+import ErrorHandler from '../utils/errorHandler.js';
+import { sendToken } from '../utils/jwtToken.js';
+
+export const create = catchAsyncError(async (req, res, next) => {
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    return next(new ErrorHandler('Fyll ut alle feltene', 400));
+  }
+  const exist = await userService.getUserByEmail({ email });
+  if (exist) {
+    return next(new ErrorHandler('Brukeren finnes allerede', 400));
+  }
+  const user = await userService.createUser({ name, email, password });
+  sendToken(user, res);
+});
+
+export const login = catchAsyncError(async (req, res, next) => {
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    return next(new ErrorHandler('Fyll ut alle feltene', 400));
+  }
+  const user = await userService.getUserByEmail({ email });
+  if (!user) {
+    return next(
+      new ErrorHandler('Informasjonen du skrev inn var ikke riktig', 400)
+    );
+  }
+  const isCorrectPassword = await user.comparePassword(password);
+  if (!isCorrectPassword) {
+    return next(
+      new ErrorHandler('Informasjonen du skrev inn var ikke riktig', 400)
+    );
+  }
+  sendToken(user, res);
+});
