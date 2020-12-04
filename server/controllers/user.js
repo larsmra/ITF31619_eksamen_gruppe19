@@ -35,3 +35,11 @@ export const login = catchAsyncError(async (req, res, next) => {
   }
   sendToken(user, res);
 });
+
+export const logout = catchAsyncError(async (req, res, next) => {
+  res.cookie('token', 'none', {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+  res.status(200).json({ success: true, data: 'Logget ut' });
+});
