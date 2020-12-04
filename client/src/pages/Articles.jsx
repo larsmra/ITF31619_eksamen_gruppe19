@@ -1,59 +1,56 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Title from '../components/Title';
 import CategorySelector from '../components/CategorySelector';
 import ArticleCard from '../components/ArticleCard';
 import CreateArticle from './CreateArticle';
-import { articles} from '../data/articleData';
+import { articles } from '../data/articleData';
 
 const ArticleFunctions = styled.section`
-    max-width: 90%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
+  max-width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const CreateArticlePage = styled.button`
-        padding: 20px 30px;
-        background-color: #479EB9;
-        border-style: none;
-        color: white;
-        &:hover{
-            background-color: #236B85;
-        }
+  padding: 20px 30px;
+  background-color: #479eb9;
+  border-style: none;
+  color: white;
+  &:hover {
+    background-color: #236b85;
+  }
 `;
 
 const SearchFilter = styled.div`
-
-    & > button{
-        margin: 5px;
-        padding: 20px 30px;
-        background-color: lightgrey;
-        border-style: none;
-        color: white;
-        &:hover{
-            background-color: grey;
-        }
-    
+  & > button {
+    margin: 5px;
+    padding: 20px 30px;
+    background-color: lightgrey;
+    border-style: none;
+    color: white;
+    &:hover {
+      background-color: grey;
     }
+  }
 `;
 
 const StyledArticleSection = styled.section`
-    display: flex;
-    flex-flow: column wrap;
-    padding: 50px 0px;
-`
+  display: flex;
+  flex-flow: column wrap;
+  padding: 50px 0px;
+`;
 
 const Articles = () => {
+  const history = useHistory();
 
-    const history = useHistory();
+  const goToCreateArticlePage = () => {
+    history.push(`/fagartikler/ny`);
+  };
 
-    const goToCreateArticlePage = () => {
-        history.push(`/fagartikler/ny`);
-    };
-
-   /*Implement when we have a backend
+  /* Implement when we have a backend
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -84,30 +81,35 @@ const Articles = () => {
   }, []);
   */
 
-    return(
-        <>
-            <Title title="Fagartikler"/>
-            <ArticleFunctions>
-                <CreateArticlePage onClick={goToCreateArticlePage}> Ny Artikkel </CreateArticlePage>
-                <SearchFilter>
-                    <button> Search </button>
-                    {/* Change later to use the CategorySelector component for filter, may change out button */}
-                    <button> Filter </button>
-                </SearchFilter>
-            </ArticleFunctions>
-            <StyledArticleSection>
-                {/* Use later
+  return (
+    <>
+      <Title title="Fagartikler" />
+      <ArticleFunctions>
+        <CreateArticlePage onClick={goToCreateArticlePage}>
+          {' '}
+          Ny Artikkel{' '}
+        </CreateArticlePage>
+        <SearchFilter>
+          <button> Search </button>
+          {/* Change later to use the CategorySelector component for filter, may change out button */}
+          <button> Filter </button>
+        </SearchFilter>
+      </ArticleFunctions>
+      <StyledArticleSection>
+        {/* Use later
 
                 {loading && 'Loading ...'}
                 {error && <p>{error}</p>}
                 {articles && articles.length > 0 && <ArticleCard data={articles} /> }
                 
                 */}
-                { articles && articles.map((article) => <ArticleCard key={article.id} {...article}/> )}
-
-            </StyledArticleSection>
-        </>
-    );
+        {articles &&
+          articles.map((article) => (
+            <ArticleCard key={article.id} {...article} />
+          ))}
+      </StyledArticleSection>
+    </>
+  );
 };
 
 export default Articles;
