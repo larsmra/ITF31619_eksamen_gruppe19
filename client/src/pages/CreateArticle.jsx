@@ -16,8 +16,7 @@ const CreateArticle = () =>{
             <Title title="Ny artikkel" />
 
             <section>
-                <ArticleForm/>
-                <Create/>
+               
             </section>
         </>
     );
