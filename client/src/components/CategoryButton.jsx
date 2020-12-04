@@ -1,9 +1,8 @@
 import React from 'react';
 
-const CategoryButton = ({name, clickHandler}) =(
-
-    <button id='new' type='button' onclick={clickHandler}>
-        {name}
-    </button>
-)
+const CategoryButton = ({ name, clickHandler }) => (
+  <button id="new" type="button" onClick={clickHandler}>
+    {name}
+  </button>
+);
 export default CategoryButton;
