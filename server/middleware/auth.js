@@ -14,7 +14,7 @@ export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
   const user = await userService.getUserById(decodedData.id);
 
   if (!user) {
-    next(new ErrorHandler('Brukeren din eksisterer ikke', 404));
+    return next(new ErrorHandler('Brukeren din eksisterer ikke', 404));
   }
   req.user = user;
   next();
