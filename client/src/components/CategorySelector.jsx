@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const CategorySelector = ( {handleAuthorChange}) => {
+const CategorySelector = ( {handleCategoryChange}) => {
     /*Temporarily dummy information to fill the select*/
     const [categories] = useState([
         {name: 'Bad', value: 1},

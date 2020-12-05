@@ -11,16 +11,28 @@ const SaveArticle = styled.button`
         background-color: lightgrey;
 `
 
-const EditArticle = () =>{
+const EditArticle = ({userInput, setUserInput, updateArticle}) =>{
 
     const { id } = useParams();
     const article = articles.filter((a) => a.id === parseInt(id))[0];
+
+    const goToArticlePage = () => {
+        history.push(`/fagartikler/${id}`);
+    };
+
+    const editArticle = () => {
+        updateArticle();
+        goToArticlePage();
+    };
 
     return(
         <>
         <Title title={article.title}/>
         <section>
-            
+        <ArticleForm 
+               userInput={userInput}
+               setUserInput={setUserInput}/>
+        <SaveArticle onClick={editArticle}/>
         </section>
         </>
     );

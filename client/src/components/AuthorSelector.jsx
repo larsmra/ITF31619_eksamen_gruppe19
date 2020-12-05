@@ -8,7 +8,7 @@ const AuthorSelector = ( {handleAuthorChange}) => {
     ]);
 
     return (
-        <select id='author_select' onChange={() => {handleAuthorChange}}>
+        <select id='author_select' name="author" onChange={() => {handleAuthorChange}}>
             <option value="" disabled selected hidden>Chose an author</option>
             {authors.map(author => (
                 <option key={author.value} value={author.name}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import styled from 'styled-components';
 import AuthorSelector from './AuthorSelector';
 import CategorySelector from './CategorySelector';
@@ -36,18 +36,13 @@ const ArticleForm = ({userInput, setUserInput}) => {
     setUserInput({ [name]: value });
   };
 
-  const handleAuthorChange = ({target}) => {
-      const {value} = target;
-      setSelectedAuthor(value);
-      console.log(selectedAuthor);
-  }
-
   return (
     <StyledForm>
       <label htmlFor="article_title"> Tittel </label>
       <input
         type="text"
         id="article_title"
+        name="title"
         placeholder="Skriv inn tittel"
         value={userInput.title}
         onChange={updateArticleValue}
@@ -56,6 +51,7 @@ const ArticleForm = ({userInput, setUserInput}) => {
       <input
         type="text"
         id="article_ingress"
+        name="ingress"
         placeholder="Skriv et kort innledende avsnitt"
         value={userInput.ingress}
         onChange={updateArticleValue}
@@ -64,13 +60,14 @@ const ArticleForm = ({userInput, setUserInput}) => {
       <textarea
         type="text"
         id="article_content"
+        name="content"
         placeholder="Skriv innhold"
         value={userInput.content}
         onChange={updateArticleValue}
       />
       <label htmlFor="article_category"> Kategori </label>
       <div>
-            <CategorySelector handleChange={(e) => setCategory(e.target.value)} />
+            <CategorySelector handleCategoryChange={updateArticleValue} />
             <CategoryButton
             name="New category"
             clickHandler={() => setModal(!modal)}
@@ -78,7 +75,7 @@ const ArticleForm = ({userInput, setUserInput}) => {
       </div>
      
       <label htmlFor="article_author"> Forfatter </label>
-      <AuthorSelector handleAuthorChange={handleAuthorChange} />
+      <AuthorSelector handleAuthorChange={updateArticleValue} />
     </StyledForm>
   );
 };

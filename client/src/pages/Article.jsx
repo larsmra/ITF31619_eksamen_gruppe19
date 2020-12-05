@@ -42,7 +42,7 @@ const Update = styled.button`
 
 `
 
-const Article = () => {
+const Article = ({userInput, setUserInput, updateArticle, deleteArticle}) => {
     const { id } = useParams();
     const article = articles.filter((a) => a.id === parseInt(id))[0];
 
@@ -109,8 +109,14 @@ const Article = () => {
             <h5> {article.category} </h5>
 
             <ArticleAdminFunctions>
-                <Delete> Slett </Delete>
-                <Update onClick={goToEditArticlePage}> Rediger </Update>
+                <Delete 
+                deleteArticle={deleteArticle}
+                onclick={goToEditArticlePage}> Slett </Delete>
+                <Update
+                userInput={userInput}
+                setUserInput={setUserInput}
+                updateArticle={updateArticle}
+                onClick={goToEditArticlePage}> Rediger </Update>
             </ArticleAdminFunctions>
        </StyledSection>
         </>

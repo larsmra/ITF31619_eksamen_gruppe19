@@ -10,25 +10,27 @@ const Create = styled.button`
 
 `
 
-const CreateArticle = ({addArticle, userInput, setUserInput, updateArticleId, }) =>{
+const CreateArticle = ({addArticle, updateArticleId, userInput, setUserInput }) =>{
 
-    const goToArticlePage = () => {
+    const goToArticlesPage = () => {
         history.push(`/fagartikler`);
-      };
-      
+    };
+
     const createArticle = () => {
         updateArticleId();
         addArticle();
-        goToArticlePage();
-      };
+        goToArticlesPage();
+    };
 
     return(
         <>
             <Title title="Ny artikkel" />
 
             <section>
-               <ArticleForm />
-               <Create/>
+               <ArticleForm 
+               userInput={userInput}
+               setUserInput={setUserInput}/>
+               <Create onClick={createArticle}/>
             </section>
         </>
     );
