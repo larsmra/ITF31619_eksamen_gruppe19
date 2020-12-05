@@ -62,10 +62,6 @@ const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`
   }
 `;
 
-const StyledLabel = styled.label`
-  margin-left: 0.5em;
-`;
-
 const Offices = () => {
   const [availableLocations, setAvailableLocations] = useState(locations);
   const [filter, setFilter] = useState(false);
@@ -79,82 +75,82 @@ const Offices = () => {
   };
 
   return (
-  <>
-    <Title title="Våre kontorer"/>
-    <section>
-      <StyledButtonSection>
-        <StyledButton
-          type="button"
-          pressed={filter}
-          onClick={() => setFilter(!filter)}
-        >
-          Filter
-        </StyledButton>
-        <StyledIconButton
-          type="button"
-          pressed={listView}
-          onClick={() => setListView(true)}
-        >
-          <svg width="2em" height="2em">
-            <rect x="0.1em" y="0.1em" width="1.8em" height="0.5em" />
-            <rect x="0.1em" y="0.75em" width="1.8em" height="0.5em" />
-            <rect x="0.1em" y="1.4em" width="1.8em" height="0.5em" />
-            List view
-          </svg>
-        </StyledIconButton>
-        <StyledIconButton
-          type="button"
-          pressed={!listView}
-          onClick={() => setListView(false)}
-        >
-          <svg width="2em" height="2em">
-            <rect x="0.1em" y="0.1em" width="0.8em" height="0.8em" />
-            <rect x="1.1em" y="0.1em" width="0.8em" height="0.8em" />
-            <rect x="0.1em" y="1.1em" width="0.8em" height="0.8em" />
-            <rect x="1.1em" y="1.1em" width="0.8em" height="0.8em" />
-            Card view
-          </svg>
-        </StyledIconButton>
-      </StyledButtonSection>
-      {filter && (
-        <StyledFilterSection>
-          <StyledList>
-            {availableLocations &&
-              availableLocations.map((location) => (
-                <StyledListElement key={location.id}>
-                  <StyledCheckbox
-                    name={location.city}
-                    type="checkbox"
-                    checked={location.view}
-                    onChange={() => handleChange(location.id)}
+    <>
+      <Title title="Våre kontorer"/>
+      <section>
+        <StyledButtonSection>
+          <StyledButton
+            type="button"
+            pressed={filter}
+            onClick={() => setFilter(!filter)}
+          >
+            Filter
+          </StyledButton>
+          <StyledIconButton
+            type="button"
+            pressed={listView}
+            onClick={() => setListView(true)}
+          >
+            <svg width="2em" height="2em">
+              <rect x="0.1em" y="0.1em" width="1.8em" height="0.5em" />
+              <rect x="0.1em" y="0.75em" width="1.8em" height="0.5em" />
+              <rect x="0.1em" y="1.4em" width="1.8em" height="0.5em" />
+              List view
+            </svg>
+          </StyledIconButton>
+          <StyledIconButton
+            type="button"
+            pressed={!listView}
+            onClick={() => setListView(false)}
+          >
+            <svg width="2em" height="2em">
+              <rect x="0.1em" y="0.1em" width="0.8em" height="0.8em" />
+              <rect x="1.1em" y="0.1em" width="0.8em" height="0.8em" />
+              <rect x="0.1em" y="1.1em" width="0.8em" height="0.8em" />
+              <rect x="1.1em" y="1.1em" width="0.8em" height="0.8em" />
+              Card view
+            </svg>
+          </StyledIconButton>
+        </StyledButtonSection>
+        {filter && (
+          <StyledFilterSection>
+            <StyledList>
+              {availableLocations &&
+                availableLocations.map((location) => (
+                  <StyledListElement key={location.id}>
+                    <StyledCheckbox
+                      id={location.city}
+                      type="checkbox"
+                      checked={location.view}
+                      onChange={() => handleChange(location.id)}
+                    />
+                    <label htmlFor={location.city}>{location.city}</label>
+                  </StyledListElement>
+                ))}
+            </StyledList>
+          </StyledFilterSection>
+        )}
+        {locations &&
+          locations
+            .filter((location) => location.view === true)
+            .map((location) => {
+              const locationOffices = offices.filter(
+                (office) => office.location === location.id
+              );
+              return (
+                <section key={location.id}>
+                  <header>
+                    <h2>{`${location.city} (${locationOffices.length} kontorer)`}</h2>
+                  </header>
+                  <OfficeContainer
+                    place={location.id}
+                    offices={locationOffices}
+                    isList={listView}
                   />
-                  <label htmlFor={location.city}>{location.city}</label>
-                </StyledListElement>
-              ))}
-          </StyledList>
-        </StyledFilterSection>
-      )}
-      {locations &&
-        locations
-          .filter((location) => location.view === true)
-          .map((location) => {
-            const locationOffices = offices.filter(
-              (office) => office.location === location.id
-            );
-            return (
-              <section key={location.id}>
-                <header>
-                  <h2>{`${location.city} (${locationOffices.length} kontorer)`}</h2>
-                </header>
-                <OfficeContainer
-                  place={location.id}
-                  offices={locationOffices}
-                  isList={listView}
-                />
-              </section>
-            );
-          })}
-    </section>
+                </section>
+              );
+            })}
+      </section>
     </>
   );
 };
