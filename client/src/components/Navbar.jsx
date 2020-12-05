@@ -10,7 +10,7 @@ const StyledNav = styled.nav`
 
   & > span {
     align-self: center;
-    padding: 10px 30px;
+    padding: 0 2em;
   }
 `;
 
@@ -18,32 +18,42 @@ const NavMenu = styled.ul`
   display: flex;
   justify-content: flex-end;
   list-style: none;
+  margin: 0;
+  padding: 0;
 `;
 
-const NavMenuItem = styled.li`
-  padding: 10px 30px;
+const NavMenuItem = styled.li.attrs(({ special }) => ({
+  special: special || false,
+}))`
+  margin: 0;
+  ${({ special }) => special && 'background-color: #479eb9;'}
+
+  /*
   &:first-child {
     padding-left: 0;
   }
+  */
 
   & > a {
     display: block;
+    color: #000000;
+    padding: 0 2em;
     font-size: 16px;
+    line-height: 3em;
     text-decoration: none;
+    ${({ special }) => special && 'color: #ffffff;'}
 
-    &.active {
-      color: #479eb9;
+    &.active, &:hover {
+      color: ${({ special }) => (special ? '#ffffff' : '#479eb9')};
+      ${({ special }) => special && 'background-color: #236b85;'}
     }
   }
 `;
 
-
-const Navbar = () => {
-
-  return(
+const Navbar = () => (
   <StyledNav>
     <span> FG </span>
-    <NavMenu >
+    <NavMenu>
       <NavMenuItem>
         <NavLink exact to="/" activeClassName="active">
           Home
@@ -64,9 +74,13 @@ const Navbar = () => {
           Kontakt
         </NavLink>
       </NavMenuItem>
+      <NavMenuItem special>
+        <NavLink exact to="/login" activeClassName="active">
+          Logg inn
+        </NavLink>
+      </NavMenuItem>
     </NavMenu>
   </StyledNav>
-  )
-};
+);
 
 export default Navbar;
