@@ -7,16 +7,28 @@ const Create = styled.button`
         margin: 5px;
         padding: 20px 30px;
         background-color: lightgrey;
+
 `
 
-const CreateArticle = () =>{
+const CreateArticle = ({addArticle, userInput, setUserInput, updateArticleId, }) =>{
+
+    const goToArticlePage = () => {
+        history.push(`/fagartikler`);
+      };
+      
+    const createArticle = () => {
+        updateArticleId();
+        addArticle();
+        goToArticlePage();
+      };
 
     return(
         <>
             <Title title="Ny artikkel" />
 
             <section>
-               <ArticleForm/>
+               <ArticleForm />
+               <Create/>
             </section>
         </>
     );

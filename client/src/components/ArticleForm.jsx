@@ -5,25 +5,41 @@ import CategorySelector from './CategorySelector';
 import CategoryButton from './CategoryButton';
 
 const StyledForm = styled.form`
-  & > label {
-    font-size: 14px;
-  }
+    display: flex;
+    flex-flow: column nowrap;
 
-  & > input {
-  }
+    & > label {
+    font-size: 14px;
+    }
+
+    & > input {
+    }
+
+    & > div{
+        display: flex;
+        justify-content: space-between;
+    }
 `;
 
-const ArticleForm = () => {
+const ArticleForm = ({userInput, setUserInput}) => {
+  /*
   const [title, setTitle] = useState('');
   const [ingress, setIngress] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
   const [selectedAuthor, setSelectedAuthor] = useState('');
+  */
   const [modal, setModal] = useState(false);
+
+  const updateArticleValue = (evt) => {
+    const { name, value } = evt.target;
+    setUserInput({ [name]: value });
+  };
 
   const handleAuthorChange = ({target}) => {
       const {value} = target;
       setSelectedAuthor(value);
+      console.log(selectedAuthor);
   }
 
   return (
@@ -33,31 +49,34 @@ const ArticleForm = () => {
         type="text"
         id="article_title"
         placeholder="Skriv inn tittel"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={userInput.title}
+        onChange={updateArticleValue}
       />
       <label htmlFor="article_ingress"> Ingress </label>
       <input
         type="text"
         id="article_ingress"
         placeholder="Skriv et kort innledende avsnitt"
-        value={ingress}
-        onChange={(e) => setIngress(e.target.value)}
+        value={userInput.ingress}
+        onChange={updateArticleValue}
       />
       <label htmlFor="article_content"> Innhold </label>
       <textarea
         type="text"
         id="article_content"
         placeholder="Skriv innhold"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
+        value={userInput.content}
+        onChange={updateArticleValue}
       />
       <label htmlFor="article_category"> Kategori </label>
-      <CategorySelector handleChange={(e) => setCategory(e.target.value)} />
-      <CategoryButton
-        name="New category"
-        clickHandler={() => setModal(!modal)}
-      />
+      <div>
+            <CategorySelector handleChange={(e) => setCategory(e.target.value)} />
+            <CategoryButton
+            name="New category"
+            clickHandler={() => setModal(!modal)}
+             />
+      </div>
+     
       <label htmlFor="article_author"> Forfatter </label>
       <AuthorSelector handleAuthorChange={handleAuthorChange} />
     </StyledForm>
