@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
+import { create } from '../utils/categoryService';
 
     const Modal = styled.section`
         & > form {
@@ -32,22 +33,26 @@ const CategoryModal = ({ setModal }) => {
         }));
     };
 
-    const submitForm = () => {
-      const postData = async () => {
-        try {
-          const response = await axios.post(`http://localhost:3000/`, {
-            values,
-          });
+    const submitForm = () =>{
+      const categoryData = async () => {
+        try{
+          const response = await create(values);
           if (response.status === 200) {
             setError('');
-            history.push('/posts');
+            setModal(false);
           }
         } catch (error) {
           setError(error.message);
         }
       };
-      postData();
+      categoryData();
     };
+
+    useEffect(() => {
+      if (submitable) {
+        submitForm();
+      }
+    }, [submitable]);
 
 
   return (
