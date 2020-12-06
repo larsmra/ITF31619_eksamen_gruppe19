@@ -14,10 +14,8 @@ const getCsrfToken = async () => {
 export const getUser = async () => {
   try {
     const user = await http.get(`${API_PATH}/me`);
-    console.log(user);
     return user;
   } catch (err) {
-    console.log(err);
     return err.response;
   }
 };

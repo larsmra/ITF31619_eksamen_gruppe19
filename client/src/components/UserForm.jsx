@@ -12,31 +12,30 @@ const ButtonSection = styled.section`
   justify-content: flex-end;
 `;
 
-const UserForm = ({
-  buttonText,
-  formData,
-  handleNameChange,
-  handleEmailChange,
-  handlePasswordChange,
-  registration,
-  onSubmit,
-}) => (
+const InputWrapper = styled.div`
+  display: flex;
+  flex-flow: column;
+`;
+
+const TYPE_EMAIL = 'email';
+const TYPE_PASSWORD = 'password';
+const TYPE_TEXT = 'text';
+
+const UserForm = ({ buttonText, formData, setFormData, labels, onSubmit }) => (
   <StyledForm onSubmit={onSubmit}>
-    {registration && (
-      <>
-        <label htmlFor="name">Name</label>
-        <input type="name" id="name" name="name" onChange={handleNameChange} />
-      </>
-    )}
-    <label htmlFor="email">Epost</label>
-    <input type="text" id="email" name="email" onChange={handleEmailChange} />
-    <label htmlFor="password">Passord</label>
-    <input
-      type="password"
-      id="password"
-      name="password"
-      onChange={handlePasswordChange}
-    />
+    {Object.keys(formData).map((key, index) => (
+      <InputWrapper key={index}>
+        <label htmlFor={key}>{labels[index] ? labels[index] : key}</label>
+        <input
+          id={key}
+          type={key === TYPE_EMAIL || key === TYPE_PASSWORD ? key : TYPE_TEXT}
+          value={formData[key]}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, [key]: e.target.value }))
+          }
+        />
+      </InputWrapper>
+    ))}
     <ButtonSection>
       <button type="submit">{buttonText}</button>
     </ButtonSection>

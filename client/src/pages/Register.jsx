@@ -3,24 +3,18 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Error from '../components/Error';
 import UserForm from '../components/UserForm';
-import { login } from '../utils/auth';
 import { useAuthContext } from '../context/AuthProvider';
 
-const StyledSection = styled.section`
-  display: flex;
-  justify-content: center;
-`;
-
-const Login = () => {
+const Register = () => {
+  const { setUser } = useAuthContext();
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
   });
   const [error, setError] = useState(null);
-  const history = useHistory();
-  const { setUser } = useAuthContext();
 
-  const handleLogin = async (e) => {
+  const handleRegistration = async () => {
     e.preventDefault();
     const { data } = await login(formData);
     console.log(data);
@@ -35,17 +29,15 @@ const Login = () => {
   };
 
   return (
-    <StyledSection>
-      <Error message={error} />
+    <>
+      <Error />
       <UserForm
         formData={formData}
         setFormData={setFormData}
-        labels={['Epost', 'Passord']}
-        buttonText="Logg inn"
-        onSubmit={handleLogin}
+        labels={['Navn', 'Epost', 'Passord']}
       />
-    </StyledSection>
+    </>
   );
 };
 
-export default Login;
+export default Register;
