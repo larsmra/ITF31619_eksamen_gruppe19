@@ -21,20 +21,9 @@ const StyledForm = styled.form`
     }
 `;
 
-const ArticleForm = ({userInput, setUserInput}) => {
-  /*
-  const [title, setTitle] = useState('');
-  const [ingress, setIngress] = useState('');
-  const [content, setContent] = useState('');
-  const [category, setCategory] = useState('');
-  const [selectedAuthor, setSelectedAuthor] = useState('');
-  */
-  const [modal, setModal] = useState(false);
+const ArticleForm = ({values, handleChange}) => {
 
-  const updateArticleValue = (evt) => {
-    const { name, value } = evt.target;
-    setUserInput({ [name]: value });
-  };
+  const [modal, setModal] = useState(false);
 
   return (
     <StyledForm>
@@ -44,8 +33,8 @@ const ArticleForm = ({userInput, setUserInput}) => {
         id="article_title"
         name="title"
         placeholder="Skriv inn tittel"
-        value={userInput.title}
-        onChange={updateArticleValue}
+        value={values.title}
+        onChange={handleChange}
       />
       <label htmlFor="article_ingress"> Ingress </label>
       <input
@@ -53,8 +42,8 @@ const ArticleForm = ({userInput, setUserInput}) => {
         id="article_ingress"
         name="ingress"
         placeholder="Skriv et kort innledende avsnitt"
-        value={userInput.ingress}
-        onChange={updateArticleValue}
+        value={values.ingress}
+        onChange={handleChange}
       />
       <label htmlFor="article_content"> Innhold </label>
       <textarea
@@ -62,12 +51,12 @@ const ArticleForm = ({userInput, setUserInput}) => {
         id="article_content"
         name="content"
         placeholder="Skriv innhold"
-        value={userInput.content}
-        onChange={updateArticleValue}
+        value={values.content}
+        onChange={handleChange}
       />
       <label htmlFor="article_category"> Kategori </label>
       <div>
-            <CategorySelector handleCategoryChange={updateArticleValue} />
+            <CategorySelector handleCategoryChange={handleChange} />
             <CategoryButton
             name="New category"
             clickHandler={() => setModal(!modal)}
@@ -75,7 +64,7 @@ const ArticleForm = ({userInput, setUserInput}) => {
       </div>
      
       <label htmlFor="article_author"> Forfatter </label>
-      <AuthorSelector handleAuthorChange={updateArticleValue} />
+      <AuthorSelector handleAuthorChange={handleChange} />
     </StyledForm>
   );
 };

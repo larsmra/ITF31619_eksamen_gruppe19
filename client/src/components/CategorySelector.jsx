@@ -8,7 +8,7 @@ const CategorySelector = ( {handleCategoryChange}) => {
     ]);
 
     return (
-        <select id='category_select' name="category" onChange={() => {handleAuthorChange}}>
+        <select id='category_select' name="category" onChange={() => {handleCategoryChange}}>
             <option value="" disabled selected hidden>Chose an category</option>
             {categories.map(category => (
                 <option key={category.value} value={category.name}>

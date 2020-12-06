@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components';
 import Title from '../components/Title';
-import { articles } from '../data/articleData';
 
 const StyledSection = styled.section`
     max-width: 90%;
@@ -42,27 +42,28 @@ const Update = styled.button`
 
 `
 
-const Article = ({userInput, setUserInput, updateArticle, deleteArticle}) => {
-    const { id } = useParams();
-    const article = articles.filter((a) => a.id === parseInt(id))[0];
+const Article = () => {
+  const { id } = useParams();
+  const history = useHistory();
 
-    const history = useHistory();
+  const goToEditArticlePage = () => {
+      history.push(`/fagartikler/${id}/rediger`);
+  };
 
-    const goToEditArticlePage = () => {
-        history.push(`/fagartikler/${id}/rediger`);
-    };
+  const goToArticlesPage = () => {
+    history.push(`/fagartikler`);
+};
 
-    /*
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const [article, setArticle] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [article, setArticle] = useState([]);
 
-    useEffect(() => {
+  useEffect(() => {
     if (id) {
       const fetchData = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`http://localhost:APORT/posts/${id}`);
+          const response = await axios.get(`http://localhost:3000/fagartikler/${id}`);
           if (response.status === 200) {
             setArticle(response.data.data);
             setError('');
@@ -78,48 +79,39 @@ const Article = ({userInput, setUserInput, updateArticle, deleteArticle}) => {
     }
   }, [id]);
 
-    */
-    return(
+  return(
+      <>
+        {loading ? (
+        'Loading ...'
+        ) : (
         <>
-        {
-        /* Use later
-            {loading ? (
-            'Loading ...'
-            ) : (
-            <>
-                
-                Place working code under, here
-            
-            </>
-            )}
-                
-                  
-        */}  
-        
-       <Title title={article.title}/>
-       <StyledSection>
+          <Title title={article.title}/>
+          <StyledSection>
             <StyledInfo>
-                <h6>Av {article.author} </h6>
-                <h6> {article.date} </h6>
+              <h6>Av {article.author} </h6>
+              <h6> {article.date} </h6>
             </StyledInfo>
             <ArticleContent>
-                <p> {article.ingress} </p>
-                <p> {article.content} </p>
+              <p> {article.ingress} </p>
+              <p> {article.content} </p>
             </ArticleContent>
             <h5> {article.category} </h5>
 
             <ArticleAdminFunctions>
-                <Delete 
-                deleteArticle={deleteArticle}
-                onclick={goToEditArticlePage}> Slett </Delete>
-                <Update
-                userInput={userInput}
-                setUserInput={setUserInput}
-                updateArticle={updateArticle}
-                onClick={goToEditArticlePage}> Rediger </Update>
+              <Delete 
+                onclick={goToArticlesPage}> 
+                Slett 
+              </Delete>
+              <Update
+                onClick={goToEditArticlePage}> 
+                Rediger 
+              </Update>
             </ArticleAdminFunctions>
-       </StyledSection>
+          </StyledSection>
         </>
+          )}
+          {error ? <Error message={error} /> : null}
+      </>
     );
 };
 

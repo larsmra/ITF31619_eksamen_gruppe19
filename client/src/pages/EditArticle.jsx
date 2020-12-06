@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useParams} from 'react-router-dom';
+import axios from 'axios';
 import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
-import { articles } from '../data/articleData';
 
 const SaveArticle = styled.button`
         margin: 5px;
@@ -14,16 +14,46 @@ const SaveArticle = styled.button`
 const EditArticle = ({userInput, setUserInput, updateArticle}) =>{
 
     const { id } = useParams();
-    const article = articles.filter((a) => a.id === parseInt(id))[0];
 
-    const goToArticlePage = () => {
-        history.push(`/fagartikler/${id}`);
-    };
+    const history = useHistory();
+    const [error, setError] = useState('');
+    const {
+      values,
+      errors,
+      handleChange,
+      validateForm,
+      submitable,
+    } = useCustomFrom({
+      initalState,
+    });
 
-    const editArticle = () => {
-        updateArticle();
-        goToArticlePage();
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        validateForm();
     };
+    
+    const submitForm = () => {
+        const articleData = async () => {
+          try {
+            const response = await axios.put(`http://localhost:3000/fagartikler/${id}`, {
+              values,
+            });
+            if (response.status === 200) {
+              setError('');
+              history.push(`/fagartikler/${id}`);
+            }
+          } catch (error) {
+            setError(error.message);
+          }
+        };
+        articleData();
+    };
+    
+    useEffect(() => {
+        if (submitable) {
+          submitForm();
+        }
+      }, [submitable]);
 
     return(
         <>
