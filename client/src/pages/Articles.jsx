@@ -4,12 +4,16 @@ import Title from '../components/Title';
 import CategorySelector from '../components/CategorySelector';
 import ArticleCard from '../components/ArticleCard';
 import { articles } from '../data/articleData';
+import { useAuthContext } from '../context/AuthProvider';
 
-const ArticleFunctions = styled.section`
+const ArticleFunctions = styled.section.attrs(({ loggedIn }) => ({
+  loggedIn: loggedIn || false,
+}))`
   max-width: 90%;
   margin: auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: ${({ loggedIn }) =>
+    loggedIn ? 'space-between' : 'flex-end'};
 `;
 
 const Create = styled.button`
@@ -41,8 +45,10 @@ const StyledArticleSection = styled.section`
   padding: 50px 0px;
 `;
 
-const Articles = () => (
-  /* Implement when we have a backend
+const Articles = () => {
+  const { isLoggedIn } = useAuthContext();
+  return (
+    /* Implement when we have a backend
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -73,29 +79,30 @@ const Articles = () => (
   }, []);
   */
 
-  <>
-    <Title title="Fagartikler" />
-    <ArticleFunctions>
-      <Create> Ny Artikkel </Create>
-      <SearchFilter>
-        <button> Search </button>
-        {/* Change later to use the CategorySelector component for filter, may change out button */}
-        <button> Filter </button>
-      </SearchFilter>
-    </ArticleFunctions>
-    <StyledArticleSection>
-      {/* Use later
+    <>
+      <Title title="Fagartikler" />
+      <ArticleFunctions loggedIn={isLoggedIn}>
+        {isLoggedIn && <Create> Ny Artikkel </Create>}
+        <SearchFilter>
+          <button> Search </button>
+          {/* Change later to use the CategorySelector component for filter, may change out button */}
+          <button> Filter </button>
+        </SearchFilter>
+      </ArticleFunctions>
+      <StyledArticleSection>
+        {/* Use later
 
                 {loading && 'Loading ...'}
                 {error && <p>{error}</p>}
                 {articles && articles.length > 0 && <ArticleCard data={articles} /> }
                 
                 */}
-      {articles &&
-        articles.map((article) => (
-          <ArticleCard key={article.id} {...article} />
-        ))}
-    </StyledArticleSection>
-  </>
-);
+        {articles &&
+          articles.map((article) => (
+            <ArticleCard key={article.id} {...article} />
+          ))}
+      </StyledArticleSection>
+    </>
+  );
+};
 export default Articles;
