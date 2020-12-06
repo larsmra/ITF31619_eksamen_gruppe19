@@ -10,6 +10,6 @@ export const list = catchAsyncError(async (req, res, next) => {
 export const create = catchAsyncError(async (req, res, next) => {
   req.body.user = req.user.id;
   const category = await categoryService.createCategory(req.body);
-  res.status(201).json(category);
+  res.status(201).json({ success: true, data: category });
 });
 
