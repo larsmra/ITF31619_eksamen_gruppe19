@@ -5,7 +5,7 @@ import axios from 'axios';
 import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
 import Error from '../components/Error';
-import useCustomFrom from '../hooks/useCustomForm';
+import useCustomForm from '../hooks/useCustomForm';
 
 const Create = styled.button`
     margin: 5px;
@@ -26,7 +26,7 @@ const CreateArticle = () =>{
       handleChange,
       validateForm,
       submitable,
-    } = useCustomFrom({
+    } = useCustomForm({
       initalState,
     });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CategoryModal = ({addCategory, setFormData, formData, setModal }) => {
+const CategoryModal = ({ setModal }) => {
 
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -41,7 +41,7 @@ const CategoryModal = ({addCategory, setFormData, formData, setModal }) => {
               type='text' 
               id='new_category' 
               placeholder='Kategori navn'
-              value={formData.category}
+              value={values.category}
               onChange={updateValue}
               autoFocus/> 
               <button type='submit'> Create </button>

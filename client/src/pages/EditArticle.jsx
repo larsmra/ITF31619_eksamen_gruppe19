@@ -4,7 +4,7 @@ import { useParams} from 'react-router-dom';
 import axios from 'axios';
 import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
-import useCustomFrom from '../hooks/useCustomForm';
+import useCustomForm from '../hooks/useCustomForm';
 
 const SaveArticle = styled.button`
         margin: 5px;
@@ -23,7 +23,7 @@ const EditArticle = ({article}) =>{
       handleChange,
       validateForm,
       submitable,
-    } = useCustomFrom({
+    } = useCustomForm({
       article,
     });
 
@@ -57,12 +57,12 @@ const EditArticle = ({article}) =>{
 
     return(
         <>
-        <Title title={article.title}/>
+        <Title title={values.title}/>
         <section>
         <ArticleForm 
-            values={article}
+            values={values}
             handleChange={handleChange}/>
-        <SaveArticle onClick={editArticle}/>
+        <SaveArticle onClick={handleSubmit}/>
         </section>
         </>
     );
