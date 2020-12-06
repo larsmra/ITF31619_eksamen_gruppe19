@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Title from '../components/Title';
+import {remove} from '../utils/articleServices';
 
 const StyledSection = styled.section`
     max-width: 90%;
@@ -79,6 +80,22 @@ const Article = () => {
     }
   }, [id]);
 
+  const deleteArticle = (id) =>{
+    const article = async () => {
+      try{
+        const response = await remove(id);
+        if (response.status === 200) {
+          setError('');
+          goToEditArticlePage();
+        }
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+    article();
+  };
+  
+
   return(
       <>
         {loading ? (
@@ -99,7 +116,7 @@ const Article = () => {
 
             <ArticleAdminFunctions>
               <Delete 
-                onclick={goToArticlesPage}> 
+                onclick={deleteArticle}> 
                 Slett 
               </Delete>
               <Update
