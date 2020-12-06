@@ -6,6 +6,7 @@ import csrf from 'csurf';
 
 import { PORT } from './constants/index.js';
 import 'dotenv/config.js';
+import errorMiddleware from './middleware/errors.js';
 
 import connectDatabase from './config/db.js';
 
@@ -35,6 +36,8 @@ app.get(`${process.env.BASEURL}/csrf-token`, (req, res) => {
 });
 
 app.use(`${process.env.BASEURL}/users`, user);
+
+app.use(errorMiddleware);
 
 connectDatabase();
 

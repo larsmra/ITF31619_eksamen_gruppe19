@@ -37,4 +37,11 @@ UserSchema.methods.getJwtToken = function () {
   });
 };
 
+UserSchema.virtual('articles', {
+  ref: 'Article',
+  localField: '_id',
+  foreignField: 'author',
+  justOne: false,
+});
+
 export default mongoose.model('User', UserSchema);

@@ -1,6 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAuthContext } from '../context/AuthProvider';
+import { logout } from '../utils/auth';
 
 const StyledNav = styled.nav`
   width: 100%;
@@ -50,37 +52,68 @@ const NavMenuItem = styled.li.attrs(({ special }) => ({
   }
 `;
 
-const Navbar = () => (
-  <StyledNav>
-    <span> FG </span>
-    <NavMenu>
-      <NavMenuItem>
-        <NavLink exact to="/" activeClassName="active">
-          Home
-        </NavLink>
-      </NavMenuItem>
-      <NavMenuItem>
-        <NavLink to="/kontorer" activeClassName="active">
-          Kontorer
-        </NavLink>
-      </NavMenuItem>
-      <NavMenuItem>
-        <NavLink exact to="/fagartikler" activeClassName="active">
-          Fagartikler
-        </NavLink>
-      </NavMenuItem>
-      <NavMenuItem>
-        <NavLink exact to="/kontakt" activeClassName="active">
-          Kontakt
-        </NavLink>
-      </NavMenuItem>
-      <NavMenuItem special>
-        <NavLink exact to="/login" activeClassName="active">
-          Logg inn
-        </NavLink>
-      </NavMenuItem>
-    </NavMenu>
-  </StyledNav>
-);
+const LogOutButton = styled.button`
+  appearance: none;
+  height: 100%;
+  color: #ffffff;
+  background-color: #479eb9;
+  padding: 0 2em;
+  margin: 0;
+  border: none;
+
+  &:hover {
+    background-color: #236b85;
+  }
+`;
+
+const Navbar = () => {
+  const { isLoggedIn, setUser } = useAuthContext();
+  const history = useHistory();
+
+  const handleLogout = async () => {
+    await logout();
+    setUser(null);
+    history.push('/');
+  };
+
+  return (
+    <StyledNav>
+      <span> FG </span>
+      <NavMenu>
+        <NavMenuItem>
+          <NavLink exact to="/" activeClassName="active">
+            Home
+          </NavLink>
+        </NavMenuItem>
+        <NavMenuItem>
+          <NavLink to="/kontorer" activeClassName="active">
+            Kontorer
+          </NavLink>
+        </NavMenuItem>
+        <NavMenuItem>
+          <NavLink exact to="/fagartikler" activeClassName="active">
+            Fagartikler
+          </NavLink>
+        </NavMenuItem>
+        <NavMenuItem>
+          <NavLink exact to="/kontakt" activeClassName="active">
+            Kontakt
+          </NavLink>
+        </NavMenuItem>
+        <NavMenuItem special>
+          {isLoggedIn ? (
+            <LogOutButton type="button" onClick={handleLogout}>
+              Logg ut
+            </LogOutButton>
+          ) : (
+            <NavLink exact to="/login" activeClassName="active">
+              Logg inn
+            </NavLink>
+          )}
+        </NavMenuItem>
+      </NavMenu>
+    </StyledNav>
+  );
+};
 
 export default Navbar;

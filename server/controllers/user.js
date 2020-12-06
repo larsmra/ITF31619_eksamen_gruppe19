@@ -17,11 +17,11 @@ export const create = catchAsyncError(async (req, res, next) => {
 });
 
 export const login = catchAsyncError(async (req, res, next) => {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     return next(new ErrorHandler('Fyll ut alle feltene', 400));
   }
-  const user = await userService.getUserByEmail({ email });
+  const user = await userService.getUserByEmail({ email }, true);
   if (!user) {
     return next(
       new ErrorHandler('Informasjonen du skrev inn var ikke riktig', 400)
@@ -42,4 +42,12 @@ export const logout = catchAsyncError(async (req, res, next) => {
     httpOnly: true,
   });
   res.status(200).json({ success: true, data: 'Logget ut' });
+});
+
+export const currentUser = catchAsyncError(async (req, res, next) => {
+  const user = await userService.getUserById(req.user.id);
+  if (!user) {
+    return next(new ErrorHandler('Brukeren finnes ikke', 404));
+  }
+  res.status(200).json({ success: true, data: user });
 });

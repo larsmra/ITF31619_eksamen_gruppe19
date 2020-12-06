@@ -17,4 +17,11 @@ CategorySchema.pre('save', function (next) {
   next();
 });
 
+CategorySchema.virtual('Article', {
+  ref: 'Article',
+  localField: '_id',
+  foreignField: 'category',
+  justOne: false,
+});
+
 export default mongoose.model('Category', CategorySchema);

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const StyledForm = styled.form`
   display: flex;
   flex-flow: column;
+  width: 50%;
 `;
 
 const ButtonSection = styled.section`
@@ -18,8 +19,9 @@ const UserForm = ({
   handleEmailChange,
   handlePasswordChange,
   registration,
+  onSubmit,
 }) => (
-  <StyledForm>
+  <StyledForm onSubmit={onSubmit}>
     {registration && (
       <>
         <label htmlFor="name">Name</label>
