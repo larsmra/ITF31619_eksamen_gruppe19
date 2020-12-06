@@ -4,12 +4,16 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Title from '../components/Title';
 import ArticleCard from '../components/ArticleCard';
+import { useAuthContext } from '../context/AuthProvider';
 
-const ArticleFunctions = styled.section`
-    max-width: 90%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
+const ArticleFunctions = styled.section.attrs(({ loggedIn }) => ({
+  loggedIn: loggedIn || false,
+}))`
+  max-width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: ${({ loggedIn }) =>
+    loggedIn ? 'space-between' : 'flex-end'};
 `;
 
 const CreateArticlePage = styled.button`
@@ -23,29 +27,29 @@ const CreateArticlePage = styled.button`
 `;
 
 const SearchFilter = styled.div`
-
-    & > button{
-        margin: 5px;
-        padding: 20px 30px;
-        background-color: lightgrey;
-        border-style: none;
-        color: white;
-        &:hover{
-            background-color: grey;
-        }
-    
+  & > button {
+    margin: 5px;
+    padding: 20px 30px;
+    background-color: lightgrey;
+    border-style: none;
+    color: white;
+    &:hover {
+      background-color: grey;
     }
+  }
 `;
 
 const StyledArticleSection = styled.section`
-    display: flex;
-    flex-flow: column wrap;
-    padding: 50px 0px;
-`
+  display: flex;
+  flex-flow: column wrap;
+  padding: 50px 0px;
+`;
 
 const Articles = () => {
 
     const history = useHistory();
+    
+    const { isLoggedIn } = useAuthContext();
 
     const goToCreateArticlePage = () => {
         history.push(`/fagartikler/ny`);
@@ -95,11 +99,12 @@ const Articles = () => {
             <StyledArticleSection>
                 {loading && 'Loading ...'}
                 {error && <p>{error}</p>}
-                {articles && articles.map((article) => <ArticleCard key={article.id} {...article}/>)}
-                
+                {articles && 
+                  articles.map((article) =>( 
+                   <ArticleCard key={article.id} {...article}/>
+                ))}
             </StyledArticleSection>
         </>
     );
 };
-
 export default Articles;
