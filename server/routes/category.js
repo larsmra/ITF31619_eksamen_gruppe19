@@ -5,6 +5,7 @@ import { isAuthenticated } from '../middleware/auth.js';
 const router = express.Router();
 
 router.get('/', categoryController.list);
-router.post('/', isAuthenticated(), categoryController.create);
+router.post('/', isAuthenticated, categoryController.create);
 
 export default router;
+

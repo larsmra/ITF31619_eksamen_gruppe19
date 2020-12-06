@@ -40,8 +40,8 @@ app.get(`${process.env.BASEURL}/csrf-token`, (req, res) => {
 */
 
 app.use(`${process.env.BASEURL}/users`, user);
-app.use(`${process.env.BASEURL}/categories`, category);
 app.use(`${process.env.BASEURL}/articles`, article);
+app.use(`${process.env.BASEURL}/categories`, category);
 
 app.use(errorMiddleware);
 
