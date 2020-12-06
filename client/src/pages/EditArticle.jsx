@@ -4,6 +4,7 @@ import { useParams} from 'react-router-dom';
 import axios from 'axios';
 import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
+import useCustomFrom from '../hooks/useCustomForm';
 
 const SaveArticle = styled.button`
         margin: 5px;
@@ -11,10 +12,9 @@ const SaveArticle = styled.button`
         background-color: lightgrey;
 `
 
-const EditArticle = ({userInput, setUserInput, updateArticle}) =>{
+const EditArticle = ({article}) =>{
 
     const { id } = useParams();
-
     const history = useHistory();
     const [error, setError] = useState('');
     const {
@@ -24,7 +24,7 @@ const EditArticle = ({userInput, setUserInput, updateArticle}) =>{
       validateForm,
       submitable,
     } = useCustomFrom({
-      initalState,
+      article,
     });
 
     const handleSubmit = (event) => {
@@ -60,8 +60,8 @@ const EditArticle = ({userInput, setUserInput, updateArticle}) =>{
         <Title title={article.title}/>
         <section>
         <ArticleForm 
-               userInput={userInput}
-               setUserInput={setUserInput}/>
+            values={article}
+            handleChange={handleChange}/>
         <SaveArticle onClick={editArticle}/>
         </section>
         </>
