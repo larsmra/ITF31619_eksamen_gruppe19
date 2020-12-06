@@ -17,6 +17,8 @@ const ArticleFunctions = styled.section.attrs(({ loggedIn }) => ({
 `;
 
 const CreateArticlePage = styled.button`
+        display: ${({ loggedIn }) =>
+        loggedIn ? 'block' : 'none'};
         padding: 20px 30px;
         background-color: #479EB9;
         border-style: none;
@@ -89,7 +91,7 @@ const Articles = () => {
             <Title title="Fagartikler"/>
             <ArticleFunctions>
                 <CreateArticlePage 
-                onClick={goToCreateArticlePage}> Ny Artikkel </CreateArticlePage>
+                  onClick={goToCreateArticlePage}> Ny Artikkel </CreateArticlePage>
                 <SearchFilter>
                     <button> Search </button>
                     {/* Change later to use the CategorySelector component for filter, may change out button */}
