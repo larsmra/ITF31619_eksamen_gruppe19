@@ -48,8 +48,6 @@ const Article = () => {
       history.push(`/fagartikler/${id}/rediger`);
   };
   const { isLoggedIn } = useAuthContext();
-  const { id } = useParams();
-  const article = articles.filter((a) => a.id === parseInt(id))[0];
 
   const goToArticlesPage = () => {
     history.push(`/fagartikler`);

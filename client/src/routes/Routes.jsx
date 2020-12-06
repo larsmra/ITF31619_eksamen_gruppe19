@@ -7,12 +7,9 @@ import Offices from '../pages/Offices';
 import Office from '../pages/Office';
 import Articles from '../pages/Articles';
 import Article from '../pages/Article';
-<<<<<<< HEAD
 import CreateArticle from '../pages/CreateArticle';
 import EditArticle from '../pages/EditArticle';
-=======
 import Login from '../pages/Login';
->>>>>>> frontpage
 
 const Routes = () => (
   <Router>
@@ -36,13 +33,11 @@ const Routes = () => (
         <Route exact path="/fagartikler/:id">
           <Article />
         </Route>
-<<<<<<< HEAD
         <Route path="/fagartikler/:id/rediger">
           <EditArticle />
-=======
+        </Route>
         <Route path="/login">
           <Login />
->>>>>>> frontpage
         </Route>
       </Switch>
     </PageLayout>
