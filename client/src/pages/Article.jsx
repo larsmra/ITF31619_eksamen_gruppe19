@@ -103,7 +103,7 @@ const Article = () => {
                 Slett 
               </Delete>
               <Update
-                initialState={article}
+                article={article}
                 onClick={goToEditArticlePage}> 
                 Rediger 
               </Update>

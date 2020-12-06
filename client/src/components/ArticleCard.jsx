@@ -52,7 +52,7 @@ const ArticleCard = ({id, title, category, ingress}) => {
     const history = useHistory();
 
     const goToPage = () => {
-    history.push(`/fagartikler/${id}`);
+        history.push(`/fagartikler/${id}`);
     };
     
     return(

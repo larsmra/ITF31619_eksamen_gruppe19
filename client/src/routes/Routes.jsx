@@ -35,8 +35,6 @@ const Routes = () => (
         <Route path="/fagartikler/:id/rediger">
           <EditArticle />
         </Route>
-       
-        
       </Switch>
     </PageLayout>
   </Router>

@@ -1,21 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CategoryModal = ({ setModal }) => {
-
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      addCategory();
-    };
-
-    const updateValue = (event) => {
-        const inputValue = {[event.target.name] : event.target.value};
-        setFormData((prev) => ({
-          ...prev,
-          ...inputValue,
-        }));
-    };
-
     const Modal = styled.section`
         & > form {
           padding: 20px;
@@ -31,6 +16,39 @@ const CategoryModal = ({ setModal }) => {
           }
         }
     `;
+
+const CategoryModal = ({ setModal }) => {
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      addCategory();
+    };
+
+    const updateValue = (event) => {
+        const inputValue = {[event.target.name] : event.target.value};
+        setFormData((prev) => ({
+          ...prev,
+          ...inputValue,
+        }));
+    };
+
+    const submitForm = () => {
+      const postData = async () => {
+        try {
+          const response = await axios.post(`http://localhost:3000/`, {
+            values,
+          });
+          if (response.status === 200) {
+            setError('');
+            history.push('/posts');
+          }
+        } catch (error) {
+          setError(error.message);
+        }
+      };
+      postData();
+    };
+
 
   return (
       <Modal>
