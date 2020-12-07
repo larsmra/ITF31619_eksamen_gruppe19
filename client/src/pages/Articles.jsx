@@ -1,10 +1,10 @@
 import React, {useState, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Title from '../components/Title';
 import ArticleCard from '../components/ArticleCard';
 import { useAuthContext } from '../context/AuthProvider';
+import {list} from '../utils/articleServices';
 
 const ArticleFunctions = styled.section.attrs(({ loggedIn }) => ({
   loggedIn: loggedIn || false,
@@ -49,64 +49,54 @@ const StyledArticleSection = styled.section`
 
 const Articles = () => {
 
-    const history = useHistory();
-    
-    const { isLoggedIn } = useAuthContext();
+  const history = useHistory();
+  
+  const { isLoggedIn } = useAuthContext();
 
-    const goToCreateArticlePage = () => {
-        history.push(`/fagartikler/ny`);
-    };
+  const goToCreateArticlePage = () => {
+      history.push(`/fagartikler/ny`);
+  };
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [articles, setArticles] = useState(null);
 
-    const createMap = ({data}) => Object.entries(data);
-
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get('http://localhost:3000/fagartikler', {
-          transformResponse: createMap,
-          responseType: 'json',
-        });
-        if (response.status === 200) {
-          setArticles(response.data);
-          setError('');
+      try{
+        const {data, error } = await list();
+        if (error) {
+          setError(error);
+        } else {
+          setArticles(data);
         }
-      } catch (error) {
-        setArticles([]);
-        setError(error.message);
-      } finally {
-        setLoading(false);
+      }finally{
+         setLoading(false);
       }
     };
     fetchData();
   }, []);
   
-
-    return(
-        <>
-            <Title title="Fagartikler"/>
-            <ArticleFunctions>
-                <CreateArticlePage 
-                  onClick={goToCreateArticlePage}> Ny Artikkel </CreateArticlePage>
-                <SearchFilter>
-                    <button> Search </button>
-                    {/* Change later to use the CategorySelector component for filter, may change out button */}
-                    <button> Filter </button>
-                </SearchFilter>
-            </ArticleFunctions>
-            <StyledArticleSection>
-                {loading && 'Loading ...'}
-                {error && <p>{error}</p>}
-                {articles && 
-                  articles.map((article) =>( 
-                   <ArticleCard key={article.id} {...article}/>
-                ))}
-            </StyledArticleSection>
-        </>
-    );
+  return(
+      <>
+          <Title title="Fagartikler"/>
+          <ArticleFunctions>
+              <CreateArticlePage 
+                onClick={goToCreateArticlePage}> Ny Artikkel </CreateArticlePage>
+              <SearchFilter>
+                  <button> Search </button>
+                  {/* Change later to use the CategorySelector component for filter, may change out button */}
+                  <button> Filter </button>
+              </SearchFilter>
+          </ArticleFunctions>
+          <StyledArticleSection>
+              {loading && 'Loading ...'}
+              {error && <p>{error}</p>}
+              {articles && articles.map((article) => ( 
+                  <ArticleCard key={article._id} {...article}/>
+              ))}   
+          </StyledArticleSection>
+      </>
+  );
 };
 export default Articles;
