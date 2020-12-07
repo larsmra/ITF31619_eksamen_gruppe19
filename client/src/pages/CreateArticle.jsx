@@ -6,6 +6,7 @@ import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
 import Error from '../components/Error';
 import useCustomForm from '../hooks/useCustomForm';
+import { create } from '../utils/articleServices';
 
 const Create = styled.button`
     margin: 5px;
@@ -36,20 +37,15 @@ const CreateArticle = () =>{
     };
     
     const submitForm = () => {
-        const articleData = async () => {
-          try {
-            const response = await axios.post(`http://localhost:3000/fagartikler`, {
-              values,
-            });
-            if (response.status === 200) {
-              setError('');
-              history.push('/fagartikler');
-            }
-          } catch (error) {
-            setError(error.message);
-          }
-        };
-        articleData();
+      const articleData = async () => {
+        const response = await create(values);
+        if (error) {
+          setError(error);
+        } else {
+          history.push('/fagartikler');
+        }
+      };
+      articleData();
     };
     
     useEffect(() => {
