@@ -10,6 +10,7 @@ import Article from '../pages/Article';
 import CreateArticle from '../pages/CreateArticle';
 import EditArticle from '../pages/EditArticle';
 import Login from '../pages/Login';
+import Contact from '../pages/Contact';
 
 const Routes = () => (
   <Router>
@@ -35,6 +36,9 @@ const Routes = () => (
         </Route>
         <Route path="/fagartikler/:id/rediger">
           <EditArticle />
+        </Route>
+        <Route path="/kontakt">
+          <Contact />
         </Route>
         <Route path="/login">
           <Login />
