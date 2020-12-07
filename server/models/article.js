@@ -29,12 +29,12 @@ const ArticleSchema = new Schema({
   },
   category: {
     type: mongoose.Schema.ObjectId,
-    ref: 'User',
+    ref: 'Category',
     required: true,
   },
   admin: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Category',
+    ref: 'User',
     required: true,
   },
   hidden: {
