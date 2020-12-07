@@ -18,6 +18,14 @@ export const get = async (id) => {
   }
 };
 
+export const update = async (id, data) => {
+  try {
+    return await http.put(`${API_URL}/${id}`, data);
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
 export const create = async (data) => {
   try {
     return await http.post(`${API_URL}`, data);

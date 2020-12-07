@@ -34,19 +34,14 @@ const EditArticle = ({article}) =>{
     
     const submitForm = () => {
         const articleData = async () => {
-          try {
-            const response = await axios.put(`http://localhost:3000/fagartikler/${id}`, {
-              values,
-            });
-            if (response.status === 200) {
-              setError('');
-              history.push(`/fagartikler/${id}`);
-            }
-          } catch (error) {
-            setError(error.message);
-          }
-        };
-        articleData();
+          const { error } = await update(id, values);
+        if (error) {
+          setError(error);
+        } else {
+          history.push(`/fagartikler/${id}`);
+        }
+      };
+      articleData();
     };
     
     useEffect(() => {
