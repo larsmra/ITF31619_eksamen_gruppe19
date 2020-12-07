@@ -9,18 +9,7 @@ export const list = catchAsyncError(async (req, res, next) => {
 });
 
 export const create = catchAsyncError(async (req, res, next) => {
-  if (!req.user.id) {
-    return next(new ErrorHandler('Du må være logget inn', 403));
-  }
-  req.body.creator = req.user.id;
-  const { name } = req.body;
-  if (!name) {
-    return next(new ErrorHandler('Fyll ut feltet', 400));
-  }
-  const exist = await categoryService.getCategory({ name });
-  if (exist) {
-    return next(new ErrorHandler('Kategorien finnes allerede', 400));
-  }
+  req.body.user = req.user.id;
   const category = await categoryService.createCategory(req.body);
   res.status(201).json({ success: true, data: category });
 });

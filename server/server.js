@@ -11,8 +11,8 @@ import errorMiddleware from './middleware/errors.js';
 import connectDatabase from './config/db.js';
 
 import user from './routes/user.js';
-import articles from './routes/article.js';
-import categories from './routes/category.js';
+import category from './routes/category.js';
+import article from './routes/article.js';
 
 const app = express();
 
@@ -30,16 +30,18 @@ app.use(
   })
 );
 
+/*
 app.use(cookieParser());
 app.use(csrf({ cookie: true }));
 
 app.get(`${process.env.BASEURL}/csrf-token`, (req, res) => {
   res.status(200).json({ data: req.csrfToken() });
 });
+*/
 
 app.use(`${process.env.BASEURL}/users`, user);
-app.use(`${process.env.BASEURL}/articles`, articles);
-app.use(`${process.env.BASEURL}/categories`, categories);
+app.use(`${process.env.BASEURL}/articles`, article);
+app.use(`${process.env.BASEURL}/categories`, category);
 
 app.use(errorMiddleware);
 

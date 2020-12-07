@@ -25,25 +25,6 @@ export const isAuthenticated = (throwError = true) =>
     next();
   });
 
-export const isAuthenticatedNoErrors = (throwError = true) =>
-  catchAsyncErrors(async (req, res, next) => {
-    if (!req.cookies.token) {
-      return next();
-    }
-
-    const { token } = req.cookies;
-
-    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await userService.getUserById(decodedData.id);
-
-    if (!user) {
-      next();
-    }
-
-    req.user = user;
-    next();
-  });
-
 export const isAuthorized = (req, res, next) => {
   if (req.user.role !== 'admin') {
     return next(new ErrorHandler('Du er ikke autorisert', 403));

@@ -20,4 +20,7 @@ export const updateArticle = async (id, data) =>
     useFindAndModify: false,
   });
 
-export const removeArticle = async (id) => Article.findByIdAndDelete(id);
+export const removeArticle = async (id) => {
+  const article = await Article.findById(id);
+  article.remove();
+}

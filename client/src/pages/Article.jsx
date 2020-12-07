@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components';
 import Title from '../components/Title';
-import { articles } from '../data/articleData';
+import { remove } from '../utils/articleServices';
 import { useAuthContext } from '../context/AuthProvider';
 
 const StyledSection = styled.section`
@@ -42,19 +43,29 @@ const Update = styled.button`
 const Article = () => {
   const { isAdmin } = useAuthContext();
   const { id } = useParams();
-  const article = articles.filter((a) => a.id === parseInt(id))[0];
+  const history = useHistory();
 
-  /*
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const [article, setArticle] = useState([]);
+  const goToEditArticlePage = () => {
+    history.push(`/fagartikler/${id}/rediger`);
+  };
+  const { isLoggedIn } = useAuthContext();
 
-    useEffect(() => {
+  const goToArticlesPage = () => {
+    history.push(`/fagartikler`);
+  };
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [article, setArticle] = useState([]);
+
+  useEffect(() => {
     if (id) {
       const fetchData = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`http://localhost:APORT/posts/${id}`);
+          const response = await axios.get(
+            `http://localhost:3000/fagartikler/${id}`
+          );
           if (response.status === 200) {
             setArticle(response.data.data);
             setError('');
@@ -70,42 +81,49 @@ const Article = () => {
     }
   }, [id]);
 
-    */
+  const deleteArticle = (id) => {
+    const article = async () => {
+      try {
+        const response = await remove(id);
+        if (response.status === 200) {
+          setError('');
+          goToEditArticlePage();
+        }
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+    article();
+  };
+
   return (
     <>
-      {/* Use later
-            {loading ? (
-            'Loading ...'
-            ) : (
-            <>
-                
-                Place working code under, here
-            
-            </>
-            )}
-                
-                  
-        */}
+      {loading ? (
+        'Loading ...'
+      ) : (
+        <>
+          <Title title={article.title} />
+          <StyledSection>
+            <StyledInfo>
+              <h6>Av {article.author} </h6>
+              <h6> {article.date} </h6>
+            </StyledInfo>
+            <ArticleContent>
+              <p> {article.ingress} </p>
+              <p> {article.content} </p>
+            </ArticleContent>
+            <h5> {article.category} </h5>
 
-      <Title title={article.title} />
-      <StyledSection>
-        <StyledInfo>
-          <h6>Av {article.author} </h6>
-          <h6> {article.date} </h6>
-        </StyledInfo>
-        <ArticleContent>
-          <p> {article.ingress} </p>
-          <p> {article.content} </p>
-        </ArticleContent>
-        <h5> {article.category} </h5>
-
-        {isAdmin && (
-          <ArticleAdminFunctions>
-            <Delete> Slett </Delete>
-            <Update> Rediger </Update>
-          </ArticleAdminFunctions>
-        )}
-      </StyledSection>
+            <ArticleAdminFunctions>
+              <Delete onclick={deleteArticle}>Slett</Delete>
+              <Update article={article} onClick={goToEditArticlePage}>
+                Rediger
+              </Update>
+            </ArticleAdminFunctions>
+          </StyledSection>
+        </>
+      )}
+      {error ? <Error message={error} /> : null}
     </>
   );
 };

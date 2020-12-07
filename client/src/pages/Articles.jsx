@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import Title from '../components/Title';
-import CategorySelector from '../components/CategorySelector';
 import ArticleCard from '../components/ArticleCard';
-import { articles } from '../data/articleData';
 import { useAuthContext } from '../context/AuthProvider';
 import { list } from '../utils/article';
 
@@ -69,29 +68,25 @@ const Articles = () => {
   return (
     /* Implement when we have a backend
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const [articles, setArticles] = useState([]);
+  const goToCreateArticlePage = () => {
+      history.push(`/fagartikler/ny`);
+  };
 
-    const createMap = ({data}) => Object.entries(data);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [articles, setArticles] = useState(null);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get('http://localhost:APORT/artikler', {
-          transformResponse: createMap,
-          responseType: 'json',
-        });
-        if (response.status === 200) {
-          setArticles(response.data);
-          setError('');
+      try{
+        const {data, error } = await list();
+        if (error) {
+          setError(error);
+        } else {
+          setArticles(data);
         }
-      } catch (error) {
-        setArticles([]);
-        setError(error.message);
-      } finally {
-        setLoading(false);
+      }finally{
+         setLoading(false);
       }
     };
     fetchData();

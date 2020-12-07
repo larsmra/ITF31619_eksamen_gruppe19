@@ -34,7 +34,7 @@ const Routes = () => (
         <Route path="/fagartikler/:id">
           <Article />
         </Route>
-        <Route path="/fagartikler/:id/edit">
+        <Route path="/fagartikler/:id/rediger">
           <EditArticle />
         </Route>
         <Route path="/register">

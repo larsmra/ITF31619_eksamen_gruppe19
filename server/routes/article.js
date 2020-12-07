@@ -1,4 +1,5 @@
 import express from 'express';
+import {isAuthenticated} from '../middleware/auth.js';
 import { articleController } from '../controllers/index.js';
 import {
   isAuthenticated,
