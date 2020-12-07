@@ -7,7 +7,10 @@ import Offices from '../pages/Offices';
 import Office from '../pages/Office';
 import Articles from '../pages/Articles';
 import Article from '../pages/Article';
+import CreateArticle from '../pages/CreateArticle';
+import EditArticle from '../pages/EditArticle';
 import Login from '../pages/Login';
+import Register from '../pages/Register';
 
 const Routes = () => (
   <Router>
@@ -25,8 +28,17 @@ const Routes = () => (
         <Route exact path="/fagartikler">
           <Articles />
         </Route>
+        <Route exact path="/fagartikler/ny">
+          <CreateArticle />
+        </Route>
         <Route path="/fagartikler/:id">
           <Article />
+        </Route>
+        <Route path="/fagartikler/:id/edit">
+          <EditArticle />
+        </Route>
+        <Route path="/register">
+          <Register />
         </Route>
         <Route path="/login">
           <Login />

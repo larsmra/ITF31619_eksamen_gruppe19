@@ -9,6 +9,11 @@ const CategorySchema = new Schema({
     required: true,
     trim: true,
   },
+  creator: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   slug: String,
 });
 

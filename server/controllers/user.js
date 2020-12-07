@@ -3,6 +3,25 @@ import catchAsyncError from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
 import { sendToken } from '../utils/jwtToken.js';
 
+const createAdmin = catchAsyncError(async (req, res, next) => {
+  const { name, email, password, role, adminPassword } = req.body;
+  if (!adminPassword) {
+    return next(
+      new ErrorHandler('Du må oppgi passord for å opprette adminbruker', 400)
+    );
+  }
+  if (adminPassword !== process.env.ADMIN_PASSWORD) {
+    return next(new ErrorHandler('Passordet er feil', 400));
+  }
+  const user = await userService.createUser({
+    name,
+    email,
+    password,
+    role,
+  });
+  sendToken(user, res);
+});
+
 export const create = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -11,6 +30,9 @@ export const create = catchAsyncError(async (req, res, next) => {
   const exist = await userService.getUserByEmail({ email });
   if (exist) {
     return next(new ErrorHandler('Brukeren finnes allerede', 400));
+  }
+  if (req.body.role && req.body.role === 'admin') {
+    return createAdmin(req, res, next);
   }
   const user = await userService.createUser({ name, email, password });
   sendToken(user, res);

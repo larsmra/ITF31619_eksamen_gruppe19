@@ -8,7 +8,8 @@ import { useAuthContext } from '../context/AuthProvider';
 
 const StyledSection = styled.section`
   display: flex;
-  justify-content: center;
+  flex-flow: column;
+  align-items: center;
 `;
 
 const Login = () => {
@@ -23,7 +24,6 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const { data } = await login(formData);
-    console.log(data);
     if (data.success) {
       const { user } = data;
       const expire = JSON.parse(window.atob(data.token.split('.')[1])).exp;

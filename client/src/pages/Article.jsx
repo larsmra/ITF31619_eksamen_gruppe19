@@ -40,7 +40,7 @@ const Update = styled.button`
 `;
 
 const Article = () => {
-  const { isLoggedIn } = useAuthContext();
+  const { isAdmin } = useAuthContext();
   const { id } = useParams();
   const article = articles.filter((a) => a.id === parseInt(id))[0];
 
@@ -99,7 +99,7 @@ const Article = () => {
         </ArticleContent>
         <h5> {article.category} </h5>
 
-        {isLoggedIn && (
+        {isAdmin && (
           <ArticleAdminFunctions>
             <Delete> Slett </Delete>
             <Update> Rediger </Update>

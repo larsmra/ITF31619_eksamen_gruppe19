@@ -4,6 +4,13 @@ import styled from 'styled-components';
 import Error from '../components/Error';
 import UserForm from '../components/UserForm';
 import { useAuthContext } from '../context/AuthProvider';
+import { register } from '../utils/auth';
+
+const StyledSection = styled.section`
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+`;
 
 const Register = () => {
   const { setUser } = useAuthContext();
@@ -13,11 +20,11 @@ const Register = () => {
     password: '',
   });
   const [error, setError] = useState(null);
+  const history = useHistory();
 
-  const handleRegistration = async () => {
+  const handleRegistration = async (e) => {
     e.preventDefault();
-    const { data } = await login(formData);
-    console.log(data);
+    const { data } = await register(formData);
     if (data.success) {
       const { user } = data;
       const expire = JSON.parse(window.atob(data.token.split('.')[1])).exp;
@@ -29,14 +36,16 @@ const Register = () => {
   };
 
   return (
-    <>
-      <Error />
+    <StyledSection>
+      <Error message={error} />
       <UserForm
         formData={formData}
         setFormData={setFormData}
         labels={['Navn', 'Epost', 'Passord']}
+        buttonText="Registrer"
+        onSubmit={handleRegistration}
       />
-    </>
+    </StyledSection>
   );
 };
 

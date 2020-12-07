@@ -11,12 +11,17 @@ export const get = catchAsyncError(async (req, res, next) => {
 });
 
 export const list = catchAsyncError(async (req, res, next) => {
-  const articles = await articleService.listArticles();
+  let showHidden = false;
+  if (req.user) {
+    showHidden = true;
+  }
+  const articles = await articleService.listArticles(showHidden);
   res.status(200).json({ success: true, data: articles });
 });
 
 export const create = catchAsyncError(async (req, res, next) => {
-  req.body.user = req.user.id;
+  req.body.admin = req.user.id;
+  req.body.date = new Date();
   const article = await articleService.createArticle(req.body);
   res.status(201).json({ success: true, data: article });
 });

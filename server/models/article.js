@@ -37,6 +37,11 @@ const ArticleSchema = new Schema({
     ref: 'Category',
     required: true,
   },
+  hidden: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 export default mongoose.model('Article', ArticleSchema);

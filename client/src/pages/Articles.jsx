@@ -1,26 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Title from '../components/Title';
 import CategorySelector from '../components/CategorySelector';
 import ArticleCard from '../components/ArticleCard';
 import { articles } from '../data/articleData';
 import { useAuthContext } from '../context/AuthProvider';
+import { list } from '../utils/article';
 
-const ArticleFunctions = styled.section.attrs(({ loggedIn }) => ({
-  loggedIn: loggedIn || false,
+const ArticleFunctions = styled.section.attrs(({ isAdmin }) => ({
+  isAdmin: isAdmin || false,
 }))`
   max-width: 90%;
   margin: auto;
   display: flex;
-  justify-content: ${({ loggedIn }) =>
-    loggedIn ? 'space-between' : 'flex-end'};
+  justify-content: ${({ isAdmin }) => (isAdmin ? 'space-between' : 'flex-end')};
 `;
 
-const Create = styled.button`
+const Create = styled.a`
   padding: 20px 30px;
   background-color: #479eb9;
   border-style: none;
   color: white;
+  cursor: pointer;
   &:hover {
     background-color: #236b85;
   }
@@ -46,7 +47,25 @@ const StyledArticleSection = styled.section`
 `;
 
 const Articles = () => {
-  const { isLoggedIn } = useAuthContext();
+  const { isAdmin } = useAuthContext();
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await list();
+      if (data.success) {
+        setArticles(data.data);
+        setError(null);
+      } else {
+        setError(data.response);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     /* Implement when we have a backend
 
@@ -81,8 +100,8 @@ const Articles = () => {
 
     <>
       <Title title="Fagartikler" />
-      <ArticleFunctions loggedIn={isLoggedIn}>
-        {isLoggedIn && <Create> Ny Artikkel </Create>}
+      <ArticleFunctions isAdmin={isAdmin}>
+        {isAdmin && <Create href="/fagartikler/ny"> Ny Artikkel </Create>}
         <SearchFilter>
           <button> Search </button>
           {/* Change later to use the CategorySelector component for filter, may change out button */}
@@ -99,7 +118,7 @@ const Articles = () => {
                 */}
         {articles &&
           articles.map((article) => (
-            <ArticleCard key={article.id} {...article} />
+            <ArticleCard key={article._id} {...article} />
           ))}
       </StyledArticleSection>
     </>

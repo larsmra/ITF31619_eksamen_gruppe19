@@ -99,17 +99,26 @@ const Navbar = () => {
             Kontakt
           </NavLink>
         </NavMenuItem>
-        <NavMenuItem special>
-          {isLoggedIn ? (
+        {isLoggedIn ? (
+          <NavMenuItem special>
             <LogOutButton type="button" onClick={handleLogout}>
               Logg ut
             </LogOutButton>
-          ) : (
-            <NavLink exact to="/login" activeClassName="active">
-              Logg inn
-            </NavLink>
-          )}
-        </NavMenuItem>
+          </NavMenuItem>
+        ) : (
+          <>
+            <NavMenuItem special>
+              <NavLink exact to="/register" activeClassName="active">
+                Registrer deg
+              </NavLink>
+            </NavMenuItem>
+            <NavMenuItem special>
+              <NavLink exact to="/login" activeClassName="active">
+                Logg inn
+              </NavLink>
+            </NavMenuItem>
+          </>
+        )}
       </NavMenu>
     </StyledNav>
   );

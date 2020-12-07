@@ -1,13 +1,21 @@
 import express from 'express';
-import isAuthenticated from '../middleware/auth.js';
 import { articleController } from '../controllers/index.js';
+import {
+  isAuthenticated,
+  isAuthenticatedNoErrors,
+  isAuthorized,
+} from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/:id', articleController.get);
-router.get('/', articleController.list);
-router.create('/', isAuthenticated(), articleController.create);
-router.put('/:id', isAuthenticated(), articleController.update);
-router.delete('/:id', isAuthenticated(), articleController.remove);
+router.get('/:id', [isAuthenticated(false)], articleController.get);
+router.get('/', [isAuthenticated(false)], articleController.list);
+router.post('/', [isAuthenticated(), isAuthorized], articleController.create);
+router.put('/:id', [isAuthenticated(), isAuthorized], articleController.update);
+router.delete(
+  '/:id',
+  [isAuthenticated(), isAuthorized],
+  articleController.remove
+);
 
 export default router;

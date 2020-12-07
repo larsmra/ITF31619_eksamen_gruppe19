@@ -76,7 +76,7 @@ const Offices = () => {
 
   return (
     <>
-      <Title title="Våre kontorer"/>
+      <Title title="Våre kontorer" />
       <section>
         <StyledButtonSection>
           <StyledButton

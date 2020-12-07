@@ -22,7 +22,14 @@ const AuthProvider = ({ children }) => {
   }, [user]);
 
   return (
-    <Provider value={{ isLoggedIn: !!user, user, setUser }}>
+    <Provider
+      value={{
+        isAdmin: user?.role === 'admin',
+        isLoggedIn: !!user,
+        user,
+        setUser,
+      }}
+    >
       {children}
     </Provider>
   );
