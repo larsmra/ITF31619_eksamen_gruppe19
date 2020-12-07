@@ -38,7 +38,7 @@ const CreateArticle = () =>{
     
     const submitForm = () => {
       const articleData = async () => {
-        const response = await create(values);
+        const {data, error } = await create(values);
         if (error) {
           setError(error);
         } else {
