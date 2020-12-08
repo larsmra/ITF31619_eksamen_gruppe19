@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useParams} from 'react-router-dom';
-import axios from 'axios';
 import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
 import useCustomForm from '../hooks/useCustomForm';
+import update from '../utils/articleServices';
 
 const SaveArticle = styled.button`
         margin: 5px;
@@ -21,7 +21,7 @@ const EditArticle = ({article}) =>{
       values,
       errors,
       handleChange,
-      validateForm,
+      validateArticleForm,
       submitable,
     } = useCustomForm({
       article,
@@ -29,7 +29,7 @@ const EditArticle = ({article}) =>{
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        validateForm();
+        validateArticleForm();
     };
     
     const submitForm = () => {

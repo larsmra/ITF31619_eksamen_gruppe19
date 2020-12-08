@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const useCustomForm = ({ initialState }) => {
+export const useCustomForm = ({ initialState }) => {
   const [values, setValues] = useState(initialState || {});
   const [errors, setErrors] = useState(null);
   const [submitable, setSubmitable] = useState(false);
@@ -13,8 +13,17 @@ const useCustomForm = ({ initialState }) => {
     setValues({ ...values, [name]: value });
   };
 
-  const validateForm = () => {
+  const validateArticleForm = () => {
     if (values.title === '' || values.ingress === '' || values.content === '' || values.author === '' || values.category === '' ) {
+      setErrors('Fyll ut all felter');
+    } else {
+      setErrors('');
+      setSubmitable(true);
+    }
+  };
+
+  const validateInquiryForm = () => {
+    if (values.name === '' || values.email === '' || values.message === '' ) {
       setErrors('Fyll ut all felter');
     } else {
       setErrors('');
@@ -26,7 +35,8 @@ const useCustomForm = ({ initialState }) => {
     values,
     errors,
     handleChange,
-    validateForm,
+    validateArticleForm,
+    validateInquiryForm,
     submitable,
   };
 };

@@ -1,12 +1,11 @@
 import React, {useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
 import Error from '../components/Error';
 import useCustomForm from '../hooks/useCustomForm';
-import { create } from '../utils/articleServices';
+import create from '../utils/articleServices';
 
 const Create = styled.button`
     margin: 5px;
@@ -25,7 +24,7 @@ const CreateArticle = () =>{
       values,
       errors,
       handleChange,
-      validateForm,
+      validateArticleForm,
       submitable,
     } = useCustomForm({
       initalState,
@@ -33,7 +32,7 @@ const CreateArticle = () =>{
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        validateForm();
+        validateArticleForm();
     };
     
     const submitForm = () => {

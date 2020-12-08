@@ -13,6 +13,7 @@ import connectDatabase from './config/db.js';
 import user from './routes/user.js';
 import category from './routes/category.js';
 import article from './routes/article.js';
+import inquiry from './routes/inquiry.js';
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.get(`${process.env.BASEURL}/csrf-token`, (req, res) => {
 app.use(`${process.env.BASEURL}/users`, user);
 app.use(`${process.env.BASEURL}/articles`, article);
 app.use(`${process.env.BASEURL}/categories`, category);
+app.use(`${process.env.BASEURL}/inquiries`, inquiry);
 
 app.use(errorMiddleware);
 
