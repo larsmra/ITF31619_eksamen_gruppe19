@@ -6,6 +6,11 @@ const router = express.Router();
 
 router.get('/:id', [isAuthenticated(false)], articleController.get);
 router.get('/pages/:page', [isAuthenticated(false)], articleController.list);
+router.get(
+  '/pages/:page/search/:search',
+  [isAuthenticated(false)],
+  articleController.list
+);
 router.post('/', [isAuthenticated(), isAuthorized], articleController.create);
 router.put('/:id', [isAuthenticated(), isAuthorized], articleController.update);
 router.delete(

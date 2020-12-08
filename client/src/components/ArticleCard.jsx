@@ -2,6 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+const MAX_LENGTH = 150;
+
 const StyledArticle = styled.article`
   display: grid;
   grid-template: auto auto auto;
@@ -45,13 +47,9 @@ const StyledIngress = styled.p`
 `;
 
 const ArticleCard = ({ id, title, category, ingress }) => {
-  const MAX_LENGTH = 150;
-
   const history = useHistory();
 
-  const goToPage = () => {
-    history.push(`/fagartikler/${id}`);
-  };
+  const goToPage = () => history.push(`/fagartikler/${id}`);
 
   return (
     <StyledArticle onClick={goToPage}>

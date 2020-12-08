@@ -12,14 +12,16 @@ export const get = catchAsyncError(async (req, res, next) => {
 
 export const list = catchAsyncError(async (req, res, next) => {
   const showAll = !!req.user;
-  const count = await articleService.countArticles(showAll);
-  const articles = await articleService.listArticles(
-    (req.params.page - 1) * 5,
+  const count = await articleService.countArticles(
+    req.params.search || '',
     showAll
   );
-  res
-    .status(200)
-    .json({ success: true, data: { pages: Math.ceil(count / 5), articles } });
+  const articles = await articleService.listArticles(
+    (req.params.page - 1) * 5,
+    req.params.search || '',
+    showAll
+  );
+  res.status(200).json({ success: true, data: { count, articles } });
 });
 
 export const listAuthors = catchAsyncError(async (req, res, next) => {
@@ -46,12 +48,6 @@ export const update = catchAsyncError(async (req, res, next) => {
 });
 
 export const remove = catchAsyncError(async (req, res, next) => {
-  let article = await articleService.getArticleById(req.params.id);
-  if (!article) {
-    return next(
-      new ErrorHandler('Artikkelen du prøver å slette finnes ikke', 404)
-    );
-  }
-  article = await articleService.deleteArticle(req.params.id);
-  res.status(204).json({});
+  await articleService.removeArticle(req.params.id);
+  res.status(200).json({ success: true });
 });

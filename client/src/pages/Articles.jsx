@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
 import Title from '../components/Title';
@@ -27,7 +27,7 @@ const Create = styled.a`
   }
 `;
 
-const SearchFilter = styled.div`
+const StyledButtonWrapper = styled.div`
   & > button {
     margin: 5px;
     padding: 20px 30px;
@@ -49,71 +49,91 @@ const StyledArticleSection = styled.section`
 const Articles = () => {
   const { isAdmin } = useAuthContext();
   const { page } = useParams();
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [pages, setPages] = useState(0);
+  const [pages, setPages] = useState(1);
   const [articles, setArticles] = useState([]);
+  const [search, setSearch] = useState('');
+  const [searchView, setSearchView] = useState(false);
+  const [filterView, setFilterView] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await list(page);
-      console.log(data);
-      if (data.success) {
-        console.log(data);
-        setPages(data.data.pages);
-        console.log(data);
-        setArticles(data.data.articles);
-        console.log(data);
-        console.log(`${data.data.pages} ${data.data.articles}`);
-        setError(null);
-      } else {
-        setError(data.response);
-        console.log(data.response);
-      }
-    };
-    fetchData();
-  }, [page]);
+  const goToFirstPage = useCallback(
+    () => history.push('/fagartikler/sider/1'),
+    [history]
+  );
 
-  console.log('test');
-  console.log(articles);
-
-  return (
-    /* Implement when we have a backend
-
-  const goToCreateArticlePage = () => {
-      history.push(`/fagartikler/ny`);
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+    if (page > 1) {
+      goToFirstPage();
+    }
   };
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [articles, setArticles] = useState(null);
-
   useEffect(() => {
-    const fetchData = async () => {
-      try{
-        const {data, error } = await list();
-        if (error) {
-          setError(error);
+    if (page) {
+      const fetchData = async (p) => {
+        const { data } = await list(p, search);
+        if (data.success) {
+          setPages(data.data.count === 0 ? 1 : Math.ceil(data.data.count / 5));
+          setArticles(data.data.articles);
+          setError(null);
         } else {
-          setArticles(data);
+          setError(data.response);
         }
-      }finally{
-         setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-  */
+      };
+      fetchData(page);
+    } else {
+      goToFirstPage();
+    }
+  }, [page, search, goToFirstPage]);
 
+  const handleSearchView = () => {
+    setSearchView(!searchView);
+    setFilterView(false);
+  };
+
+  const handleFilterView = () => {
+    setFilterView(!filterView);
+    setSearchView(false);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    goToFirstPage();
+  };
+
+  return (
     <>
       <Title title="Fagartikler" />
       <ArticleFunctions isAdmin={isAdmin}>
         {isAdmin && <Create href="/fagartikler/ny"> Ny Artikkel </Create>}
-        <SearchFilter>
-          <button> Search </button>
-          {/* Change later to use the CategorySelector component for filter, may change out button */}
-          <button> Filter </button>
-        </SearchFilter>
+        <StyledButtonWrapper>
+          <button type="button" onClick={handleSearchView}>
+            Search
+          </button>
+          <button type="button" onClick={handleFilterView}>
+            Filter
+          </button>
+          {searchView && (
+            <section>
+              <form onSubmit={handleSearch}>
+                <input
+                  type="search"
+                  placeholder="Søk"
+                  value={search}
+                  onChange={handleSearchChange}
+                />
+              </form>
+            </section>
+          )}
+          {filterView && (
+            <section>
+              <input />
+            </section>
+          )}
+        </StyledButtonWrapper>
       </ArticleFunctions>
       <StyledArticleSection>
         {/* Use later
@@ -125,7 +145,7 @@ const Articles = () => {
                 */}
         {articles &&
           articles.map((article) => (
-            <ArticleCard key={article._id} {...article} />
+            <ArticleCard key={article._id} id={article._id} {...article} />
           ))}
       </StyledArticleSection>
       <ArticleNavigation pages={pages} />

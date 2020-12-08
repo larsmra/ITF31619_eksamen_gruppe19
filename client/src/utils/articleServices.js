@@ -3,10 +3,11 @@ import { getCsrfToken } from './authServices';
 
 const API_PATH = '/articles';
 
-export const list = async (page) => {
+export const list = async (page, search = '') => {
   try {
-    const articles = await http.get(`${API_PATH}/pages/${page}`);
-    console.log(articles);
+    const articles = search
+      ? await http.get(`${API_PATH}/pages/${page}/search/${search}`)
+      : await http.get(`${API_PATH}/pages/${page}`);
     return articles;
   } catch (err) {
     return err.response;
@@ -40,7 +41,11 @@ export const create = async (data) => {
 
 export const remove = async (id) => {
   try {
-    return await http.delete(`${API_PATH}/${id}`);
+    await getCsrfToken();
+    const del = await http.delete(`${API_PATH}/${id}`);
+    console.log(`Respons: ${del}`);
+    console.log(del);
+    return del;
   } catch (err) {
     return err.response;
   }

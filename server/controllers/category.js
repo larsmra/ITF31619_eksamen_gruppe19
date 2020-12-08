@@ -1,7 +1,5 @@
 import { categoryService } from '../services/index.js';
 import catchAsyncError from '../middleware/catchAsync.js';
-import ErrorHandler from '../utils/errorHandler.js';
-import { sendToken } from '../utils/jwtToken.js';
 
 export const list = catchAsyncError(async (req, res, next) => {
   const categories = await categoryService.listCategories();
