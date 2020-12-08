@@ -13,6 +13,11 @@ const InquirySchema = new Schema({
         required: true,
         validate: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
     },
+    subject: {
+        type: String,
+        required: true,
+        trim: true,
+    },
     message: {
         type: String,
         required: true,
