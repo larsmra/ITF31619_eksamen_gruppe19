@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Error from '../components/Error';
 import UserForm from '../components/UserForm';
 import { useAuthContext } from '../context/AuthProvider';
-import { register } from '../utils/auth';
+import { register } from '../utils/authServices';
 
 const StyledSection = styled.section`
   display: flex;

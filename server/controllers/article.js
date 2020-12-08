@@ -11,12 +11,20 @@ export const get = catchAsyncError(async (req, res, next) => {
 });
 
 export const list = catchAsyncError(async (req, res, next) => {
-  let showHidden = false;
-  if (req.user) {
-    showHidden = true;
-  }
-  const articles = await articleService.listArticles(showHidden);
-  res.status(200).json({ success: true, data: articles });
+  const showAll = !!req.user;
+  const count = await articleService.countArticles(showAll);
+  const articles = await articleService.listArticles(
+    (req.params.page - 1) * 5,
+    showAll
+  );
+  res
+    .status(200)
+    .json({ success: true, data: { pages: Math.ceil(count / 5), articles } });
+});
+
+export const listAuthors = catchAsyncError(async (req, res, next) => {
+  const authors = await articleService.listAuthors();
+  res.status(200).json({ success: true, data: authors });
 });
 
 export const create = catchAsyncError(async (req, res, next) => {

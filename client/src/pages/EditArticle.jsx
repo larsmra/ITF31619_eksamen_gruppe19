@@ -15,7 +15,7 @@ const SaveArticle = styled.button`
 const EditArticle = ({ article }) => {
   const { id } = useParams();
   const history = useHistory();
-  const [error, setError] = useState('');
+  /* const [error, setError] = useState('');
   const {
     values,
     errors,
@@ -24,38 +24,34 @@ const EditArticle = ({ article }) => {
     submitable,
   } = useCustomForm({
     article,
-  });
+  }); */
 
-  const handleSubmit = (event) => {
+  /* const handleSubmit = (event) => {
     event.preventDefault();
     validateForm();
-  };
+  }; */
 
-  const submitForm = () => {
-    const articleData = async () => {
-      const { error } = await update(id, values);
-      if (error) {
-        setError(error);
-      } else {
-        history.push(`/fagartikler/${id}`);
-      }
-    };
-    articleData();
-  };
-
-  useEffect(() => {
+  /* useEffect(() => {
     if (submitable) {
+      const submitForm = () => {
+        const articleData = async () => {
+          const { error } = await update(id, values);
+          if (error) {
+            setError(error);
+          } else {
+            history.push(`/fagartikler/${id}`);
+          }
+        };
+        articleData();
+      };
       submitForm();
     }
-  }, [submitable]);
+  }, [submitable, history, id, values]); */
 
   return (
     <>
       <Title title={values.title} />
-      <section>
-        <ArticleForm values={values} handleChange={handleChange} />
-        <SaveArticle onClick={handleSubmit} />
-      </section>
+      <ArticleForm values={values} />
     </>
   );
 };

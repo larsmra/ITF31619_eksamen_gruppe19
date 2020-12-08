@@ -7,6 +7,7 @@ import ArticleForm from '../components/ArticleForm';
 import Error from '../components/Error';
 import useCustomForm from '../hooks/useCustomForm';
 import { create } from '../utils/articleServices';
+import CategoryModal from '../components/CategoryModal';
 
 const Create = styled.button`
   margin: 5px;
@@ -14,18 +15,40 @@ const Create = styled.button`
   background-color: lightgrey;
 `;
 
-const initalState = {
+/* const initalState = {
   title: '',
   ingress: '',
   content: '',
   author: '',
   category: '',
-};
+}; */
 
 const CreateArticle = () => {
   const history = useHistory();
   const [error, setError] = useState('');
-  const {
+  const [formData, setFormData] = useState({
+    title: '',
+    ingress: '',
+    content: '',
+    author: '',
+    category: { _id: '' },
+    hidden: false,
+  });
+  const [modal, setModal] = useState(false);
+
+  console.log(formData);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const { data } = await create(formData);
+    if (data.success) {
+      history.push(`/fagartikler/${data.data._id}`);
+    } else {
+      setError(data.message);
+    }
+  };
+
+  /* const {
     values,
     errors,
     handleChange,
@@ -33,42 +56,41 @@ const CreateArticle = () => {
     submitable,
   } = useCustomForm({
     initalState,
-  });
+  }); */
 
-  const handleSubmit = (event) => {
+  /* const handleSubmit = (event) => {
     event.preventDefault();
     validateForm();
-  };
+  }; */
 
-  const submitForm = () => {
-    const articleData = async () => {
-      const response = await create(values);
-      if (error) {
-        setError(error);
-      } else {
-        history.push('/fagartikler');
-      }
-    };
-    articleData();
-  };
-
-  useEffect(() => {
+  /* useEffect(() => {
     if (submitable) {
+      const submitForm = () => {
+        const articleData = async () => {
+          const response = await create(values);
+          console.log(response);
+          if (error) {
+            setError(error);
+          } else {
+            history.push('/fagartikler');
+          }
+        };
+        articleData();
+      };
       submitForm();
     }
-  }, [submitable]);
+  }, [submitable, error, history, values]); */
 
   return (
     <>
       <Title title="Ny artikkel" />
-
-      <section>
-        <ArticleForm values={values} handleChange={handleChange} />
-        <Create type="button" onClick={handleSubmit}>
-          {' '}
-          Create{' '}
-        </Create>
-      </section>
+      <ArticleForm
+        data={formData}
+        setData={setFormData}
+        setModal={setModal}
+        onSubmit={onSubmit}
+      />
+      {modal && <CategoryModal setModal={setModal} />}
     </>
   );
 };

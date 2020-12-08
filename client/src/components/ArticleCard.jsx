@@ -58,7 +58,7 @@ const ArticleCard = ({ id, title, category, ingress }) => {
       <StyledDiv />
       <StyledHeader>
         <h2>{title}</h2>
-        <h6>{category}</h6>
+        <h6>{category.name}</h6>
       </StyledHeader>
       {ingress.length > MAX_LENGTH ? (
         <StyledIngress>

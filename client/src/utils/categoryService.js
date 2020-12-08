@@ -1,28 +1,31 @@
 import http from './http';
+import { getCsrfToken } from './authServices';
 
-const API_URL = '/categories';
+const API_PATH = '/categories';
 
 export const list = async () => {
   try {
-    return await http.get(`${API_URL}`);
+    return await http.get(`${API_PATH}`);
   } catch (err) {
-    return err.response.data;
+    return err.response;
   }
 };
 
 export const get = async (id) => {
   try {
-    return await http.get(`${API_URL}/${id}`);
+    return await http.get(`${API_PATH}/${id}`);
   } catch (err) {
-    return err.response.data;
+    return err.response;
   }
 };
 
 export const create = async (data) => {
   try {
-    return await http.post(`${API_URL}`, data);
+    await getCsrfToken();
+    return await http.post(`${API_PATH}`, data);
   } catch (err) {
-    return err.response.data;
+    console.log(err.response);
+    return err.response;
   }
 };
 
