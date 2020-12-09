@@ -11,15 +11,16 @@ export const list = async () => {
 };
 
 export const create = async (data) => {
-    console.log("In the create method");
-    try {
-        return await http.post(`${API_URL}`, data);
-    } catch (err) {
-        return err.response.data;
-    }
+    console.log("I create metoden");
+  try {
+    return await http.post(`${API_URL}`, data);
+  } catch (err) {
+      console.log("Her gikk det galt");
+    return err.response;
+  }
 };
 
 export default {  
     list,
     create,
-  };
+};

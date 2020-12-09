@@ -49,13 +49,11 @@ const Contact = () => {
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("Submit started");
         validateInquiryForm();
     };
     
     const submitForm = () => {
         const inquiryData = async () => {
-          console.log(values);
           const { data } = await create(values);
         if (!data.success) {
           setError(data.message);

@@ -10,6 +10,7 @@ export const list = catchAsyncError(async (req, res, next) => {
 export const create = catchAsyncError(async (req, res, next) => {
     console.log("I got to the controller");
     const inquiry = await inquiryService.createEmail(req.body);
+    /*
     try{
       await receiveMail({
         email: inquiry.email,
@@ -25,5 +26,6 @@ export const create = catchAsyncError(async (req, res, next) => {
     }catch(error){
       console.log(error);
     }
+    */
     res.status(201).json(inquiry);
   });
