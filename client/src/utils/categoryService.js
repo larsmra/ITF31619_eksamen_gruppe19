@@ -1,5 +1,5 @@
 import http from './http';
-import { getCsrfToken } from './authServices';
+import { getCsrfToken } from './authService';
 
 const API_PATH = '/categories';
 
