@@ -27,6 +27,7 @@ export const useCustomForm = ({ initialState }) => {
       setErrors('Fyll ut all felter');
     } else {
       setErrors('');
+      console.log("Validering godkjent");
       setSubmitable(true);
     }
   };

@@ -8,7 +8,8 @@ export const list = catchAsyncError(async (req, res, next) => {
   });
 
 export const create = catchAsyncError(async (req, res, next) => {
-    const inquiry = await inquiryService.createInquiry(req.body);
+    console.log("I got to the controller");
+    const inquiry = await inquiryService.createEmail(req.body);
     try{
       await receiveMail({
         email: inquiry.email,

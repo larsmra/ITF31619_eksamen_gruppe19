@@ -3,17 +3,36 @@ import styled from 'styled-components';
 import Title from '../components/Title';
 import { useHistory } from 'react-router-dom';
 import useCustomForm from '../hooks/useCustomForm';
-import create from '../utils/inquiryService';
+import create from '../utils/inquiryService.js';
 import { useAuthContext } from '../context/AuthProvider';
 
 const ContactForm = styled.form`
-
+    display: flex;
+    flex-flow: column wrap;
+    & > * {
+      margin: 5px;
+    }
+    
 `
-
-const initialState = { name: '', email: '', message:''};
+const Send = styled.button`
+    padding: 20px 30px;
+    justify-self: end;
+    background-color: #479EB9;
+    border-style: none;
+    color: white;
+    &:hover{
+        background-color: #236B85;
+    }
+`;
 
 const Contact = () => {
     const { isLoggedIn, user } = useAuthContext();
+    let initialState;
+
+    isLoggedIn ? 
+      (initialState = { name: user.name, email: user.email, message:''}) 
+      :
+      (initialState = { name: '', email: '', message:''});
 
     const history = useHistory();
     const [error, setError] = useState('');
@@ -26,21 +45,23 @@ const Contact = () => {
     } = useCustomForm({
       initialState,
     });
-
-    isLoggedIn && (values.name=user.name, values.email=user.email); 
-
+    
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log("Submit started");
         validateInquiryForm();
     };
     
     const submitForm = () => {
         const inquiryData = async () => {
+          console.log(values);
           const { error } = await create(values);
         if (error) {
           setError(error);
+          console.log("Noe galt skjedde");
         } else {
           history.push(`/kontakt`);
+          console.log("Alt bra?");
         }
       };
       inquiryData();
@@ -48,6 +69,7 @@ const Contact = () => {
     
     useEffect(() => {
         if (submitable) {
+
           submitForm();
         }
       }, [submitable]);
@@ -56,7 +78,7 @@ const Contact = () => {
         <>
         <Title title="Kontakt oss"/>
         <section>
-            <ContactForm>
+            <ContactForm onSubmit={handleSubmit}>
             <label htmlFor="name">Navn</label>
             <input 
                 type="text" 
@@ -78,6 +100,9 @@ const Contact = () => {
                 id="contact_message"
                 value={values.message}
                 onChange={handleChange}/>
+            <Send type="submit">
+              Send 
+            </Send>
             </ContactForm>
         </section>
         </>
