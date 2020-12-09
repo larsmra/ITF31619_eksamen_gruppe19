@@ -10,7 +10,6 @@ export const list = catchAsyncError(async (req, res, next) => {
 export const create = catchAsyncError(async (req, res, next) => {
     console.log("I got to the controller");
     const inquiry = await inquiryService.createEmail(req.body);
-    /*
     try{
       await receiveMail({
         email: inquiry.email,
@@ -18,14 +17,15 @@ export const create = catchAsyncError(async (req, res, next) => {
         subject: "Kontaktskjema",
         message: inquiry.message,
       });
+
       await sendMail({
         email: inquiry.email,
-        subject: "Bekreftet henvendelse",
-        message: "Vi har mottatt henvendelsen din, vi tar kontakt innen 1-2 dager. \n Mvh. FG Rørleggerservice AS",
+        subject: 'Bekreftet henvendelse',
+        message: `Hei ${inquiry.name} \n Vi har mottatt henvendelsen din, vi tar kontakt innen 1-2 dager. \n Mvh. FG Rørleggerservice AS`,
       });
     }catch(error){
       console.log(error);
     }
-    */
+    
     res.status(201).json(inquiry);
   });
