@@ -33,8 +33,7 @@ export const receiveMail = async (sender) =>{
     
     const message = {
         from: `${sender.email} <${sender.name}>`,
-        //Change to admin e-mail 
-        to: process.env.EMAIL_COMPANY,
+        to: process.env.EMAIL_ADMIN,
         subject: sender.subject,
         text: sender.message
     };

@@ -30,11 +30,6 @@ const NavMenuItem = styled.li.attrs(({ special }) => ({
   margin: 0;
   ${({ special }) => special && 'background-color: #479eb9;'}
 
-  /*
-  &:first-child {
-    padding-left: 0;
-  }
-  */
 
   & > a {
     display: block;
@@ -66,7 +61,7 @@ const LogOutButton = styled.button`
 `;
 
 const Navbar = () => {
-  const { isLoggedIn, setUser } = useAuthContext();
+  const { isLoggedIn, isAdmin, setUser } = useAuthContext();
   const history = useHistory();
 
   const handleLogout = async () => {
@@ -96,9 +91,16 @@ const Navbar = () => {
         </NavMenuItem>
         <NavMenuItem>
           <NavLink exact to="/kontakt" activeClassName="active">
-            Kontakt
+          Kontakt
           </NavLink>
         </NavMenuItem>
+        {isAdmin && (
+          <NavMenuItem>
+          <NavLink exact to="/henvendelser" activeClassName="active">
+            Henvendelser
+          </NavLink>
+        </NavMenuItem>
+        )}
         {isLoggedIn ? (
           <NavMenuItem special>
             <LogOutButton type="button" onClick={handleLogout}>

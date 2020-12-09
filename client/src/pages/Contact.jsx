@@ -57,7 +57,6 @@ const Contact = () => {
           const { data } = await create(values);
         if (!data.success) {
           setError(data.message);
-
         } else {
           setSuccess(true);
           setError(null);
