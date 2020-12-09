@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import axios from 'axios';
 import styled from 'styled-components';
 import Title from '../components/Title';
-import {remove} from '../utils/articleServices';
+import Error from '../components/Error';
+import { remove, get } from '../utils/articleServices';
 import { useAuthContext } from '../context/AuthProvider';
+import dateFormatter from '../utils/dateFormatter';
 
 const StyledSection = styled.section`
   max-width: 90%;
@@ -41,94 +42,90 @@ const Update = styled.button`
 `;
 
 const Article = () => {
+  const { isLoggedIn, isAdmin } = useAuthContext();
   const { id } = useParams();
   const history = useHistory();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [article, setArticle] = useState(null);
 
   const goToEditArticlePage = () => {
-      history.push(`/fagartikler/${id}/rediger`);
+    history.push(`/fagartikler/${id}/rediger`);
   };
-  const { isLoggedIn } = useAuthContext();
 
-  const goToArticlesPage = () => {
+  const goToArticlesPage = useCallback(() => {
     history.push(`/fagartikler`);
-};
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [article, setArticle] = useState([]);
+  }, [history]);
 
   useEffect(() => {
+    console.log(`id: ${id}`);
     if (id) {
-      const fetchData = async () => {
-        setLoading(true);
+      console.log('useEffect 1');
+      const fetchArticleData = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/fagartikler/${id}`);
-          if (response.status === 200) {
-            setArticle(response.data.data);
-            setError('');
-          }
-        } catch (error) {
-          setArticle([]);
-          setError(error.message);
-        } finally {
-          setLoading(false);
+          setLoading(true);
+          const { data } = await get(id);
+          setArticle(data.data);
+          setError(null);
+        } catch (err) {
+          goToArticlesPage();
         }
+        setLoading(true);
+        const { data } = await get(id);
+        if (data.success) {
+          setArticle(data.data);
+          setError(null);
+        } else {
+          console.log(data.message);
+          setError(data.message);
+          console.log('test2');
+          // goToArticlesPage();
+        }
+        setLoading(false);
       };
-      fetchData();
+      fetchArticleData();
     }
-  }, [id]);
+  }, [id, error, goToArticlesPage]);
 
-  const deleteArticle = (id) =>{
-    const article = async () => {
-      try{
-        const response = await remove(id);
-        if (response.status === 200) {
-          setError('');
-          goToEditArticlePage();
-        }
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-    article();
+  const deleteArticle = async () => {
+    console.log('test');
+    const { data } = await remove(id);
+    console.log(data);
+    if (data.success) {
+      goToArticlesPage();
+    } else {
+      setError(data.message);
+    }
   };
-  
 
-  return(
-      <>
-        {loading ? (
-        'Loading ...'
-        ) : (
+  return (
+    <>
+      {article && (
         <>
-          <Title title={article.title}/>
+          <Title title={article.title} />
           <StyledSection>
             <StyledInfo>
-              <h6>Av {article.author} </h6>
-              <h6> {article.date} </h6>
+              <p>Av {article.author} </p>
+              <p> {dateFormatter(article.date)} </p>
             </StyledInfo>
             <ArticleContent>
               <p> {article.ingress} </p>
               <p> {article.content} </p>
             </ArticleContent>
-            <h5> {article.category} </h5>
+            <h5> {article.category.name} </h5>
 
             <ArticleAdminFunctions>
-              <Delete 
-                onclick={deleteArticle}> 
-                Slett 
-              </Delete>
-              <Update
-                article={article}
-                onClick={goToEditArticlePage}> 
-                Rediger 
+              <Delete onClick={deleteArticle}>Slett</Delete>
+              <Update article={article} onClick={goToEditArticlePage}>
+                Rediger
               </Update>
             </ArticleAdminFunctions>
           </StyledSection>
         </>
-          )}
-          {error ? <Error message={error} /> : null}
-      </>
-    );
+      )}
+      {error && <Error message={error} />}
+    </>
+  );
 };
 
 export default Article;

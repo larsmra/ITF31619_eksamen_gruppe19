@@ -1,4 +1,4 @@
-import { articleService } from '../services/index.js';
+import { articleService, categoryService } from '../services/index.js';
 import catchAsyncError from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
 
@@ -11,12 +11,33 @@ export const get = catchAsyncError(async (req, res, next) => {
 });
 
 export const list = catchAsyncError(async (req, res, next) => {
-  const articles = await articleService.listArticles();
-  res.status(200).json({ success: true, data: articles });
+  const showAll = !!req.user;
+  const categories = await categoryService.listCategories(
+    req.params.filter ? req.params.filter.split(',') : null
+  );
+  const count = await articleService.countArticles(
+    req.params.search || '',
+    categories,
+    showAll
+  );
+  const articles = await articleService.listArticles(
+    (req.params.page - 1) * 5,
+    req.params.search || '',
+    categories,
+    showAll
+  );
+  res.status(200).json({ success: true, data: { count, articles } });
+});
+
+export const listAuthors = catchAsyncError(async (req, res, next) => {
+  const authors = await articleService.listAuthors();
+  res.status(200).json({ success: true, data: authors });
 });
 
 export const create = catchAsyncError(async (req, res, next) => {
-  req.body.user = req.user.id;
+  req.body.admin = req.user.id;
+  req.body.title_lower = req.body.title.toLowerCase();
+  req.body.date = new Date();
   const article = await articleService.createArticle(req.body);
   res.status(201).json({ success: true, data: article });
 });
@@ -33,12 +54,6 @@ export const update = catchAsyncError(async (req, res, next) => {
 });
 
 export const remove = catchAsyncError(async (req, res, next) => {
-  let article = await articleService.getArticleById(req.params.id);
-  if (!article) {
-    return next(
-      new ErrorHandler('Artikkelen du prøver å slette finnes ikke', 404)
-    );
-  }
-  article = await articleService.deleteArticle(req.params.id);
-  res.status(204).json({});
+  await articleService.removeArticle(req.params.id);
+  res.status(200).json({ success: true });
 });

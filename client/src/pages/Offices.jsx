@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Title from '../components/Title';
-import { locations, offices } from '../data/data';
+import { officeLocations, offices } from '../data/data';
 
 import OfficeContainer from '../components/OfficeContainer';
 
@@ -63,20 +63,20 @@ const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`
 `;
 
 const Offices = () => {
-  const [availableLocations, setAvailableLocations] = useState(locations);
+  const [viewableLocations, setViewableLocations] = useState(officeLocations);
   const [filter, setFilter] = useState(false);
   const [listView, setListView] = useState(false);
 
-  const handleChange = (id) => {
-    const temp = [...locations];
-    const filtered = temp.filter((location) => location.id === id).shift();
+  const handleFilterChange = (id) => {
+    const locations = [...officeLocations];
+    const filtered = locations.filter((location) => location.id === id).shift();
     filtered.view = !filtered.view;
-    setAvailableLocations(temp);
+    setViewableLocations(locations);
   };
 
   return (
     <>
-      <Title title="Våre kontorer"/>
+      <Title title="Våre kontorer" />
       <section>
         <StyledButtonSection>
           <StyledButton
@@ -115,14 +115,14 @@ const Offices = () => {
         {filter && (
           <StyledFilterSection>
             <StyledList>
-              {availableLocations &&
-                availableLocations.map((location) => (
+              {viewableLocations &&
+                viewableLocations.map((location) => (
                   <StyledListElement key={location.id}>
                     <StyledCheckbox
                       id={location.city}
                       type="checkbox"
                       checked={location.view}
-                      onChange={() => handleChange(location.id)}
+                      onChange={() => handleFilterChange(location.id)}
                     />
                     <label htmlFor={location.city}>{location.city}</label>
                   </StyledListElement>
@@ -130,8 +130,8 @@ const Offices = () => {
             </StyledList>
           </StyledFilterSection>
         )}
-        {locations &&
-          locations
+        {officeLocations &&
+          officeLocations
             .filter((location) => location.view === true)
             .map((location) => {
               const locationOffices = offices.filter(

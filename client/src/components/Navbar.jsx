@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuthContext } from '../context/AuthProvider';
-import { logout } from '../utils/auth';
+import { logout } from '../utils/authServices';
 
 const StyledNav = styled.nav`
   width: 100%;
@@ -90,7 +90,7 @@ const Navbar = () => {
           </NavLink>
         </NavMenuItem>
         <NavMenuItem>
-          <NavLink exact to="/fagartikler" activeClassName="active">
+          <NavLink to="/fagartikler/sider/1" activeClassName="active">
             Fagartikler
           </NavLink>
         </NavMenuItem>
@@ -99,17 +99,26 @@ const Navbar = () => {
             Kontakt
           </NavLink>
         </NavMenuItem>
-        <NavMenuItem special>
-          {isLoggedIn ? (
+        {isLoggedIn ? (
+          <NavMenuItem special>
             <LogOutButton type="button" onClick={handleLogout}>
               Logg ut
             </LogOutButton>
-          ) : (
-            <NavLink exact to="/login" activeClassName="active">
-              Logg inn
-            </NavLink>
-          )}
-        </NavMenuItem>
+          </NavMenuItem>
+        ) : (
+          <>
+            <NavMenuItem special>
+              <NavLink exact to="/register" activeClassName="active">
+                Registrer deg
+              </NavLink>
+            </NavMenuItem>
+            <NavMenuItem special>
+              <NavLink exact to="/login" activeClassName="active">
+                Logg inn
+              </NavLink>
+            </NavMenuItem>
+          </>
+        )}
       </NavMenu>
     </StyledNav>
   );

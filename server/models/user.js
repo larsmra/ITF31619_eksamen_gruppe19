@@ -13,12 +13,19 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
     validate: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
   },
   password: {
     type: String,
     required: true,
     select: false,
+  },
+  role: {
+    type: String,
+    required: true,
+    enum: ['admin', 'user'],
+    default: 'user',
   },
 });
 

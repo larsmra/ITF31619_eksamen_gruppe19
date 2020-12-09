@@ -16,7 +16,7 @@ const Office = () => {
 
   return (
     <>
-    <Title title="Våre kontorer"/>
+      <Title title="Våre kontorer" />
       <section>
         <h2>Velkommen til {office.name}</h2>
         <p>{office.description}</p>

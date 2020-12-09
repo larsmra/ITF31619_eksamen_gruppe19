@@ -1,13 +1,32 @@
 import express from 'express';
-import {isAuthenticated} from '../middleware/auth.js';
+import { isAuthenticated, isAuthorized } from '../middleware/auth.js';
 import { articleController } from '../controllers/index.js';
 
 const router = express.Router();
 
-router.get('/:id', articleController.get);
-router.get('/', articleController.list);
-router.post('/', isAuthenticated, articleController.create);
-router.put('/:id', isAuthenticated, articleController.update);
-router.delete('/:id', isAuthenticated, articleController.remove);
+router.get('/:id', [isAuthenticated(false)], articleController.get);
+router.get(
+  '/pages/:page/search/:search/filter/:filter',
+  [isAuthenticated(false)],
+  articleController.list
+);
+router.get(
+  '/pages/:page/search/:search',
+  [isAuthenticated(false)],
+  articleController.list
+);
+router.get(
+  '/pages/:page/filter/:filter',
+  [isAuthenticated(false)],
+  articleController.list
+);
+router.get('/pages/:page', [isAuthenticated(false)], articleController.list);
+router.post('/', [isAuthenticated(), isAuthorized], articleController.create);
+router.put('/:id', [isAuthenticated(), isAuthorized], articleController.update);
+router.delete(
+  '/:id',
+  [isAuthenticated(), isAuthorized],
+  articleController.remove
+);
 
 export default router;

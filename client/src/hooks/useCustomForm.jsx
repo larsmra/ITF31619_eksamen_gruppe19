@@ -14,7 +14,13 @@ export const useCustomForm = ({ initialState }) => {
   };
 
   const validateArticleForm = () => {
-    if (values.title === '' || values.ingress === '' || values.content === '' || values.author === '' || values.category === '' ) {
+    if (
+      values.title === '' ||
+      values.ingress === '' ||
+      values.content === '' ||
+      values.author === '' ||
+      values.category === ''
+    ) {
       setErrors('Fyll ut all felter');
     } else {
       setErrors('');

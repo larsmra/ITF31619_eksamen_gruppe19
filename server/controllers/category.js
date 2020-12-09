@@ -1,6 +1,5 @@
 import { categoryService } from '../services/index.js';
 import catchAsyncError from '../middleware/catchAsync.js';
-import ErrorHandler from '../utils/errorHandler.js';
 
 export const list = catchAsyncError(async (req, res, next) => {
   const categories = await categoryService.listCategories();
@@ -8,8 +7,7 @@ export const list = catchAsyncError(async (req, res, next) => {
 });
 
 export const create = catchAsyncError(async (req, res, next) => {
-  req.body.user = req.user.id;
+  req.body.creator = req.user.id;
   const category = await categoryService.createCategory(req.body);
   res.status(201).json({ success: true, data: category });
 });
-

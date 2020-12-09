@@ -1,72 +1,95 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AuthorSelector from './AuthorSelector';
 import CategorySelector from './CategorySelector';
 import CategoryButton from './CategoryButton';
 
-const StyledForm = styled.form`
-    display: flex;
-    flex-flow: column nowrap;
+const StyledWrapper = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
 
-    & > label {
+  & > label {
     font-size: 14px;
-    }
-
-    & > input {
-    }
-
-    & > div{
-        display: flex;
-        justify-content: space-between;
-    }
+  }
 `;
 
-const ArticleForm = ({values, handleChange}) => {
+const CategoryWrapper = styled.div`
+  display: flex;
 
-  const [modal, setModal] = useState(false);
+  & > select {
+    flex-grow: 1;
+  }
+`;
 
-  return (
-    <StyledForm>
-      <label htmlFor="article_title"> Tittel </label>
+const ArticleForm = ({
+  data,
+  setData,
+  modal,
+  setModal = () => null,
+  onSubmit = (e) => e.preventDefault(),
+}) => (
+  <form onSubmit={onSubmit}>
+    <StyledWrapper>
+      <label htmlFor="article_title">Tittel</label>
       <input
         type="text"
         id="article_title"
         name="title"
         placeholder="Skriv inn tittel"
-        value={values.title}
-        onChange={handleChange}
+        value={data.title}
+        onChange={(e) =>
+          setData((prev) => ({ ...prev, title: e.target.value }))
+        }
       />
-      <label htmlFor="article_ingress"> Ingress </label>
+      <label htmlFor="article_ingress">Ingress</label>
       <input
         type="text"
         id="article_ingress"
         name="ingress"
         placeholder="Skriv et kort innledende avsnitt"
-        value={values.ingress}
-        onChange={handleChange}
+        value={data.ingress}
+        onChange={(e) =>
+          setData((prev) => ({ ...prev, ingress: e.target.value }))
+        }
       />
-      <label htmlFor="article_content"> Innhold </label>
+      <label htmlFor="article_content">Innhold</label>
       <textarea
         type="text"
         id="article_content"
         name="content"
         placeholder="Skriv innhold"
-        value={values.content}
-        onChange={handleChange}
+        value={data.content}
+        onChange={(e) =>
+          setData((prev) => ({ ...prev, content: e.target.value }))
+        }
       />
-      <label htmlFor="article_category"> Kategori </label>
+      <label htmlFor="article_category">Kategori</label>
+      <CategoryWrapper>
+        <CategorySelector setData={setData} />
+        <CategoryButton
+          name="New category"
+          clickHandler={() => setModal(!modal)}
+        />
+      </CategoryWrapper>
+
+      <label htmlFor="article_author">Forfatter</label>
+      <AuthorSelector setData={setData} />
       <div>
-            <CategorySelector handleCategoryChange={handleChange} />
-            <CategoryButton
-            name="New category"
-            clickHandler={() => setModal(!modal)}
-             />
+        <input
+          type="checkbox"
+          id="toggle_hidden"
+          name="hidden"
+          onChange={(e) =>
+            setData((prev) => ({ ...prev, hidden: e.target.checked }))
+          }
+        />
+        <label htmlFor="toggle_hidden">
+          Skjul artikkelen for uregistrerte brukere
+        </label>
       </div>
-     
-      <label htmlFor="article_author"> Forfatter </label>
-      <AuthorSelector handleAuthorChange={handleChange} />
-    </StyledForm>
-  );
-};
+    </StyledWrapper>
+    <button type="submit">Lag</button>
+  </form>
+);
 
 export default ArticleForm;

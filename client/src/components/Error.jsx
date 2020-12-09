@@ -5,6 +5,8 @@ const Message = styled.p`
   color: #ff0000;
 `;
 
-const Error = ({ message }) => <>{message && <Message>{message}</Message>}</>;
+const Error = ({ message = null }) => (
+  <>{message && <Message>{message}</Message>}</>
+);
 
 export default Error;

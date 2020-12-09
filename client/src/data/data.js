@@ -1,4 +1,4 @@
-export const locations = [
+export const officeLocations = [
   {
     id: 1,
     city: 'Fredrikstad',

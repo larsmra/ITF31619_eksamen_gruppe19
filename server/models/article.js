@@ -8,6 +8,11 @@ const ArticleSchema = new Schema({
     required: true,
     trim: true,
   },
+  title_lower: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   ingress: {
     type: String,
     required: true,
@@ -37,6 +42,13 @@ const ArticleSchema = new Schema({
     ref: 'User',
     required: true,
   },
+  hidden: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
-export default mongoose.model('Article', ArticleSchema);
+const Article = mongoose.model('Article', ArticleSchema);
+
+export default Article;
