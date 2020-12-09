@@ -52,6 +52,7 @@ const EditArticle = ({ article }) => {
     <>
       <Title title={values.title} />
       <ArticleForm values={values} />
+      
     </>
   );
 };

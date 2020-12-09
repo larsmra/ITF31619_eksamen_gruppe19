@@ -1,5 +1,5 @@
 import {inquiryService} from '../services/index.js';
-import { sendMail, receiveMail } from '../utils/email.js';
+import { sendMail} from '../utils/email.js';
 import catchAsyncError from '../middleware/catchAsync.js';
 
 export const list = catchAsyncError(async (req, res, next) => {
@@ -8,16 +8,9 @@ export const list = catchAsyncError(async (req, res, next) => {
   });
 
 export const create = catchAsyncError(async (req, res, next) => {
-    console.log("I got to the controller");
     const inquiry = await inquiryService.createEmail(req.body);
+    console.log("Jeg er i controlleren");
     try{
-      await receiveMail({
-        email: inquiry.email,
-        name: inquiry.name,
-        subject: "Kontaktskjema",
-        message: inquiry.message,
-      });
-
       await sendMail({
         email: inquiry.email,
         subject: 'Bekreftet henvendelse',

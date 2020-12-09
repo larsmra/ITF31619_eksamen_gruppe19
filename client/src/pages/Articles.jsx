@@ -83,6 +83,8 @@ const Articles = () => {
 
   const fetchArticleData = async (p, s, f) => {
     const { data } = await listArticles(p, s, f);
+    console.log("Data skal hit:");
+    console.log(data.data);
     if (data.success) {
       setPages(data.data.count === 0 ? 1 : Math.ceil(data.data.count / 5));
       setArticles(data.data.articles);
