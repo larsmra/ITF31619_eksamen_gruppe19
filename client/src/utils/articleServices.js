@@ -3,13 +3,23 @@ import { getCsrfToken } from './authServices';
 
 const API_PATH = '/articles';
 
-export const list = async (page, search = '') => {
+export const list = async (page, search = '', filter = []) => {
   try {
-    const articles = search
-      ? await http.get(`${API_PATH}/pages/${page}/search/${search}`)
-      : await http.get(`${API_PATH}/pages/${page}`);
+    let articles;
+    if (search && filter.length > 0) {
+      articles = await http.get(
+        `${API_PATH}/pages/${page}/search/${search}/filter/${filter}`
+      );
+    } else if (search) {
+      articles = await http.get(`${API_PATH}/pages/${page}/search/${search}`);
+    } else if (filter.length > 0) {
+      articles = await http.get(`${API_PATH}/pages/${page}/filter/${filter}`);
+    } else {
+      articles = await http.get(`${API_PATH}/pages/${page}`);
+    }
     return articles;
   } catch (err) {
+    console.log(err.response);
     return err.response;
   }
 };
@@ -35,6 +45,7 @@ export const create = async (data) => {
     await getCsrfToken();
     return await http.post(`${API_PATH}/`, { ...data });
   } catch (err) {
+    console.log(err.response);
     return err.response;
   }
 };

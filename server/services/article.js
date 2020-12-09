@@ -3,18 +3,41 @@ import Article from '../models/article.js';
 export const getArticleById = async (id) =>
   Article.findById(id).populate('category', 'name');
 
-export const countArticles = async (search, showAll) =>
+export const countArticles = async (
+  search = '',
+  filter = [],
+  showAll = false
+) =>
   Article.count(
     showAll
-      ? { title: { $regex: search } }
-      : { title: { $regex: search }, hidden: false }
+      ? {
+          title_lower: { $regex: search.toLowerCase() },
+          category: { $in: filter },
+        }
+      : {
+          title_lower: { $regex: search.toLowerCase() },
+          category: { $in: filter },
+          hidden: false,
+        }
   );
 
-export const listArticles = async (offset, search, showAll) =>
+export const listArticles = async (
+  offset,
+  search = '',
+  filter = [],
+  showAll = false
+) =>
   Article.find(
     showAll
-      ? { title: { $regex: search } }
-      : { title: { $regex: search }, hidden: false }
+      ? {
+          title_lower: { $regex: search.toLowerCase() },
+          category: { $in: filter },
+        }
+      : {
+          title_lower: { $regex: search.toLowerCase() },
+          category: { $in: filter },
+          hidden: false,
+        }
   )
     .skip(offset)
     .limit(5)

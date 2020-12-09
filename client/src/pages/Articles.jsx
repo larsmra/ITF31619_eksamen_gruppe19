@@ -4,7 +4,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import Title from '../components/Title';
 import ArticleCard from '../components/ArticleCard';
 import { useAuthContext } from '../context/AuthProvider';
-import { list } from '../utils/articleServices';
+import { list as listArticles } from '../utils/articleServices';
+import { list as listCategories } from '../utils/categoryService';
 import ArticleNavigation from '../components/ArticleNavigation';
 
 const ArticleFunctions = styled.section.attrs(({ isAdmin }) => ({
@@ -54,7 +55,9 @@ const Articles = () => {
   const [error, setError] = useState('');
   const [pages, setPages] = useState(1);
   const [articles, setArticles] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState([]);
   const [searchView, setSearchView] = useState(false);
   const [filterView, setFilterView] = useState(false);
 
@@ -63,31 +66,40 @@ const Articles = () => {
     [history]
   );
 
-  const handleSearchChange = (e) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-    if (page > 1) {
-      goToFirstPage();
+  const fetchCategoryData = async () => {
+    const { data } = await listCategories();
+    if (data.success) {
+      data.data.map((category) => (category.view = true));
+      setCategories((prev) =>
+        data.data.filter((c1) =>
+          prev.map((c2) => c1.name === c2.name && (c1.view = c2.view))
+        )
+      );
+      setError(null);
+    } else {
+      setError(data.response);
+    }
+  };
+
+  const fetchArticleData = async (p, s, f) => {
+    const { data } = await listArticles(p, s, f);
+    if (data.success) {
+      setPages(data.data.count === 0 ? 1 : Math.ceil(data.data.count / 5));
+      setArticles(data.data.articles);
+      setError(null);
+    } else {
+      setError(data.response);
     }
   };
 
   useEffect(() => {
     if (page) {
-      const fetchData = async (p) => {
-        const { data } = await list(p, search);
-        if (data.success) {
-          setPages(data.data.count === 0 ? 1 : Math.ceil(data.data.count / 5));
-          setArticles(data.data.articles);
-          setError(null);
-        } else {
-          setError(data.response);
-        }
-      };
-      fetchData(page);
+      fetchCategoryData();
+      fetchArticleData(page, search, filter);
     } else {
       goToFirstPage();
     }
-  }, [page, search, goToFirstPage]);
+  }, [page, search, filter, goToFirstPage]);
 
   const handleSearchView = () => {
     setSearchView(!searchView);
@@ -95,13 +107,43 @@ const Articles = () => {
   };
 
   const handleFilterView = () => {
+    fetchCategoryData();
     setFilterView(!filterView);
     setSearchView(false);
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    goToFirstPage();
+    if (page > 1) {
+      goToFirstPage();
+    }
+    fetchArticleData(page);
+  };
+
+  const handleSearchChange = async (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+    if (page > 1) {
+      goToFirstPage();
+    }
+    fetchArticleData(page, e.target.value, filter);
+  };
+
+  const handleFilterChange = (id) => {
+    const tempCategories = [...categories];
+    const filtered = tempCategories
+      .filter((category) => category._id === id)
+      .shift();
+    filtered.view = !filtered.view;
+    setCategories(tempCategories);
+    const f = categories
+      .filter((category) => category.view)
+      .map((category) => category.name);
+    setFilter(f);
+    if (page > 1) {
+      goToFirstPage();
+    }
+    fetchArticleData(page, search, f);
   };
 
   return (
@@ -130,7 +172,20 @@ const Articles = () => {
           )}
           {filterView && (
             <section>
-              <input />
+              <ul>
+                {categories &&
+                  categories.map((category) => (
+                    <li key={category._id}>
+                      <input
+                        type="checkbox"
+                        id={category.name}
+                        checked={category.view}
+                        onChange={() => handleFilterChange(category._id)}
+                      />
+                      <label htmlFor={category.name}>{category.name}</label>
+                    </li>
+                  ))}
+              </ul>
             </section>
           )}
         </StyledButtonWrapper>
