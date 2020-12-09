@@ -11,6 +11,7 @@ export const list = async () => {
 };
 
 export const create = async (data) => {
+    console.log("In the create method");
     try {
         return await http.post(`${API_URL}`, data);
     } catch (err) {

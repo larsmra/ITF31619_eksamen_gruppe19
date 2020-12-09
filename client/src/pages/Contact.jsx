@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Title from '../components/Title';
 import { useHistory } from 'react-router-dom';
 import useCustomForm from '../hooks/useCustomForm';
-import create from '../utils/inquiryService.js';
+import  {create} from '../utils/inquiryService.js';
 import { useAuthContext } from '../context/AuthProvider';
 
 const ContactForm = styled.form`
@@ -35,7 +35,8 @@ const Contact = () => {
       (initialState = { name: '', email: '', message:''});
 
     const history = useHistory();
-    const [error, setError] = useState('');
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
     const {
       values,
       errors,
@@ -55,13 +56,13 @@ const Contact = () => {
     const submitForm = () => {
         const inquiryData = async () => {
           console.log(values);
-          const { error } = await create(values);
-        if (error) {
-          setError(error);
-          console.log("Noe galt skjedde");
+          const { data } = await create(values);
+        if (!data.success) {
+          setError(data.message);
+
         } else {
-          history.push(`/kontakt`);
-          console.log("Alt bra?");
+          setSuccess(true);
+          setError(null);
         }
       };
       inquiryData();
