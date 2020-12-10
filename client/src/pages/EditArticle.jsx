@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Page from '../components/Page';
 import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
 import useCustomForm from '../hooks/useCustomForm';
+import update from '../utils/articleService';
 
 const SaveArticle = styled.button`
   margin: 5px;
@@ -16,7 +15,7 @@ const SaveArticle = styled.button`
 const EditArticle = ({ article }) => {
   const { id } = useParams();
   const history = useHistory();
-  /* const [error, setError] = useState('');
+  const [error, setError] = useState('');
   const {
     values,
     errors,
@@ -25,14 +24,14 @@ const EditArticle = ({ article }) => {
     submitable,
   } = useCustomForm({
     article,
-  }); */
+  });
 
-  /* const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     validateForm();
-  }; */
+  };
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (submitable) {
       const submitForm = () => {
         const articleData = async () => {
@@ -47,12 +46,14 @@ const EditArticle = ({ article }) => {
       };
       submitForm();
     }
-  }, [submitable, history, id, values]); */
+  }, [submitable, history, id, values]);
 
   return (
     <>
       <Title title={values.title} />
-      <ArticleForm values={values} />
+      <section className="pageContent">
+        <ArticleForm values={values} />
+      </section>
     </>
   );
 };

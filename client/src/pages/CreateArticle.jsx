@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import Page from '../components/Page';
 import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
 import Error from '../components/Error';
@@ -87,12 +85,14 @@ const CreateArticle = () => {
   return (
     <>
       <Title title="Ny artikkel" />
-      <ArticleForm
-        data={formData}
-        setData={setFormData}
-        setModal={setModal}
-        onSubmit={onSubmit}
-      />
+      <section className="pageContent">
+        <ArticleForm
+          data={formData}
+          setData={setFormData}
+          setModal={setModal}
+          onSubmit={onSubmit}
+        />
+      </section>
       {modal && <CategoryModal setModal={setModal} />}
     </>
   );

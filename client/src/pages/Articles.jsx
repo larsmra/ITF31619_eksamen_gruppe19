@@ -15,17 +15,18 @@ const ArticleFunctions = styled.section.attrs(({ isAdmin }) => ({
   max-width: 90%;
   margin: auto;
   display: flex;
+  font-size: 1.5rem;
   justify-content: ${({ isAdmin }) => (isAdmin ? 'space-between' : 'flex-end')};
 `;
 
 const Create = styled.a`
   padding: 20px 30px;
-  background-color: #479eb9;
+  background-color: ${({ theme }) => theme.colors.default};
+  font-size: 1.5rem;
   border-style: none;
   color: white;
-  cursor: pointer;
   &:hover {
-    background-color: #236b85;
+    background-color: ${({ theme }) => theme.colors.action};
   }
 `;
 
@@ -84,6 +85,8 @@ const Articles = () => {
 
   const fetchArticleData = async (p, s, f) => {
     const { data } = await listArticles(p, s, f);
+    console.log('Data skal hit:');
+    console.log(data.data);
     if (data.success) {
       setPages(data.data.count === 0 ? 1 : Math.ceil(data.data.count / 5));
       setArticles(data.data.articles);
@@ -150,7 +153,7 @@ const Articles = () => {
   return (
     <>
       <Title title="Fagartikler" />
-      <ArticleFunctions isAdmin={isAdmin}>
+      <ArticleFunctions isAdmin={isAdmin} className="pageContent">
         {isAdmin && <Create href="/fagartikler/ny"> Ny Artikkel </Create>}
         <StyledButtonWrapper>
           <button type="button" onClick={handleSearchView}>
@@ -191,7 +194,7 @@ const Articles = () => {
           )}
         </StyledButtonWrapper>
       </ArticleFunctions>
-      <StyledArticleSection>
+      <StyledArticleSection className="pageContent">
         {/* Use later
 
                 {loading && 'Loading ...'}

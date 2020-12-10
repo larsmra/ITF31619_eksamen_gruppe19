@@ -11,9 +11,11 @@ import Article from '../pages/Article';
 import CreateArticle from '../pages/CreateArticle';
 import EditArticle from '../pages/EditArticle';
 import Login from '../pages/Login';
+import Contact from '../pages/Contact';
 import Register from '../pages/Register';
 import NotFound from '../pages/NotFound';
 import Forbidden from '../pages/Forbidden';
+import Inquiries from '../pages/Inquiries';
 
 const AdminRoute = ({ children, ...attrs }) => {
   const { isLoggedIn, isAdmin } = useAuthContext();
@@ -50,6 +52,12 @@ const Routes = () => (
         </AdminRoute>
         <Route path="/register">
           <Register />
+        </Route>
+        <Route path="/kontakt">
+          <Contact />
+        </Route>
+        <Route path="/henvendelser">
+          <Inquiries />
         </Route>
         <Route path="/login">
           <Login />
