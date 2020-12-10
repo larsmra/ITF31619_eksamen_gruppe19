@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Title from '../components/Title';
 import Error from '../components/Error';
-import { remove, get } from '../utils/articleServices';
+import { remove, get } from '../utils/articleService';
 import { useAuthContext } from '../context/AuthProvider';
 import dateFormatter from '../utils/dateFormatter';
 

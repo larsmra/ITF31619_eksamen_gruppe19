@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import Title from '../components/Title';
 import ArticleCard from '../components/ArticleCard';
 import { useAuthContext } from '../context/AuthProvider';
-import { list as listArticles } from '../utils/articleServices';
+import { list as listArticles } from '../utils/articleService';
 import { list as listCategories } from '../utils/categoryService';
 import ArticleNavigation from '../components/ArticleNavigation';
 
@@ -14,17 +14,18 @@ const ArticleFunctions = styled.section.attrs(({ isAdmin }) => ({
   max-width: 90%;
   margin: auto;
   display: flex;
+  font-size: 1.5rem;
   justify-content: ${({ isAdmin }) => (isAdmin ? 'space-between' : 'flex-end')};
 `;
 
 const Create = styled.a`
   padding: 20px 30px;
-  background-color: #479eb9;
+  background-color: ${({ theme }) => theme.colors.default};
+  font-size: 1.5rem;
   border-style: none;
   color: white;
-  cursor: pointer;
   &:hover {
-    background-color: #236b85;
+    background-color: ${({ theme }) => theme.colors.action};
   }
 `;
 
