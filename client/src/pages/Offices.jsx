@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Page from '../components/Page';
 import Title from '../components/Title';
 import { officeLocations, offices } from '../data/data';
 

@@ -17,7 +17,7 @@ const CategorySchema = new Schema({
   slug: String,
 });
 
-CategorySchema.virtual('Article', {
+CategorySchema.virtual('articles', {
   ref: 'Article',
   localField: '_id',
   foreignField: 'category',

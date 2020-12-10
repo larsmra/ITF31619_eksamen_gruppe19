@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Title from '../components/Title';
+import Page from '../components/Page';
 import Error from '../components/Error';
-import { remove, get } from '../utils/articleServices';
+import { remove, get } from '../utils/articleService';
 import { useAuthContext } from '../context/AuthProvider';
 import dateFormatter from '../utils/dateFormatter';
 
@@ -58,18 +59,8 @@ const Article = () => {
   }, [history]);
 
   useEffect(() => {
-    console.log(`id: ${id}`);
     if (id) {
-      console.log('useEffect 1');
       const fetchArticleData = async () => {
-        try {
-          setLoading(true);
-          const { data } = await get(id);
-          setArticle(data.data);
-          setError(null);
-        } catch (err) {
-          goToArticlesPage();
-        }
         setLoading(true);
         const { data } = await get(id);
         if (data.success) {
@@ -78,8 +69,7 @@ const Article = () => {
         } else {
           console.log(data.message);
           setError(data.message);
-          console.log('test2');
-          // goToArticlesPage();
+          goToArticlesPage();
         }
         setLoading(false);
       };
@@ -102,7 +92,7 @@ const Article = () => {
     <>
       {article && (
         <>
-          <Title title={article.title} />
+          <Title title={article.title} bgImage={article.imagePath} />
           <StyledSection>
             <StyledInfo>
               <p>Av {article.author} </p>

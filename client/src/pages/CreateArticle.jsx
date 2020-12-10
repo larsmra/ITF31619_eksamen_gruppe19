@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Page from '../components/Page';
 import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
 import Error from '../components/Error';
 import useCustomForm from '../hooks/useCustomForm';
-import { create } from '../utils/articleServices';
+import { create } from '../utils/articleService';
 import CategoryModal from '../components/CategoryModal';
+import { upload } from '../utils/imageService';
 
 const Create = styled.button`
   margin: 5px;
@@ -31,8 +33,9 @@ const CreateArticle = () => {
     ingress: '',
     content: '',
     author: '',
-    category: { _id: '' },
+    category: '',
     hidden: false,
+    image: null,
   });
   const [modal, setModal] = useState(false);
 

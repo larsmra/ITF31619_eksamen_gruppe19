@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Page from '../components/Page';
 import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
 import useCustomForm from '../hooks/useCustomForm';

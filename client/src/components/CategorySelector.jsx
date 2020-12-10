@@ -16,7 +16,7 @@ const CategorySelector = ({ setData }) => {
           setValue(data.data[0]._id);
           setData((prev) => ({
             ...prev,
-            category: { _id: data.data[0]._id },
+            category: data.data[0]._id,
           }));
         } else {
           setError(data.message);
@@ -30,7 +30,7 @@ const CategorySelector = ({ setData }) => {
     setValue(e.target.value);
     setData((prev) => ({
       ...prev,
-      category: { _id: e.target.value },
+      category: e.target.value,
     }));
   };
 

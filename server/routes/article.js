@@ -1,5 +1,6 @@
 import express from 'express';
 import { isAuthenticated, isAuthorized } from '../middleware/auth.js';
+import { upload } from '../middleware/image.js';
 import { articleController } from '../controllers/index.js';
 
 const router = express.Router();
@@ -21,7 +22,11 @@ router.get(
   articleController.list
 );
 router.get('/pages/:page', [isAuthenticated(false)], articleController.list);
-router.post('/', [isAuthenticated(), isAuthorized], articleController.create);
+router.post(
+  '/',
+  [isAuthenticated(), isAuthorized, upload],
+  articleController.create
+);
 router.put('/:id', [isAuthenticated(), isAuthorized], articleController.update);
 router.delete(
   '/:id',

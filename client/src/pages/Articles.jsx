@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
+import Page from '../components/Page';
 import Title from '../components/Title';
 import ArticleCard from '../components/ArticleCard';
 import { useAuthContext } from '../context/AuthProvider';
-import { list as listArticles } from '../utils/articleServices';
+import { list as listArticles } from '../utils/articleService';
 import { list as listCategories } from '../utils/categoryService';
 import ArticleNavigation from '../components/ArticleNavigation';
 
@@ -137,7 +138,7 @@ const Articles = () => {
     filtered.view = !filtered.view;
     setCategories(tempCategories);
     const f = categories
-      .filter((category) => category.view)
+      .filter((category) => !category.view)
       .map((category) => category.name);
     setFilter(f);
     if (page > 1) {
@@ -200,7 +201,12 @@ const Articles = () => {
                 */}
         {articles &&
           articles.map((article) => (
-            <ArticleCard key={article._id} id={article._id} {...article} />
+            <ArticleCard
+              key={article._id}
+              id={article._id}
+              imageSrc={article.imagePath}
+              {...article}
+            />
           ))}
       </StyledArticleSection>
       <ArticleNavigation pages={pages} />

@@ -5,14 +5,17 @@ const API_PATH = '/categories';
 
 export const list = async () => {
   try {
+    await getCsrfToken();
     return await http.get(`${API_PATH}`);
   } catch (err) {
+    console.log(err.response);
     return err.response;
   }
 };
 
 export const get = async (id) => {
   try {
+    await getCsrfToken();
     return await http.get(`${API_PATH}/${id}`);
   } catch (err) {
     return err.response;

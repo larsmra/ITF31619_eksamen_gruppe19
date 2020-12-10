@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import Image from './Image';
 
 const MAX_LENGTH = 150;
 
@@ -46,13 +47,14 @@ const StyledIngress = styled.p`
   padding: 0 2rem;
 `;
 
-const ArticleCard = ({ id, title, category, ingress }) => {
+const ArticleCard = ({ id, title, category, ingress, imageSrc }) => {
   const history = useHistory();
 
   const goToPage = () => history.push(`/fagartikler/${id}`);
 
   return (
     <StyledArticle onClick={goToPage}>
+      <Image src={imageSrc} alt={title} />
       <StyledDiv />
       <StyledHeader>
         <h2>{title}</h2>
@@ -60,8 +62,7 @@ const ArticleCard = ({ id, title, category, ingress }) => {
       </StyledHeader>
       {ingress.length > MAX_LENGTH ? (
         <StyledIngress>
-          {' '}
-          {`${ingress.substring(0, MAX_LENGTH)}...`}{' '}
+          {`${ingress.substring(0, MAX_LENGTH)}...`}
         </StyledIngress>
       ) : (
         <StyledIngress> {ingress} </StyledIngress>

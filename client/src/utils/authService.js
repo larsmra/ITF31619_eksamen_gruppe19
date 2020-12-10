@@ -13,8 +13,10 @@ export const getCsrfToken = async () => {
 
 export const getUser = async () => {
   try {
+    await getCsrfToken();
     return await http.get(`${API_PATH}/me`);
   } catch (err) {
+    console.log(err.response);
     return err.response;
   }
 };

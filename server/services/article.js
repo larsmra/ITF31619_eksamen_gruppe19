@@ -41,7 +41,8 @@ export const listArticles = async (
   )
     .skip(offset)
     .limit(5)
-    .populate('category', 'name');
+    .populate('category', 'name')
+    .populate('image');
 
 export const listAuthors = async () => ({
   authors: Article.schema.path('author').enumValues,

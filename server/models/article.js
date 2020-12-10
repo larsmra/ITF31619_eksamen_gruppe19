@@ -32,6 +32,11 @@ const ArticleSchema = new Schema({
     enum: ['Lars Larsen', 'Gunn Gundersen', 'Simen Simensen'],
     required: true,
   },
+  hidden: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   category: {
     type: mongoose.Schema.ObjectId,
     ref: 'Category',
@@ -42,10 +47,9 @@ const ArticleSchema = new Schema({
     ref: 'User',
     required: true,
   },
-  hidden: {
-    type: Boolean,
+  imagePath: {
+    type: String,
     required: true,
-    default: false,
   },
 });
 

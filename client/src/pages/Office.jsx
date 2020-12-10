@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import Page from '../components/Page';
 import Title from '../components/Title';
 import { offices } from '../data/data';
 

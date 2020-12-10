@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuthContext } from '../context/AuthProvider';
-import { logout } from '../utils/authServices';
+import { logout } from '../utils/authService';
 
 const StyledNav = styled.nav`
   width: 100%;

@@ -1,4 +1,8 @@
-import { articleService, categoryService } from '../services/index.js';
+import {
+  articleService,
+  categoryService,
+  imageService,
+} from '../services/index.js';
 import catchAsyncError from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
 
@@ -35,9 +39,14 @@ export const listAuthors = catchAsyncError(async (req, res, next) => {
 });
 
 export const create = catchAsyncError(async (req, res, next) => {
+  if (!req.file) {
+    return next(new ErrorHandler('Bildet ble ikke lagret', 400));
+  }
+  req.body.imagePath = req.file.path.replace('public\\', '');
   req.body.admin = req.user.id;
   req.body.title_lower = req.body.title.toLowerCase();
   req.body.date = new Date();
+  req.body.hidden = req.body.hidden === 'true';
   const article = await articleService.createArticle(req.body);
   res.status(201).json({ success: true, data: article });
 });
