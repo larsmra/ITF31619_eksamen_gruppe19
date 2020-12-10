@@ -17,11 +17,11 @@ const Office = () => {
   return (
     <>
       <Title title="Våre kontorer" />
-      <section>
+      <section className="pageContent">
         <h2>Velkommen til {office.name}</h2>
         <p>{office.description}</p>
       </section>
-      <section>
+      <section className="pageContent">
         <h2>Våre ansatte</h2>
         <GridSection>
           {office.employees.map((employee) => (
@@ -33,7 +33,7 @@ const Office = () => {
           ))}
         </GridSection>
       </section>
-      <section>
+      <section className="pageContent">
         <p>Kontakt oss på {office.phone}</p>
       </section>
     </>

@@ -77,7 +77,7 @@ const Offices = () => {
   return (
     <>
       <Title title="Våre kontorer" />
-      <section>
+      <section className="pageContent">
         <StyledButtonSection>
           <StyledButton
             type="button"
@@ -91,7 +91,7 @@ const Offices = () => {
             pressed={listView}
             onClick={() => setListView(true)}
           >
-            <svg width="2em" height="2em">
+            <svg width="2rem" height="2rem">
               <rect x="0.1em" y="0.1em" width="1.8em" height="0.5em" />
               <rect x="0.1em" y="0.75em" width="1.8em" height="0.5em" />
               <rect x="0.1em" y="1.4em" width="1.8em" height="0.5em" />

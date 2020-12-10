@@ -35,7 +35,7 @@ const Login = () => {
   };
 
   return (
-    <StyledSection>
+    <StyledSection className="pageContent">
       <Error message={error} />
       <UserForm
         formData={formData}

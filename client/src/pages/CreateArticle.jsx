@@ -12,7 +12,6 @@ const Create = styled.button`
   margin: 5px;
   padding: 20px 30px;
   background-color: lightgrey;
-
 `;
 
 /* const initalState = {
@@ -84,12 +83,14 @@ const CreateArticle = () => {
   return (
     <>
       <Title title="Ny artikkel" />
-      <ArticleForm
-        data={formData}
-        setData={setFormData}
-        setModal={setModal}
-        onSubmit={onSubmit}
-      />
+      <section className="pageContent">
+        <ArticleForm
+          data={formData}
+          setData={setFormData}
+          setModal={setModal}
+          onSubmit={onSubmit}
+        />
+      </section>
       {modal && <CategoryModal setModal={setModal} />}
     </>
   );

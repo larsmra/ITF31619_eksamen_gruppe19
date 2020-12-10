@@ -9,12 +9,10 @@ const StyledNav = styled.nav`
   display: flex;
   justify-content: space-between;
   box-shadow: 0px 10px 38px 2px rgba(237, 237, 237, 1);
-
   & > span {
     align-self: center;
     padding: 0 2em;
     font-size: 1.5rem;
-    font-weight: 900;
   }
 `;
 
@@ -24,8 +22,8 @@ const NavMenu = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
-  
-  @media only screen and (min-width: 420px) and (max-width: 800px)  {
+
+  @media only screen and (min-width: 420px) and (max-width: 800px) {
     flex-flow: column nowrap;
     padding: 1rem;
   }
@@ -37,10 +35,6 @@ const NavMenuItem = styled.li.attrs(({ special }) => ({
   margin: 0;
   ${({ special }) => special && 'background-color: #479eb9;'}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> responsive
   & > a {
     display: block;
     color: #000000;
@@ -64,8 +58,6 @@ const LogOutButton = styled.button`
   background-color: #479eb9;
   padding: 0 2em;
   border: none;
-  font-size: 1.5rem;
-
   &:hover {
     background-color: #236b85;
   }
@@ -102,15 +94,15 @@ const Navbar = () => {
         </NavMenuItem>
         <NavMenuItem>
           <NavLink exact to="/kontakt" activeClassName="active">
-          Kontakt
+            Kontakt
           </NavLink>
         </NavMenuItem>
         {isAdmin && (
           <NavMenuItem>
-          <NavLink exact to="/henvendelser" activeClassName="active">
-            Henvendelser
-          </NavLink>
-        </NavMenuItem>
+            <NavLink exact to="/henvendelser" activeClassName="active">
+              Henvendelser
+            </NavLink>
+          </NavMenuItem>
         )}
         {isLoggedIn ? (
           <NavMenuItem special>
@@ -136,5 +128,4 @@ const Navbar = () => {
     </StyledNav>
   );
 };
-
 export default Navbar;

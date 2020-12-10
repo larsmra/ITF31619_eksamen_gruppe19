@@ -7,10 +7,7 @@ import { remove, get } from '../utils/articleService';
 import { useAuthContext } from '../context/AuthProvider';
 import dateFormatter from '../utils/dateFormatter';
 
-const StyledSection = styled.section`
-  max-width: 90%;
-  margin: auto;
-`;
+const StyledSection = styled.section;
 
 const StyledInfo = styled.div`
   display: flex;
@@ -103,7 +100,7 @@ const Article = () => {
       {article && (
         <>
           <Title title={article.title} />
-          <StyledSection>
+          <StyledSection class="pageContent">
             <StyledInfo>
               <p>Av {article.author} </p>
               <p> {dateFormatter(article.date)} </p>
