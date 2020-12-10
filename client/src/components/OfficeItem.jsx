@@ -8,7 +8,7 @@ const StyledArticle = styled.article.attrs(({ isList }) => ({
   isList: isList || false,
 }))`
   display: flex;
-  padding: 0;
+  padding: 1em;
   cursor: pointer;
   align-items: ${({ isList }) => (isList ? 'center' : 'left')};
   flex-direction: ${({ isList }) => (isList ? 'row' : 'column')};

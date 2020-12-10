@@ -42,7 +42,7 @@ export const create = catchAsyncError(async (req, res, next) => {
   if (!req.file) {
     return next(new ErrorHandler('Bildet ble ikke lagret', 400));
   }
-  req.body.imagePath = req.file.path.replace('public\\', '');
+  req.body.imagePath = req.file.path.replace('public\\', '').replace('\\', '/');
   req.body.admin = req.user.id;
   req.body.title_lower = req.body.title.toLowerCase();
   req.body.date = new Date();

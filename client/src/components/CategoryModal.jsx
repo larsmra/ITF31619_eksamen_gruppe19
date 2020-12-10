@@ -32,40 +32,17 @@ const ModalForm = styled.form`
   }
 `;
 
-const CategoryModal = ({ setModal }) => {
+const CategoryModal = ({ setModal, fetchCategoryData }) => {
   const [category, setCategory] = useState({ name: '' });
-  const [error, setError] = useState('');
-
-  /* const handleSubmit = (event) => {
-    event.preventDefault();
-    addCategory();
-  }; */
-
-  /* const updateValue = (event) => {
-    const inputValue = { [event.target.name]: event.target.value };
-    setFormData((prev) => ({
-      ...prev,
-      ...inputValue,
-    }));
-  }; */
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const { data } = await create(category);
     if (data.success) {
-      setError('');
       setModal(false);
-    } else {
-      setError(data.message);
+      fetchCategoryData();
     }
   };
-  // categoryData();
-
-  /* useEffect(() => {
-    if (submitable) {
-      submitForm();
-    }
-  }, [submitable]); */
 
   const handleOverlayClick = (e) =>
     e.target.getAttribute('name') === 'category_modal_overlay' &&

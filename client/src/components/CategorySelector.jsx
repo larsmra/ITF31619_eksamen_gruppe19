@@ -1,33 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { list } from '../utils/categoryService';
 
-const CategorySelector = ({ setData }) => {
-  /* Temporarily dummy information to fill the select */
-  const [categories, setCategories] = useState([]);
-  const [error, setError] = useState(null);
-  const [value, setValue] = useState('');
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      if (categories.length === 0) {
-        const { data } = await list();
-        if (data.success) {
-          setCategories(data.data);
-          setValue(data.data[0]._id);
-          setData((prev) => ({
-            ...prev,
-            category: data.data[0]._id,
-          }));
-        } else {
-          setError(data.message);
-        }
-      }
-    };
-    fetchCategories();
-  }, [categories, error, setData]);
-
+const CategorySelector = ({ data, setData, categories }) => {
   const handleCategoryChange = (e) => {
-    setValue(e.target.value);
     setData((prev) => ({
       ...prev,
       category: e.target.value,

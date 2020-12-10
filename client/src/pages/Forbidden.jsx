@@ -1,6 +1,10 @@
 import React from 'react';
 import Page from '../components/Page';
 
-const Forbidden = () => <p>Du har ikke tilgang til denne siden</p>;
+const Forbidden = () => (
+  <Page title="403">
+    <p>Du har ikke tilgang til denne siden</p>
+  </Page>
+);
 
 export default Forbidden;

@@ -7,6 +7,7 @@ const StyledSection = styled.section.attrs(({ isList }) => ({
 }))`
   display: grid;
   grid-gap: 2em;
+  width: 100%;
   ${({ isList }) =>
     isList === true
       ? 'grid-template-columns: 100%'

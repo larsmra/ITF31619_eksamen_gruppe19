@@ -17,7 +17,6 @@ const StyledInfo = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const ArticleContent = styled.article``;
 
 const ArticleAdminFunctions = styled.div`
   & > button {
@@ -78,7 +77,6 @@ const Article = () => {
   }, [id, error, goToArticlesPage]);
 
   const deleteArticle = async () => {
-    console.log('test');
     const { data } = await remove(id);
     console.log(data);
     if (data.success) {
@@ -91,18 +89,17 @@ const Article = () => {
   return (
     <>
       {article && (
-        <>
-          <Title title={article.title} bgImage={article.imagePath} />
+        <Page title={article.title} headerBackground={article.imagePath}>
           <StyledSection>
             <StyledInfo>
               <p>Av {article.author} </p>
               <p> {dateFormatter(article.date)} </p>
             </StyledInfo>
-            <ArticleContent>
+            <section>
               <p> {article.ingress} </p>
               <p> {article.content} </p>
-            </ArticleContent>
-            <h5> {article.category.name} </h5>
+            </section>
+            <p> {article.category.name} </p>
 
             <ArticleAdminFunctions>
               <Delete onClick={deleteArticle}>Slett</Delete>
@@ -111,9 +108,8 @@ const Article = () => {
               </Update>
             </ArticleAdminFunctions>
           </StyledSection>
-        </>
+        </Page>
       )}
-      {error && <Error message={error} />}
     </>
   );
 };

@@ -31,8 +31,7 @@ const GridItem = styled.article`
 `;
 
 const Home = () => (
-  <>
-    <Title title="Velkommen til FG Rørleggerservice AS" />
+  <Page title="Velkommen til FG Rørleggerservice AS" wide>
     <GridContainer>
       <GridItem id="offices">
         <h2> Kontorer </h2>
@@ -44,7 +43,7 @@ const Home = () => (
         <h2> Se våre fagartikler om oppussing av bad</h2>
       </GridItem>
     </GridContainer>
-  </>
+  </Page>
 );
 
 export default Home;

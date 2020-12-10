@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
-import { useTitleContext } from '../context/TitleProvider';
+import { usePageDataContext } from '../context/PageDataProvider';
 
-const Page = ({ title, background, children }) => {
-  const { setTitle, setBackground } = useTitleContext();
+const Page = ({ title, headerBackground, wide, children }) => {
+  const { setTitle, setBackground, setWide } = usePageDataContext();
 
   useEffect(() => {
     setTitle(title);
-    setBackground(background);
-  }, [title, background, setTitle, setBackground]);
+    setBackground(
+      headerBackground ? `${process.env.BASE_URL}/${headerBackground}` : null
+    );
+    setWide(wide);
+    document.title = title;
+  }, [title, headerBackground, wide, setTitle, setBackground, setWide]);
 
   return <>{children}</>;
 };
+
+export default Page;

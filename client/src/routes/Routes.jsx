@@ -14,6 +14,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import NotFound from '../pages/NotFound';
 import Forbidden from '../pages/Forbidden';
+import PageDataProvider from '../context/PageDataProvider';
 
 const AdminRoute = ({ children, ...attrs }) => {
   const { isLoggedIn, isAdmin } = useAuthContext();
@@ -22,43 +23,45 @@ const AdminRoute = ({ children, ...attrs }) => {
 
 const Routes = () => (
   <Router>
-    <PageLayout>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route exact path="/kontorer">
-          <Offices />
-        </Route>
-        <Route path="/kontorer/:id">
-          <Office />
-        </Route>
-        <Route exact path="/fagartikler">
-          <Articles />
-        </Route>
-        <Route exact path="/fagartikler/sider/:page">
-          <Articles />
-        </Route>
-        <AdminRoute exact path="/fagartikler/ny">
-          <CreateArticle />
-        </AdminRoute>
-        <Route path="/fagartikler/:id">
-          <Article />
-        </Route>
-        <AdminRoute path="/fagartikler/:id/rediger">
-          <EditArticle />
-        </AdminRoute>
-        <Route path="/register">
-          <Register />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="*">
-          <NotFound />
-        </Route>
-      </Switch>
-    </PageLayout>
+    <PageDataProvider>
+      <PageLayout>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/kontorer">
+            <Offices />
+          </Route>
+          <Route path="/kontorer/:id">
+            <Office />
+          </Route>
+          <Route exact path="/fagartikler">
+            <Articles />
+          </Route>
+          <Route exact path="/fagartikler/sider/:page">
+            <Articles />
+          </Route>
+          <AdminRoute exact path="/fagartikler/ny">
+            <CreateArticle />
+          </AdminRoute>
+          <Route exact path="/fagartikler/:id">
+            <Article />
+          </Route>
+          <AdminRoute path="/fagartikler/:id/rediger">
+            <EditArticle />
+          </AdminRoute>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
+      </PageLayout>
+    </PageDataProvider>
   </Router>
 );
 

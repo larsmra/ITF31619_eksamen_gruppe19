@@ -1,29 +1,32 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import Image from './Image';
 
 const MAX_LENGTH = 150;
 
 const StyledArticle = styled.article`
   display: grid;
-  grid-template: auto auto auto;
+  grid-template-columns: auto 1fr 1fr;
+  margin: 1em 0em;
   padding: 20px;
-  max-width: 90%;
-  margin: auto;
-  border: 0.1rem solid white;
+
+  border: 0.1rem solid #ffffff;
 
   &:hover {
-    border: 0.1rem solid lightgrey;
+    border: 0.1rem solid #d3d3d3;
     cursor: pointer;
   }
 `;
 
-const StyledDiv = styled.div`
+const StyledImg = styled.img.attrs(({ bgImage }) => ({
+  bgImage: bgImage || '',
+}))`
+  width: 10em;
+  height: 8em;
   grid-row-start: 1;
   grid-row-end: 3;
-  padding: 70px;
-  background-color: lightgrey;
+  background-color: #d3d3d3;
+  background-image: url(${({ bgImage }) => `${bgImage}`});
 `;
 
 const StyledHeader = styled.header`
@@ -32,19 +35,19 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
 
-  & > h2 {
+  & > p {
     padding: 0 2rem;
   }
+`;
 
-  & h6 {
-    padding: 0 2rem;
-  }
+const StyledTitle = styled.h2`
+  margin: 1rem;
 `;
 
 const StyledIngress = styled.p`
   grid-column-start: 2;
   grid-column-end: 4;
-  padding: 0 2rem;
+  margin: 1rem;
 `;
 
 const ArticleCard = ({ id, title, category, ingress, imageSrc }) => {
@@ -54,11 +57,10 @@ const ArticleCard = ({ id, title, category, ingress, imageSrc }) => {
 
   return (
     <StyledArticle onClick={goToPage}>
-      <Image src={imageSrc} alt={title} />
-      <StyledDiv />
+      <StyledImg src={`${process.env.BASE_URL}/${imageSrc}`} />
       <StyledHeader>
-        <h2>{title}</h2>
-        <h6>{category.name}</h6>
+        <StyledTitle>{title}</StyledTitle>
+        <p>{category.name}</p>
       </StyledHeader>
       {ingress.length > MAX_LENGTH ? (
         <StyledIngress>

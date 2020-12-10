@@ -7,18 +7,19 @@ import ArticleCard from '../components/ArticleCard';
 import { useAuthContext } from '../context/AuthProvider';
 import { list as listArticles } from '../utils/articleService';
 import { list as listCategories } from '../utils/categoryService';
+import Checklist from '../components/Checklist';
 import ArticleNavigation from '../components/ArticleNavigation';
 
 const ArticleFunctions = styled.section.attrs(({ isAdmin }) => ({
   isAdmin: isAdmin || false,
 }))`
-  max-width: 90%;
-  margin: auto;
   display: flex;
-  justify-content: ${({ isAdmin }) => (isAdmin ? 'space-between' : 'flex-end')};
+  flex-flow: column;
+  /*justify-content: ${({ isAdmin }) =>
+    isAdmin ? 'space-between' : 'flex-end'};*/
 `;
 
-const Create = styled.a`
+const Create = styled.button`
   padding: 20px 30px;
   background-color: #479eb9;
   border-style: none;
@@ -30,22 +31,47 @@ const Create = styled.a`
 `;
 
 const StyledButtonWrapper = styled.div`
+  display: flex;
+  flex-flow: row;
+`;
+
+const StyledRightButtonWrapper = styled.div`
+  margin-left: auto;
   & > button {
-    margin: 5px;
+    margin-left: 1em;
     padding: 20px 30px;
-    background-color: lightgrey;
     border-style: none;
-    color: white;
-    &:hover {
-      background-color: grey;
-    }
+  }
+`;
+
+const DropDownWrapper = styled.div`
+  background-color: #808080;
+  padding: 1em;
+  color: #ffffff;
+
+  & > input {
+    width: 100%;
+  }
+
+  & > ul {
+    list-style: none;
   }
 `;
 
 const StyledArticleSection = styled.section`
   display: flex;
-  flex-flow: column wrap;
-  padding: 50px 0px;
+  flex-flow: column;
+`;
+
+const ToggleButton = styled.button.attrs(({ pressed }) => ({
+  pressed: pressed || false,
+}))`
+  background-color: ${({ pressed }) => (pressed ? '#808080' : '#d3d3d3')};
+  color: ${({ pressed }) => (pressed ? '#ffffff' : '#000000')};
+  &:hover {
+    background-color: #808080;
+    color: #ffffff;
+  }
 `;
 
 const Articles = () => {
@@ -113,14 +139,6 @@ const Articles = () => {
     setSearchView(false);
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (page > 1) {
-      goToFirstPage();
-    }
-    fetchArticleData(page);
-  };
-
   const handleSearchChange = async (e) => {
     e.preventDefault();
     setSearch(e.target.value);
@@ -130,13 +148,9 @@ const Articles = () => {
     fetchArticleData(page, e.target.value, filter);
   };
 
-  const handleFilterChange = (id) => {
-    const tempCategories = [...categories];
-    const filtered = tempCategories
-      .filter((category) => category._id === id)
-      .shift();
+  const handleFilterChange = (filtered) => {
     filtered.view = !filtered.view;
-    setCategories(tempCategories);
+    setCategories([...categories]);
     const f = categories
       .filter((category) => !category.view)
       .map((category) => category.name);
@@ -148,48 +162,69 @@ const Articles = () => {
   };
 
   return (
-    <>
-      <Title title="Fagartikler" />
+    <Page title="Fagartikler">
       <ArticleFunctions isAdmin={isAdmin}>
-        {isAdmin && <Create href="/fagartikler/ny"> Ny Artikkel </Create>}
         <StyledButtonWrapper>
-          <button type="button" onClick={handleSearchView}>
-            Search
-          </button>
-          <button type="button" onClick={handleFilterView}>
-            Filter
-          </button>
-          {searchView && (
-            <section>
-              <form onSubmit={handleSearch}>
-                <input
-                  type="search"
-                  placeholder="Søk"
-                  value={search}
-                  onChange={handleSearchChange}
-                />
-              </form>
-            </section>
+          {isAdmin && (
+            <Create onClick={() => history.push('/fagartikler/ny')}>
+              Ny Artikkel
+            </Create>
           )}
-          {filterView && (
-            <section>
-              <ul>
-                {categories &&
-                  categories.map((category) => (
-                    <li key={category._id}>
-                      <input
-                        type="checkbox"
-                        id={category.name}
-                        checked={category.view}
-                        onChange={() => handleFilterChange(category._id)}
-                      />
-                      <label htmlFor={category.name}>{category.name}</label>
-                    </li>
-                  ))}
-              </ul>
-            </section>
-          )}
+          <StyledRightButtonWrapper>
+            <ToggleButton
+              type="button"
+              onClick={handleSearchView}
+              pressed={searchView}
+            >
+              Search
+            </ToggleButton>
+            <ToggleButton
+              type="button"
+              onClick={handleFilterView}
+              pressed={filterView}
+            >
+              Filter
+            </ToggleButton>
+          </StyledRightButtonWrapper>
         </StyledButtonWrapper>
+        {searchView && (
+          <DropDownWrapper>
+            <label htmlFor="search">Søk</label>
+            <input
+              id="search"
+              name="search"
+              type="search"
+              placeholder="Søk"
+              value={search}
+              onChange={handleSearchChange}
+            />
+          </DropDownWrapper>
+        )}
+        {filterView && (
+          <DropDownWrapper>
+            {/* <ul>
+              {categories &&
+                categories.map((category) => (
+                  <li key={category._id}>
+                    <input
+                      type="checkbox"
+                      id={category.name}
+                      checked={category.view}
+                      onChange={() => handleFilterChange(category._id)}
+                    />
+                    <label htmlFor={category.name}>{category.name}</label>
+                  </li>
+                ))}
+                </ul> */}
+            <Checklist
+              values={categories}
+              idKey="_id"
+              nameKey="name"
+              booleanKey="view"
+              onChange={handleFilterChange}
+            />
+          </DropDownWrapper>
+        )}
       </ArticleFunctions>
       <StyledArticleSection>
         {/* Use later
@@ -210,7 +245,7 @@ const Articles = () => {
           ))}
       </StyledArticleSection>
       <ArticleNavigation pages={pages} />
-    </>
+    </Page>
   );
 };
 export default Articles;

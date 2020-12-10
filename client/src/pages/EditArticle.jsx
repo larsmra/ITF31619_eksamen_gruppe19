@@ -1,59 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import Page from '../components/Page';
-import Title from '../components/Title';
-import ArticleForm from '../components/ArticleForm';
-import useCustomForm from '../hooks/useCustomForm';
+import ArticleCreator from '../components/ArticleCreator';
+import { get, update } from '../utils/articleService';
 
-const SaveArticle = styled.button`
-  margin: 5px;
-  padding: 20px 30px;
-  background-color: lightgrey;
-`;
-
-const EditArticle = ({ article }) => {
+const EditArticle = () => {
   const { id } = useParams();
   const history = useHistory();
-  /* const [error, setError] = useState('');
-  const {
-    values,
-    errors,
-    handleChange,
-    validateForm,
-    submitable,
-  } = useCustomForm({
-    article,
-  }); */
+  const [formData, setFormData] = useState([]);
+  const [error, setError] = useState(null);
+  const [title, setTitle] = useState('');
+  /* const [error, setError] = useState(''); */
 
-  /* const handleSubmit = (event) => {
-    event.preventDefault();
-    validateForm();
-  }; */
-
-  /* useEffect(() => {
-    if (submitable) {
-      const submitForm = () => {
-        const articleData = async () => {
-          const { error } = await update(id, values);
-          if (error) {
-            setError(error);
-          } else {
-            history.push(`/fagartikler/${id}`);
-          }
-        };
-        articleData();
+  useEffect(() => {
+    if (id) {
+      const fetchArticleData = async () => {
+        const { data } = await get(id);
+        if (data.success) {
+          setFormData(data.data);
+          setTitle(data.data.title);
+        } else {
+          setError(data.message);
+        }
       };
-      submitForm();
+      fetchArticleData();
     }
-  }, [submitable, history, id, values]); */
+  }, [id]);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const { data } = await update(id, formData);
+    console.log(data);
+    if (data.success) {
+      history.push(`/fagartikler/${data.data._id}`);
+    } else {
+      setError(data.message);
+    }
+  };
 
   return (
-    <>
-      <Title title={values.title} />
-      <ArticleForm values={values} />
-    </>
+    <Page title={title}>
+      <ArticleCreator
+        edit
+        articleData={formData}
+        setArticleData={setFormData}
+        onSubmit={onSubmit}
+      />
+    </Page>
   );
 };
 

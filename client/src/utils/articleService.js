@@ -27,10 +27,8 @@ export const list = async (page, search = '', filter) => {
 
 export const get = async (id) => {
   try {
-    const articles = await http.get(`${API_PATH}/${id}`);
-    console.log(articles);
-    return articles;
-    // return await http.get(`${API_PATH}/${id}`);
+    await getCsrfToken();
+    return await http.get(`${API_PATH}/${id}`);
   } catch (err) {
     return err.response;
   }
@@ -38,7 +36,9 @@ export const get = async (id) => {
 
 export const update = async (id, data) => {
   try {
-    return await http.put(`${API_PATH}/${id}`, data);
+    await getCsrfToken();
+    console.log(data);
+    return await http.put(`${API_PATH}/${id}`, { ...data });
   } catch (err) {
     return err.response;
   }
@@ -46,6 +46,7 @@ export const update = async (id, data) => {
 
 export const create = async (data) => {
   try {
+    console.log(data);
     await getCsrfToken();
     const article = new FormData();
     article.append('title', data.title);

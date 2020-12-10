@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Page from '../components/Page';
 import Title from '../components/Title';
-import { offices } from '../data/data';
+import { officeLocations } from '../data/data';
 
 const GridSection = styled.section`
   display: grid;
@@ -11,13 +11,24 @@ const GridSection = styled.section`
   grid-gap: 1em;
 `;
 
+const StyledImage = styled.div`
+  margin: 0.2em;
+  width: 100%;
+  height: 8em;
+  background-color: #a9a9a9;
+`;
+
 const Office = () => {
   const { id } = useParams();
-  const office = offices.filter((o) => o.id === parseInt(id))[0];
+  let office;
+  officeLocations.forEach((location) =>
+    location.offices.forEach((o) => o.id === parseInt(id) && (office = o))
+  );
+
+  console.log(office);
 
   return (
-    <>
-      <Title title="Våre kontorer" />
+    <Page title={`Kontor ${office.name}`} wide>
       <section>
         <h2>Velkommen til {office.name}</h2>
         <p>{office.description}</p>
@@ -27,7 +38,7 @@ const Office = () => {
         <GridSection>
           {office.employees.map((employee) => (
             <article key={employee.id}>
-              <img alt={employee.name} />
+              <StyledImage alt={employee.name} />
               <p>{employee.name}</p>
               <p>{employee.position}</p>
             </article>
@@ -37,7 +48,7 @@ const Office = () => {
       <section>
         <p>Kontakt oss på {office.phone}</p>
       </section>
-    </>
+    </Page>
   );
 };
 

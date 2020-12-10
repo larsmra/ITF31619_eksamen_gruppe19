@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Page from '../components/Page';
 import Title from '../components/Title';
-import { officeLocations, offices } from '../data/data';
+import { officeLocations } from '../data/data';
 
 import OfficeContainer from '../components/OfficeContainer';
+import Checklist from '../components/Checklist';
 
 const StyledButtonSection = styled.section`
   padding: 1em 1em 0 1em;
@@ -18,8 +19,13 @@ const StyledButton = styled.button.attrs(({ pressed }) => ({
 }))`
   border: none;
   padding: 1.2em 2.4em;
-  background-color: ${({ pressed }) => (pressed ? '#479eb9' : '#e8e8e8')};
+  background-color: ${({ pressed }) => (pressed ? '#808080' : '#d3d3d3')};
   color: ${({ pressed }) => (pressed ? '#ffffff' : '#000000')};
+
+  &:hover {
+    background-color: #808080;
+    color: #ffffff;
+  }
 `;
 
 const StyledIconButton = styled.button.attrs(({ pressed }) => ({
@@ -34,33 +40,9 @@ const StyledIconButton = styled.button.attrs(({ pressed }) => ({
 `;
 
 const StyledFilterSection = styled.section`
-  background-color: #479eb9;
+  background-color: #808080;
   color: #ffffff;
   padding: 0.1em;
-`;
-
-const StyledList = styled.ul`
-  list-style: none;
-`;
-
-const StyledListElement = styled.li`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: #ffffff;
-  border: 0.2em solid #ffffff;
-  border-radius: 0.2em;
-  padding: 0.3em;
-  display: inline-block;
-
-  &:checked {
-    background-color: #000000;
-  }
 `;
 
 const Offices = () => {
@@ -68,16 +50,13 @@ const Offices = () => {
   const [filter, setFilter] = useState(false);
   const [listView, setListView] = useState(false);
 
-  const handleFilterChange = (id) => {
-    const locations = [...officeLocations];
-    const filtered = locations.filter((location) => location.id === id).shift();
-    filtered.view = !filtered.view;
-    setViewableLocations(locations);
+  const handleFilterChange = (location) => {
+    location.view = !location.view;
+    setViewableLocations([...viewableLocations]);
   };
 
   return (
-    <>
-      <Title title="Våre kontorer" />
+    <Page title="Våre kontorer" wide>
       <section>
         <StyledButtonSection>
           <StyledButton
@@ -115,44 +94,32 @@ const Offices = () => {
         </StyledButtonSection>
         {filter && (
           <StyledFilterSection>
-            <StyledList>
-              {viewableLocations &&
-                viewableLocations.map((location) => (
-                  <StyledListElement key={location.id}>
-                    <StyledCheckbox
-                      id={location.city}
-                      type="checkbox"
-                      checked={location.view}
-                      onChange={() => handleFilterChange(location.id)}
-                    />
-                    <label htmlFor={location.city}>{location.city}</label>
-                  </StyledListElement>
-                ))}
-            </StyledList>
+            <Checklist
+              values={officeLocations}
+              idKey="id"
+              nameKey="city"
+              booleanKey="view"
+              onChange={handleFilterChange}
+            />
           </StyledFilterSection>
         )}
         {officeLocations &&
           officeLocations
             .filter((location) => location.view === true)
-            .map((location) => {
-              const locationOffices = offices.filter(
-                (office) => office.location === location.id
-              );
-              return (
-                <section key={location.id}>
-                  <header>
-                    <h2>{`${location.city} (${locationOffices.length} kontorer)`}</h2>
-                  </header>
-                  <OfficeContainer
-                    place={location.id}
-                    offices={locationOffices}
-                    isList={listView}
-                  />
-                </section>
-              );
-            })}
+            .map((location) => (
+              <section key={location.id}>
+                <header>
+                  <h2>{`${location.city} (${location.offices.length} kontorer)`}</h2>
+                </header>
+                <OfficeContainer
+                  place={location.id}
+                  offices={location.offices}
+                  isList={listView}
+                />
+              </section>
+            ))}
       </section>
-    </>
+    </Page>
   );
 };
 

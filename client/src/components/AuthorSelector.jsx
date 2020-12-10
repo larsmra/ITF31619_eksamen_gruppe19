@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { listAuthors } from '../utils/authorService';
 
-const AuthorSelector = ({ setData }) => {
+const AuthorSelector = ({ data, setData }) => {
   const [authors, setAuthors] = useState([]);
   const [error, setError] = useState(null);
   const [value, setValue] = useState('');
@@ -28,14 +28,17 @@ const AuthorSelector = ({ setData }) => {
   };
 
   return (
-    <select id="author" name="author" onChange={handleAuthorChange}>
-      {authors &&
-        authors.map((author, index) => (
-          <option key={index} value={author}>
-            {author}
-          </option>
-        ))}
-    </select>
+    <>
+      {(authors || data.category) && (
+        <select id="author" name="author" onChange={handleAuthorChange}>
+          {authors.map((author, index) => (
+            <option key={index} value={author}>
+              {author}
+            </option>
+          ))}
+        </select>
+      )}
+    </>
   );
 };
 

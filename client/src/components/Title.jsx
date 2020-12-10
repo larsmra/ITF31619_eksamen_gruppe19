@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const TitleText = styled.h1`
   text-align: center;
-  padding: 200px;
-  background-color: lightgray;
+  padding: 0.5em;
+  background-color: #d3d3d3;
 `;
 
 const Title = ({ title, bgImage }) => <TitleText>{title}</TitleText>;
