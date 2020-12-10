@@ -6,10 +6,9 @@ import Routes from './routes/Routes';
 const App = () => (
   <Theme>
     <AuthProvider>
-    <Routes />
+      <Routes />
     </AuthProvider>
   </Theme>
- 
 );
 
 export default App;

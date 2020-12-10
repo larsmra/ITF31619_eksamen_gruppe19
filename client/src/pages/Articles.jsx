@@ -11,8 +11,6 @@ import ArticleNavigation from '../components/ArticleNavigation';
 const ArticleFunctions = styled.section.attrs(({ isAdmin }) => ({
   isAdmin: isAdmin || false,
 }))`
-  max-width: 90%;
-  margin: auto;
   display: flex;
   font-size: 1.5rem;
   justify-content: ${({ isAdmin }) => (isAdmin ? 'space-between' : 'flex-end')};
@@ -193,7 +191,7 @@ const Articles = () => {
           )}
         </StyledButtonWrapper>
       </ArticleFunctions>
-      <StyledArticleSection class="pageContent">
+      <StyledArticleSection className="pageContent">
         {/* Use later
 
                 {loading && 'Loading ...'}
