@@ -14,7 +14,6 @@ import user from './routes/user.js';
 import category from './routes/category.js';
 import article from './routes/article.js';
 import author from './routes/author.js';
-import image from './routes/image.js';
 
 const app = express();
 
@@ -44,7 +43,6 @@ app.use(`${process.env.BASEURL}/users`, user);
 app.use(`${process.env.BASEURL}/articles`, article);
 app.use(`${process.env.BASEURL}/authors`, author);
 app.use(`${process.env.BASEURL}/categories`, category);
-app.use(`${process.env.BASEURL}/`, image);
 
 app.use(errorMiddleware);
 
