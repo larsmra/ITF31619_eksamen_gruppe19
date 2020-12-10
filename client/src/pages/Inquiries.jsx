@@ -22,8 +22,7 @@ const Inquiries = () => {
       setLoading(true);
       const { data } = await list();
       if (!data.success) {
-        console.log(error);
-        setError(error);
+        setError(error.message);
       } else {
         setInquiries(data.data);
         setError(null);
@@ -38,7 +37,6 @@ const Inquiries = () => {
       <Title title="Henvendelser" />
       <section className="pageContent">
         {loading && <div>Loading ... </div>}
-        {error && <p> {error} </p>}
         {inquiries &&
           inquiries.map((inquiry) => (
             <InquiryCard>

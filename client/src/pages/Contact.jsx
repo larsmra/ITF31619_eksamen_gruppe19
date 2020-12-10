@@ -5,6 +5,7 @@ import Title from '../components/Title';
 import { useCustomForm } from '../hooks/useCustomForm';
 import { create } from '../utils/inquiryService';
 import { useAuthContext } from '../context/AuthProvider';
+import Error from '../components/Error';
 
 const ContactForm = styled.form`
   display: flex;
@@ -73,12 +74,13 @@ const Contact = () => {
     <>
       <Title title="Kontakt oss" />
       <section className="pageContent">
-        {success && (
-          <Alert status="success">
-            <AlertIcon />
-            Event opprettet ...
-          </Alert>
-        )}
+        {error ||
+          (errors && (
+            <div>
+              {<Error message={errors} />}
+              {<Error message={error} />}
+            </div>
+          ))}
         <ContactForm onSubmit={handleSubmit}>
           <label htmlFor="name">Navn</label>
           <input

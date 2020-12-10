@@ -29,6 +29,12 @@ export const GlobalStyles = createGlobalStyle`
         max-width: 90%;
         margin: 0 auto;
     }
+    input{
+      font-size: 1.5rem;
+    }
+    textarea{
+      font-size: 1.5rem;
+    }
   }
   ${normalize}
 `;

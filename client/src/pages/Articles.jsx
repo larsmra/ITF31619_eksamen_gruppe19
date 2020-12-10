@@ -193,7 +193,7 @@ const Articles = () => {
           )}
         </StyledButtonWrapper>
       </ArticleFunctions>
-      <StyledArticleSection class="pageContent">
+      <StyledArticleSection className="pageContent">
         {/* Use later
 
                 {loading && 'Loading ...'}
