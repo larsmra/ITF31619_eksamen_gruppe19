@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Error from '../components/Error';
 import UserForm from '../components/UserForm';
-import { login } from '../utils/authServices';
+import { login } from '../utils/authService';
 import { useAuthContext } from '../context/AuthProvider';
 
 const StyledSection = styled.section`

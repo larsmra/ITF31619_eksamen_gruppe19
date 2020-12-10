@@ -1,11 +1,15 @@
 import React from 'react';
 import AuthProvider from './context/AuthProvider';
+import Theme from './styled/Theme';
 import Routes from './routes/Routes';
 
 const App = () => (
-  <AuthProvider>
+  <Theme>
+    <AuthProvider>
     <Routes />
-  </AuthProvider>
+    </AuthProvider>
+  </Theme>
+ 
 );
 
 export default App;

@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuthContext } from '../context/AuthProvider';
-import { logout } from '../utils/authServices';
+import { logout } from '../utils/authService';
 
 const StyledNav = styled.nav`
   width: 100%;
@@ -13,6 +13,8 @@ const StyledNav = styled.nav`
   & > span {
     align-self: center;
     padding: 0 2em;
+    font-size: 1.5rem;
+    font-weight: 900;
   }
 `;
 
@@ -22,6 +24,11 @@ const NavMenu = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+  
+  @media only screen and (min-width: 420px) and (max-width: 800px)  {
+    flex-flow: column nowrap;
+    padding: 1rem;
+  }
 `;
 
 const NavMenuItem = styled.li.attrs(({ special }) => ({
@@ -30,12 +37,15 @@ const NavMenuItem = styled.li.attrs(({ special }) => ({
   margin: 0;
   ${({ special }) => special && 'background-color: #479eb9;'}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> responsive
   & > a {
     display: block;
     color: #000000;
     padding: 0 2em;
-    font-size: 16px;
+    font-size: 1.5rem;
     line-height: 3em;
     text-decoration: none;
     ${({ special }) => special && 'color: #ffffff;'}
@@ -54,6 +64,7 @@ const LogOutButton = styled.button`
   background-color: #479eb9;
   padding: 0 2em;
   border: none;
+  font-size: 1.5rem;
 
   &:hover {
     background-color: #236b85;

@@ -5,13 +5,14 @@ import Title from '../components/Title';
 import ArticleForm from '../components/ArticleForm';
 import Error from '../components/Error';
 import useCustomForm from '../hooks/useCustomForm';
-import { create } from '../utils/articleServices';
+import { create } from '../utils/articleService';
 import CategoryModal from '../components/CategoryModal';
 
 const Create = styled.button`
   margin: 5px;
   padding: 20px 30px;
   background-color: lightgrey;
+
 `;
 
 /* const initalState = {

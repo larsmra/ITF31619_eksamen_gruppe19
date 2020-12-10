@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import Title from '../components/Title';
 
 const GridContainer = styled.section`
@@ -13,6 +14,10 @@ const GridItem = styled.article`
   padding: 50px 0;
   text-align: center;
   background-color: lightgray;
+  &:hover{
+    cursor: pointer;
+    background-color: grey;
+  }
 
   &#offices {
     grid-column: 1;
@@ -29,21 +34,30 @@ const GridItem = styled.article`
   }
 `;
 
-const Home = () => (
+const Home = () => {
+  const history = useHistory();
+
+  const goToOffices = () => history.push(`/kontorer`);
+  const goToContact = () => history.push(`/kontakt`);
+  const goToArticles = () => history.push(`/fagartikler`);
+
+  return(
   <>
     <Title title="Velkommen til FG Rørleggerservice AS" />
     <GridContainer>
-      <GridItem id="offices">
+      <GridItem id="offices" onClick={goToOffices}>
         <h2> Kontorer </h2>
       </GridItem>
-      <GridItem id="contact">
+      <GridItem id="contact" onClick={goToContact}>
         <h2> Kontakt </h2>
       </GridItem>
-      <GridItem id="articles">
+      <GridItem id="articles" onClick={goToArticles}>
         <h2> Se våre fagartikler om oppussing av bad</h2>
       </GridItem>
     </GridContainer>
   </>
-);
+
+  );
+};
 
 export default Home;

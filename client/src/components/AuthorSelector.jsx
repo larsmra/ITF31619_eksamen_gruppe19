@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { listAuthors } from '../utils/authorServices';
+import { listAuthors } from '../utils/authorService';
 
 const AuthorSelector = ({ setData }) => {
   const [authors, setAuthors] = useState([]);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { list } from '../utils/categoryService';
 
 const CategorySelector = ({ setData }) => {
-  /* Temporarily dummy information to fill the select */
+
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [value, setValue] = useState('');

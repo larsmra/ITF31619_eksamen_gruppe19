@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Message = styled.p`
-  color: #ff0000;
+  color: ${({ theme }) => theme.colors.error};
 `;
 
 const Error = ({ message = null }) => (
