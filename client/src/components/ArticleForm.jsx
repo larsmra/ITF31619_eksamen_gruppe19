@@ -33,7 +33,6 @@ const ArticleForm = ({
   <>
     <form encType="multipart/form-data" method="post" onSubmit={onSubmit}>
       <StyledWrapper>
-        {console.log(articleData.title || '')}
         <label htmlFor="article_title">Tittel</label>
         <input
           type="text"
@@ -75,10 +74,7 @@ const ArticleForm = ({
             data={articleData}
             categories={categories}
           />
-          <CategoryButton
-            name="New category"
-            clickHandler={() => setModal(!modal)}
-          />
+          <CategoryButton name="Ny" clickHandler={() => setModal(!modal)} />
         </CategoryWrapper>
         <label htmlFor="article_author">Forfatter</label>
         <AuthorSelector setData={setArticleData} />

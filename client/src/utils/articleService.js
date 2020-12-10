@@ -3,24 +3,22 @@ import { getCsrfToken } from './authService';
 
 const API_PATH = '/articles';
 
-export const list = async (page, search = '', filter) => {
+export const list = async (page, search = '', filter = []) => {
   try {
-    await getCsrfToken();
-    let path;
+    let articles;
     if (search && filter.length > 0) {
-      path = `${API_PATH}/pages/${page}/search/${search}/filter/${filter}`;
+      articles = await http.get(
+        `${API_PATH}/pages/${page}/search/${search}/filter/${filter}`
+      );
     } else if (search) {
-      path = `${API_PATH}/pages/${page}/search/${search}`;
+      articles = await http.get(`${API_PATH}/pages/${page}/search/${search}`);
     } else if (filter.length > 0) {
-      path = `${API_PATH}/pages/${page}/filter/${filter}`;
+      articles = await http.get(`${API_PATH}/pages/${page}/filter/${filter}`);
     } else {
-      path = `${API_PATH}/pages/${page}`;
+      articles = await http.get(`${API_PATH}/pages/${page}`);
     }
-    const articles = await http.get(`${path}`);
-    console.log(articles);
     return articles;
   } catch (err) {
-    console.log(err.response);
     return err.response;
   }
 };
@@ -37,7 +35,6 @@ export const get = async (id) => {
 export const update = async (id, data) => {
   try {
     await getCsrfToken();
-    console.log(data);
     return await http.put(`${API_PATH}/${id}`, { ...data });
   } catch (err) {
     return err.response;
@@ -46,7 +43,6 @@ export const update = async (id, data) => {
 
 export const create = async (data) => {
   try {
-    console.log(data);
     await getCsrfToken();
     const article = new FormData();
     article.append('title', data.title);
@@ -57,6 +53,7 @@ export const create = async (data) => {
     article.append('image', data.image);
     article.append('hidden', `${data.hidden}`);
 
+    console.log(data);
     console.log(article);
 
     return await http.post(`${API_PATH}`, article, {
@@ -65,7 +62,6 @@ export const create = async (data) => {
       },
     });
   } catch (err) {
-    console.log(err.response);
     return err.response;
   }
 };

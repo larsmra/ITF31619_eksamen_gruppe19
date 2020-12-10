@@ -16,6 +16,7 @@ const ArticleCreator = ({
     const { data } = await list();
     if (data.success) {
       setCategories([...data.data]);
+      setArticleData((prev) => ({ ...prev, category: data.data[0]?._id }));
     }
   };
 
@@ -25,14 +26,16 @@ const ArticleCreator = ({
 
   return (
     <>
-      <ArticleForm
-        edit={edit}
-        articleData={articleData}
-        setArticleData={setArticleData}
-        categories={categories}
-        onSubmit={onSubmit}
-        setModal={setModal}
-      />
+      {categories && (
+        <ArticleForm
+          edit={edit}
+          articleData={articleData}
+          setArticleData={setArticleData}
+          categories={categories}
+          onSubmit={onSubmit}
+          setModal={setModal}
+        />
+      )}
       {modal && (
         <CategoryModal
           setModal={setModal}

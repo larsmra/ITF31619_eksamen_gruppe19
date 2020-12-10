@@ -2,16 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Title from '../components/Title';
-import Page from '../components/Page';
-import Error from '../components/Error';
 import { remove, get } from '../utils/articleService';
 import { useAuthContext } from '../context/AuthProvider';
 import dateFormatter from '../utils/dateFormatter';
-
-const StyledSection = styled.section`
-  max-width: 90%;
-  margin: auto;
-`;
 
 const StyledInfo = styled.div`
   display: flex;
@@ -66,7 +59,6 @@ const Article = () => {
           setArticle(data.data);
           setError(null);
         } else {
-          console.log(data.message);
           setError(data.message);
           goToArticlesPage();
         }
@@ -78,7 +70,6 @@ const Article = () => {
 
   const deleteArticle = async () => {
     const { data } = await remove(id);
-    console.log(data);
     if (data.success) {
       goToArticlesPage();
     } else {
@@ -89,8 +80,9 @@ const Article = () => {
   return (
     <>
       {article && (
-        <Page title={article.title} headerBackground={article.imagePath}>
-          <StyledSection>
+        <>
+          <Title title={article.title} bgImage={article.imagePath} />
+          <section className="pageContent">
             <StyledInfo>
               <p>Av {article.author} </p>
               <p> {dateFormatter(article.date)} </p>
@@ -101,14 +93,16 @@ const Article = () => {
             </section>
             <p> {article.category.name} </p>
 
-            <ArticleAdminFunctions>
-              <Delete onClick={deleteArticle}>Slett</Delete>
-              <Update article={article} onClick={goToEditArticlePage}>
-                Rediger
-              </Update>
-            </ArticleAdminFunctions>
-          </StyledSection>
-        </Page>
+            {isAdmin && (
+              <ArticleAdminFunctions>
+                <Delete onClick={deleteArticle}>Slett</Delete>
+                <Update article={article} onClick={goToEditArticlePage}>
+                  Rediger
+                </Update>
+              </ArticleAdminFunctions>
+            )}
+          </section>
+        </>
       )}
     </>
   );

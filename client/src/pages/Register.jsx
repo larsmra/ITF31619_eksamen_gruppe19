@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import Page from '../components/Page';
 import Error from '../components/Error';
 import UserForm from '../components/UserForm';
 import { useAuthContext } from '../context/AuthProvider';
@@ -37,7 +36,7 @@ const Register = () => {
   };
 
   return (
-    <StyledSection>
+    <StyledSection className="pageContent">
       <Error message={error} />
       <UserForm
         formData={formData}

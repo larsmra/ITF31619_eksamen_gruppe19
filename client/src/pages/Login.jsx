@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import Page from '../components/Page';
 import Error from '../components/Error';
 import UserForm from '../components/UserForm';
 import { login } from '../utils/authService';
@@ -36,7 +35,7 @@ const Login = () => {
   };
 
   return (
-    <StyledSection>
+    <StyledSection className="pageContent">
       <Error message={error} />
       <UserForm
         formData={formData}

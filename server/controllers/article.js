@@ -1,8 +1,4 @@
-import {
-  articleService,
-  categoryService,
-  imageService,
-} from '../services/index.js';
+import { articleService, categoryService } from '../services/index.js';
 import catchAsyncError from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
 

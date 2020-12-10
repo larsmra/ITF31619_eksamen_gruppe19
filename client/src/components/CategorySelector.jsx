@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const CategorySelector = ({ data, setData, categories }) => {
+const CategorySelector = ({ setData, categories }) => {
   const handleCategoryChange = (e) => {
     setData((prev) => ({
       ...prev,

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
-import Page from '../components/Page';
 import Title from '../components/Title';
 import ArticleCard from '../components/ArticleCard';
 import { useAuthContext } from '../context/AuthProvider';
@@ -15,18 +14,16 @@ const ArticleFunctions = styled.section.attrs(({ isAdmin }) => ({
 }))`
   display: flex;
   flex-flow: column;
-  /*justify-content: ${({ isAdmin }) =>
-    isAdmin ? 'space-between' : 'flex-end'};*/
 `;
 
 const Create = styled.button`
   padding: 20px 30px;
-  background-color: #479eb9;
+  background-color: ${({ theme }) => theme.colors.default};
+  font-size: 1.5rem;
   border-style: none;
   color: white;
-  cursor: pointer;
   &:hover {
-    background-color: #236b85;
+    background-color: ${({ theme }) => theme.colors.action};
   }
 `;
 
@@ -162,8 +159,9 @@ const Articles = () => {
   };
 
   return (
-    <Page title="Fagartikler">
-      <ArticleFunctions isAdmin={isAdmin}>
+    <>
+      <Title title="Fagartikler" />
+      <ArticleFunctions isAdmin={isAdmin} className="pageContent">
         <StyledButtonWrapper>
           {isAdmin && (
             <Create onClick={() => history.push('/fagartikler/ny')}>
@@ -202,20 +200,6 @@ const Articles = () => {
         )}
         {filterView && (
           <DropDownWrapper>
-            {/* <ul>
-              {categories &&
-                categories.map((category) => (
-                  <li key={category._id}>
-                    <input
-                      type="checkbox"
-                      id={category.name}
-                      checked={category.view}
-                      onChange={() => handleFilterChange(category._id)}
-                    />
-                    <label htmlFor={category.name}>{category.name}</label>
-                  </li>
-                ))}
-                </ul> */}
             <Checklist
               values={categories}
               idKey="_id"
@@ -226,14 +210,7 @@ const Articles = () => {
           </DropDownWrapper>
         )}
       </ArticleFunctions>
-      <StyledArticleSection>
-        {/* Use later
-
-                {loading && 'Loading ...'}
-                {error && <p>{error}</p>}
-                {articles && articles.length > 0 && <ArticleCard data={articles} /> }
-                
-                */}
+      <StyledArticleSection className="pageContent">
         {articles &&
           articles.map((article) => (
             <ArticleCard
@@ -245,7 +222,7 @@ const Articles = () => {
           ))}
       </StyledArticleSection>
       <ArticleNavigation pages={pages} />
-    </Page>
+    </>
   );
 };
 export default Articles;

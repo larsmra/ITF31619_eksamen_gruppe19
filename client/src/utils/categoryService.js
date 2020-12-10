@@ -8,7 +8,6 @@ export const list = async () => {
     await getCsrfToken();
     return await http.get(`${API_PATH}`);
   } catch (err) {
-    console.log(err.response);
     return err.response;
   }
 };
@@ -25,6 +24,7 @@ export const get = async (id) => {
 export const create = async (data) => {
   try {
     await getCsrfToken();
+    console.log(data);
     return await http.post(`${API_PATH}`, data);
   } catch (err) {
     console.log(err.response);

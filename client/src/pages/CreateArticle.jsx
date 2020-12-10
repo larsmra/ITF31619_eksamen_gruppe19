@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import Page from '../components/Page';
+import Title from '../components/Title';
 import { create } from '../utils/articleService';
 import ArticleCreator from '../components/ArticleCreator';
 
@@ -35,13 +35,16 @@ const CreateArticle = () => {
   };
 
   return (
-    <Page title="Ny artikkel">
-      <ArticleCreator
-        articleData={formData}
-        setArticleData={setFormData}
-        onSubmit={onSubmit}
-      />
-    </Page>
+    <>
+      <Title title="Fagartikler" />
+      <section className="pageContent">
+        <ArticleCreator
+          articleData={formData}
+          setArticleData={setFormData}
+          onSubmit={onSubmit}
+        />
+      </section>
+    </>
   );
 };
 

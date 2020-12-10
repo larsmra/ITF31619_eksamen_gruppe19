@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Page from '../components/Page';
 import Title from '../components/Title';
 import { officeLocations } from '../data/data';
 
@@ -25,15 +24,14 @@ const Office = () => {
     location.offices.forEach((o) => o.id === parseInt(id) && (office = o))
   );
 
-  console.log(office);
-
   return (
-    <Page title={`Kontor ${office.name}`} wide>
-      <section>
+    <>
+      <Title title="Våre kontorer" />
+      <section className="pageContent">
         <h2>Velkommen til {office.name}</h2>
         <p>{office.description}</p>
       </section>
-      <section>
+      <section className="pageContent">
         <h2>Våre ansatte</h2>
         <GridSection>
           {office.employees.map((employee) => (
@@ -45,10 +43,10 @@ const Office = () => {
           ))}
         </GridSection>
       </section>
-      <section>
+      <section className="pageContent">
         <p>Kontakt oss på {office.phone}</p>
       </section>
-    </Page>
+    </>
   );
 };
 

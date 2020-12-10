@@ -6,7 +6,6 @@ export const listAuthors = async () => {
   try {
     return await http.get(`${API_PATH}`);
   } catch (err) {
-    console.log(err.response);
     return err.response;
   }
 };

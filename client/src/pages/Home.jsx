@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Page from '../components/Page';
+import { useHistory } from 'react-router-dom';
 import Title from '../components/Title';
 
 const GridContainer = styled.section`
-  width: 90%;
-  margin: auto;
   display: grid;
   grid-template-columns: auto auto auto;
   grid-gap: 20px;
@@ -14,6 +12,10 @@ const GridItem = styled.article`
   padding: 50px 0;
   text-align: center;
   background-color: lightgray;
+  &:hover {
+    cursor: pointer;
+    background-color: grey;
+  }
 
   &#offices {
     grid-column: 1;
@@ -30,20 +32,29 @@ const GridItem = styled.article`
   }
 `;
 
-const Home = () => (
-  <Page title="Velkommen til FG Rørleggerservice AS" wide>
-    <GridContainer>
-      <GridItem id="offices">
-        <h2> Kontorer </h2>
-      </GridItem>
-      <GridItem id="contact">
-        <h2> Kontakt </h2>
-      </GridItem>
-      <GridItem id="articles">
-        <h2> Se våre fagartikler om oppussing av bad</h2>
-      </GridItem>
-    </GridContainer>
-  </Page>
-);
+const Home = () => {
+  const history = useHistory();
+
+  const goToOffices = () => history.push(`/kontorer`);
+  const goToContact = () => history.push(`/kontakt`);
+  const goToArticles = () => history.push(`/fagartikler`);
+
+  return (
+    <>
+      <Title title="Velkommen til FG Rørleggerservice AS" />
+      <GridContainer className="pageContent">
+        <GridItem id="offices" onClick={goToOffices}>
+          <h2> Kontorer </h2>
+        </GridItem>
+        <GridItem id="contact" onClick={goToContact}>
+          <h2> Kontakt </h2>
+        </GridItem>
+        <GridItem id="articles" onClick={goToArticles}>
+          <h2> Se våre fagartikler om oppussing av bad</h2>
+        </GridItem>
+      </GridContainer>
+    </>
+  );
+};
 
 export default Home;

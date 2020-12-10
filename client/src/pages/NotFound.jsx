@@ -1,10 +1,11 @@
 import React from 'react';
-import Page from '../components/Page';
+import Title from '../components/Title';
 
 const NotFound = () => (
-  <Page title="404">
+  <>
+    <Title title="Siden finnes ikke" />
     <p>Siden du leter etter finnes ikke</p>
-  </Page>
+  </>
 );
 
 export default NotFound;
